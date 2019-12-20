@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>web_socket_client</title>
+</head>
+<body>
+    <p style="text-align: center;font-size: 50px;">web_socket_client</p>
+</body>
+<script>
+    var url = 'ws://sw.com:9502',
+        webSocket= new WebSocket(url);
+    webSocket.onopen = function(evt){
+        console.log('连接成功');
+        console.log(evt.data);
+        webSocket.send('我发了东西');
+    };
+    webSocket.onmessage = function (evt) {
+        console.log('接受服务器消息');
+        console.log(evt.data);
+    };
+    webSocket.onclose = function(evt){
+        console.log('关闭ws');
+        console.log(evt.data);
+    };
+    webSocket.onerror  = function(evt,e){
+        console.log('我错了');
+        console.log(evt.data);
+    };
+
+</script>
+</html>
