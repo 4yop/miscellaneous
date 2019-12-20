@@ -1,0 +1,49 @@
+<script>
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+/**
+ * @param {ListNode} node
+ * @return {void} Do not return anything, modify node in-place instead.
+ */
+ function ListNode(val) {
+     this.val = val;
+     this.next = null;
+ }
+var head = [4,5,1,9],
+    node = 5;
+var listNode = new ListNode(head[0]),
+    current = listNode;
+//console.log(current);
+var i = 1;
+while(i < head.length){
+    var val = head[i++];
+    current.next = new ListNode(val);
+    current = current.next;
+}
+//console.log(listNode);
+head = listNode;
+
+    var currentNode = new ListNode(-1);
+    currentNode.next =  head;
+    while (!currentNode.next){
+        console.log(currentNode);
+        if(currentNode.next.val == node){
+            currentNode.next =  currentNode.next.next;
+            console.log(head);
+            break;
+        }
+        currentNode = currentNode.next;
+    }
+
+
+
+console.log(1);
+
+
+
+</script>
