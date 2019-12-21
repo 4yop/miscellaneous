@@ -1,0 +1,7 @@
+创建.gitattributes文件 *.js linguist-language=语言
+
+
+*.js linguist-language=php
+*.css linguist-language=php
+*.html linguist-language=php
+*.txt linguist-language=php
