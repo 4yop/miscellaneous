@@ -1,0 +1,21 @@
+cp [oldname] [newname]
+#复制文件 newname特殊符号"." 写成 ".\"
+
+mkdir [dirname]
+#创建文件夹
+
+vim [filename]
+#打开文件或创建
+
+find / -name [filename]
+#查找名字包含[filename]的文件
+
+pwd
+#当前路径
+
+ls
+ll
+#查看文件列表
+
+cd ..
+#去某个文件夹
