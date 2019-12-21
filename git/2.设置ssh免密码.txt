@@ -1,0 +1,12 @@
+1.先配置
+git config --global user.name "your_name"
+#设用户名字
+git config --global user.email "your_email@example.com"
+#设邮箱
+
+2.生成密钥
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+3.复制公钥
+window系统：进 "C:\Users\[用户名]\.ssh",私钥:id_rsa,公钥:id_rsa.pub,
+           复制 id_rsa.pub 里的内容,至服务器/[user]/.ssh/authorized_keys里
