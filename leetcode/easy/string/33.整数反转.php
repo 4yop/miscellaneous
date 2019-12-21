@@ -12,11 +12,14 @@ class Solution {
      * @return NULL
      */
     function reverse($x) {
-        if(pow(-2,31) < $x || $x > (pow(2,31) -1)){
-            return 0;
-        }
+
         $n = $x >=0 ? $x : 0 - $x;
         $n = intval(strrev($n));
+
+        if(-2147483648 >= $n || $n >= 2147483647){
+            return 0;
+        }
+
         return $x >=0 ? $n : '-'.$n;
     }
 }

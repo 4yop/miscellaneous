@@ -23,3 +23,7 @@ class Solution {
         }
     }
 }
+
+$s = new Solution();
+$res = $s->reverse("words and 987");
+print_r($res);
