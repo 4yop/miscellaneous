@@ -25,24 +25,15 @@ while(i < head.length){
     current.next = new ListNode(val);
     current = current.next;
 }
-//console.log(listNode);
-head = listNode;
 
-    var currentNode = new ListNode(-1);
-    currentNode.next =  head;
-    while (!currentNode.next){
-        console.log(currentNode);
-        if(currentNode.next.val == node){
-            currentNode.next =  currentNode.next.next;
-            console.log(head);
-            break;
-        }
-        currentNode = currentNode.next;
-    }
+var deleteNode = function(node) {
+    node.val = node.next.val;
+    node.next = node.next.next;
+};
 
 
 
-console.log(1);
+
 
 
 

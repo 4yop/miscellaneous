@@ -15,19 +15,17 @@ class ListNode {
 class Solution {
 
 
-    function reverseList($head, $n) {
-        $curr = $head;
-        $temp = $curr;
-        $temp->next = NULL;
-        while($curr->next === NULL){
-
-            $aa = $curr;
-            $aa->next = $temp;
-            $temp = $aa;
-
-            $curr = $curr->next;
+    function reverseList($head) {
+        $currentNode = $head;
+        $res = NULL;
+        $nextNode = NULL;
+        while($currentNode !== NULL){
+            $nextNode = $currentNode->next;
+            $currentNode->next = $res;
+            $res = $currentNode;
+            $currentNode = $nextNode;
         }
-        return $temp;
+        return $res;
     }
 }
 
@@ -44,10 +42,10 @@ while($i < count($head)){
     $current = $current->next;
 }
 
-print_r($node);
+//print_r($node);
 
 $head = $node;
 
 $s = new Solution();
-$res= $s->reverseList($head,$n);
-var_dump($res);
+$res= $s->reverseList($head);
+print_r($res);

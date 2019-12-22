@@ -20,12 +20,38 @@ class Solution {
      * @return ListNode
      */
     function removeNthFromEnd($head, $n) {
+        $count = 0;
+        $fast = $head;
+        while($fast->next !== NULL){
+            $count+=2;
+            $fast = $fast->next->next;
+        }
+        if($fast !== NULL){
+            ++$count;
+        }
+        $i = 0;
+        $end = $count - $n;
+        if($end === 0){
+            return $head->next;
+        }
 
+        $slow = new ListNode(0);
+        $slow->next = $head;
+        while($slow->next !== NULL){
+            if($i == $end){
+                $slow->next = $slow->next->next;
+                break;
+            }
+            $i++;
+            $slow = $slow->next;
+
+        }
+        return $head;
     }
 }
 
-$head = [1,2,3,4,5];
-$n = 2;
+$head = [1];
+$n = 1;
 
 //生成链表
 $node = new ListNode($head[0]);
@@ -37,7 +63,10 @@ while($i < count($head)){
     $current = $current->next;
 }
 
-print_r($node);
+
 
 $head = $node;
 
+$s = new Solution();
+$r = $s->removeNthFromEnd($head,$n);
+print_r($r);
