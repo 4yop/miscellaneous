@@ -102,10 +102,11 @@ class LinkedList {
         while($currentNode !== NULL){
             $next = $currentNode->next;
             $tempNode = $this->add($tempNode,$currentNode);
-            echo "---".$currentNode->val."\n";
-            print_r($tempNode);
+            //echo "---".$currentNode->val."\n";
+            //print_r($tempNode);
             $currentNode = $next;
         }
+        $this->listNode = $tempNode;
         return $tempNode;
     }
 
@@ -125,25 +126,92 @@ class LinkedList {
 
 
 
-        $currentNode = new ListNode();
-        $currentNode->next = $listNode;
-        $flag = false;
-        while($currentNode->next !== NULL){
+        $curr = new ListNode(-1);
+        $curr->next = $listNode;
 
-            if($node->val <= $currentNode->next->val){
-                $nextnext = $currentNode->next->next;
-                $node->next = $nextnext;
-                $currentNode->next = $node;
+        $node->next = NULL;
+        if($node->val <= $curr->next->val){
+            $node->next = $curr->next;
+            return $node;
+        }
+
+
+        $flag = false;//是否已经插入了
+        while($curr->next !== NULL){
+            if($node->val <= $curr->next->val){
+
+                $next = $curr->next;
+                $node->next = $next;
+                $curr->next = $node;
+
                 $flag = true;
                 break;
             }
-
-            $currentNode = $currentNode->next;
+            $curr = $curr->next;
         }
-        if($flag === false && $currentNode->next === NULL){
-            $currentNode->next = $node;
+        if(!$flag){
+            $curr->next = $node;
         }
         return $listNode;
+    }
+
+    /**获取最大值
+     * @return mixed
+     */
+    public function getMax(){
+        $currentNode = $this->listNode;
+        $max = $currentNode->val;
+        $index = 0;
+        $i = 0;
+        $currentNode = $currentNode->next;
+
+        while($currentNode !== NULL){
+            if($max < $currentNode->val){
+                $max = $currentNode->val;
+                $index = $i;
+            }
+
+            $currentNode = $currentNode->next;
+            $i++;
+        }
+
+        return $max;
+    }
+
+    /**获取长度
+     * @return int
+     */
+    public function length(){
+        $currentNode = $this->listNode;
+        $length = 0;
+        while($currentNode !== NULL){
+            $length++;
+            $currentNode = $currentNode->next;
+        }
+        return $length;
+    }
+
+    /**获取最小值
+     * @return mixed
+     */
+    public function getMin(){
+        $currentNode = $this->listNode;
+        $min = $currentNode->val;
+        $index = 0;
+        $i = 0;
+        $currentNode = $currentNode->next;
+
+        while($currentNode !== NULL){
+            if($min > $currentNode->val){
+                $min = $currentNode->val;
+                $index = $i;
+            }
+
+            $currentNode = $currentNode->next;
+            $i++;
+        }
+
+        return $min;
     }
 
     /**
@@ -173,5 +241,7 @@ $linkedList->insert(new ListNode(2));
 
 
 $r = $linkedList->order();
-//var_dump($r);
-//$linkedList->display();
+$min = $linkedList->getMin();
+$length = $linkedList->length();
+print_r($length);
+$linkedList->display();
