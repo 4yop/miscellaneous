@@ -5,97 +5,173 @@
  * tip:其实就是递归对象，类型于多级分类
  */
 class ListNode {
-    public $data = NULL;
+    public $val = NULL;
     public $next = NULL;
 
-    public function __construct($data = NULL) {
-        $this->data = $data;
+    public function __construct($val = NULL) {
+        $this->val = $val;
     }
 }
 
 class LinkedList {
-    private $_firstNode = NULL;
-    private $_totalNodes = 0;
+    public $listNode = NULL;
 
-    public function insert($data = NULL) {
-        $newNode = new ListNode($data);
-
-        if ($this->_firstNode === NULL) {
-            $this->_firstNode = &$newNode;
-        } else {
-            $currentNode = $this->_firstNode;
-            while ($currentNode->next !== NULL) {
+    /**末尾插入结点
+     * @param ListNode|NULL $node 结点
+     */
+    public function insert(ListNode $node = NULL){
+        if($this->listNode === NULL){
+            $this->listNode = $node;
+        }else{
+            $currentNode = $this->listNode;
+            while($currentNode !== NULL){
+                if($currentNode->next === NULL){
+                    $currentNode->next = $node;
+                    break;
+                }
                 $currentNode = $currentNode->next;
             }
-            $currentNode->next = $newNode;
+
         }
-        $this->_totalNode++;
-        return TRUE;
+        return $this->listNode;
     }
 
-    public function display() {
-        echo "Total book titles: ".$this->_totalNode."\n";
-        $currentNode = $this->_firstNode;
-        while ($currentNode !== NULL) {
-            echo $currentNode->data . "\n";
+    /**删除一个结点根据val值
+     * @param $val
+     */
+    public function del($val){
+        $currentNode = new ListNode();
+        $currentNode->next = $this->listNode;
+        $flag = false;//是否有删除了
+        while($currentNode->next !== NULL){
+            if($currentNode->next->val === $val){
+                $currentNode->next = $currentNode->next->next;
+                $flag = true;
+                break;
+            }
+            $currentNode = $currentNode->next;
+        }
+        return $flag;
+    }
+
+    /**删除所有结点根据val值
+     * @param $val
+     * @return int
+     */
+    public function remove($val){
+        $currentNode = new ListNode();
+        $currentNode->next = $this->listNode;
+        $count = 0;
+        while($currentNode->next != NULL){
+            //echo "{$currentNode->next->val} === {$val}\n";
+            if($currentNode->next->val == $val){
+                $currentNode->next = $currentNode->next->next;
+                $count++;
+                continue;
+            }
+            $currentNode = $currentNode->next;
+
+
+        }
+        return $count;
+    }
+
+    /**链表反转
+     * @return null
+     */
+    public function reverse(){
+        $currentNode = $this->listNode;
+        $tempNode = NULL;
+        while($currentNode !== NULL){
+            $next = $currentNode->next;
+            $currentNode->next = $tempNode;
+            $tempNode = $currentNode;
+            $currentNode = $next;
+        }
+        $this->listNode = $tempNode;
+        return $this->listNode;
+    }
+
+    /**排序
+     * @param string $order asc 从小到大 desc从大到小
+     * @return null
+     */
+    public function order($order = 'asc'){
+        $currentNode = $this->listNode;
+        $tempNode = NULL;
+        while($currentNode !== NULL){
+            $next = $currentNode->next;
+            $tempNode = $this->add($tempNode,$currentNode);
+            echo "---".$currentNode->val."\n";
+            print_r($tempNode);
+            $currentNode = $next;
+        }
+        return $tempNode;
+    }
+
+    /**结点里加入一个结点
+     * @param ListNode|NULL $listNode
+     * @param null $node
+     * @return ListNode
+     */
+    public function add(ListNode $listNode = NULL,$node = NULL){
+        if($node === NULL){
+            return $listNode;
+        }
+        $node->next = NULL;
+        if($listNode === NULL){
+            return $node;
+        }
+
+
+
+        $currentNode = new ListNode();
+        $currentNode->next = $listNode;
+        $flag = false;
+        while($currentNode->next !== NULL){
+
+            if($node->val <= $currentNode->next->val){
+                $nextnext = $currentNode->next->next;
+                $node->next = $nextnext;
+                $currentNode->next = $node;
+                $flag = true;
+                break;
+            }
+
+            $currentNode = $currentNode->next;
+        }
+        if($flag === false && $currentNode->next === NULL){
+            $currentNode->next = $node;
+        }
+        return $listNode;
+    }
+
+    /**
+     *显示到第几位 -1就全部显示
+     */
+    public function display($index = -1){
+        $currentNode = $this->listNode;
+        $i = 0;
+        while($currentNode !== NULL){
+            echo "listNode[$i]:{$currentNode->val}\n";
+            if($index != -1 && $i == $index){
+                break;
+            }
+            $i++;
             $currentNode = $currentNode->next;
         }
     }
-    /**
-     * 模拟链表
-     */
-
-    public function analog(){
-        $data = [];
-        $right = [];
-
-        fwrite(STDOUT,'输入多少个数:');
-        $n = intval(fgets(STDIN));
-
-        for($i = 0;$i < $n;$i++){
-            fwrite(STDOUT,"输入data[{$i}]的值:");
-            $data[$i] = intval(fgets(STDIN));
-        }
-
-        for($i = 0;$i < $n;$i++){
-
-            $right[$i] = $i != $n - 1 ? $i + 1 : -1;
-
-        }
-        //插入
-        $n++;
-        fwrite(STDOUT,"输入data[".($n-1)."]的值:");
-        $data[$n-1] = intval(fgets(STDIN));
-
-        $t = 0;
-        while($t != -1){
-            if($data[$right[$t]] > $data[$n-1]){
-                $right[$n-1] = $right[$t];
-                $right[$t] = $n - 1;
-                break;
-            }
-            $t = $right[$t];
-        }
-
-
-        //输入链表的所有值
-        $t = 0;
-        while($t != -1){
-            echo $data[$t]."\t";
-            $t = $right[$t];
-        }
-        echo "\n";
-
-        print_r($data);
-        print_r($right);
-    }
 }
-$linked_list = new LinkedList();
-//$linked_list->insert(1);
-//$linked_list->insert(2);
-//
-//$linked_list->insert(4);
-//$linked_list->insert(3);
-//$linked_list->display();
 
-$linked_list->analog();
+
+$linkedList = new LinkedList();
+
+$linkedList->insert(new ListNode(3));
+$linkedList->insert(new ListNode(1));
+$linkedList->insert(new ListNode(4));
+$linkedList->insert(new ListNode(2));
+
+
+$r = $linkedList->order();
+//var_dump($r);
+//$linkedList->display();

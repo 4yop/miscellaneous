@@ -9,11 +9,14 @@ class Solution {
         $end = $m + $n;
 
         for($i = $m;$i < $end;$i++){
+
             $nums1[$i] = current($nums2);
             next($nums2);
         }
 
+        sort($nums1);
         return $nums1;
+
     }
 }
 
@@ -22,4 +25,4 @@ $nums2 = [2,5,6];      $n = 3;
     $s = new Solution();
 
 $res = $s->merge($nums1, $m, $nums2, $n);
-var_dump($res);
+print_r($res);
