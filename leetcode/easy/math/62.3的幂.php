@@ -6,11 +6,9 @@ class Solution {
      * @return Boolean
      */
     function isPowerOfThree($n) {
-
-        return $n > 0 && strpos('.',log($n,3)) === false ? true : false;
+        return $n > 0 && 1162261467 % $n == 0;
     }
 }
-
 $s = new Solution();
 
 $res = $s->isPowerOfThree(9);
