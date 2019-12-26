@@ -6,7 +6,13 @@ class Solution {
      * @return Boolean
      */
     function hammingWeight($n) {
-    	return unpack('cchars/nint',$n);
+        if ($n == 0) return 0;
+        $result = 1;
+        while ($n > 2) {
+            $result += $n % 2;
+            $n = floor($n / 2);
+        }
+        return $result;
     }
 
     
