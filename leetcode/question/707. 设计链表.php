@@ -10,7 +10,8 @@ class MyLinkedList {
     /**
      * Initialize your data structure here.
      */
-
+    public $linkedList = NULL;
+    public $total = 0;
     function __construct() {
 
     }
@@ -21,17 +22,17 @@ class MyLinkedList {
      * @return Integer
      */
     function get($index) {
-        $i = 0;
-
-        $currentNode = $this->head;
-        while($currentNode != NULL){
-            if($i == $index){
-                return $currentNode;
+        if($index < $this->total){
+            $currentNode = $this->linkedList;
+            $i = 0;
+            while($currentNode !== NULL){
+                if($i == $index){
+                    return $currentNode->val;
+                }
+                $i++;
+                $currentNode = $currentNode->next;
             }
-            $i++;
-            $currentNode = $currentNode->next;
         }
-
         return -1;
     }
 
@@ -42,13 +43,9 @@ class MyLinkedList {
      */
     function addAtHead($val) {
         $node = new ListNode($val);
-        if($this->head != NULL){
-            $node->next = $this->head;
-            $this->head = $node;
-        }else{
-            $this->head = $node;
-        }
-        return $this->head;
+        $node->next = $this->linkedList;
+        $this->linkedList = $node->next;
+        $this->total++;
     }
 
     /**
@@ -58,12 +55,12 @@ class MyLinkedList {
      */
     function addAtTail($val) {
         $node = new ListNode($val);
-        $currentNode = $this->head;
-        while($currentNode->next != NULL){
+        $currentNode = $this->linkedList;
+        while($currentNode !== NULL){
             $currentNode = $currentNode->next;
         }
-        $currentNode->next = $node;
-        return $this->head;
+        $currentNode = $node;
+        $this->total++;
     }
 
     /**
@@ -73,27 +70,30 @@ class MyLinkedList {
      * @return NULL
      */
     function addAtIndex($index, $val) {
-        $currentNode = $this->head;
-        $i = 0;
-        $newNode = new ListNode($val);
-        $flag = false;
-        while($currentNode != NULL){
-
-            if($i == $index){
-                $newNode->next =$currentNode->next;
-                $currentNode->next = $newNode;
-                $flag = true;
-                break;
+        $node = new ListNode($val);
+        if($index <= 0){
+            $node->next = $this->linkedList;
+            $this->linkedList = $node;
+        }else{
+            $currentNode = new ListNode(-1);
+            $currentNode->next = $this->linkedList;
+            $flag = false;//是否加了
+            $i = 0;
+            while($currentNode->next !== NULL ){
+                if($i == $index){
+                    $next = $currentNode->next;
+                    $node->next = $next;
+                    $currentNode->next = $node;
+                    return;
+                }
+                $i++;
+                $currentNode = $currentNode->next;
             }
-            $i++;
-            $currentNode = $currentNode->next;
+            if($this->total == $index){
+                $currentNode->next = $node;
+            }
         }
 
-        if($flag == false){
-            $currentNode->next = $newNode;
-        }
-
-        return $this->head;
     }
 
     /**
@@ -102,25 +102,21 @@ class MyLinkedList {
      * @return NULL
      */
     function deleteAtIndex($index) {
-
+        if($index >= $this->total){
+            return;
+        }
         $currentNode = new ListNode(-1);
-        $currentNode->next = $this->head;
+        $currentNode->next = $this->linkedList;
         $i = 0;
-
-
-        while($currentNode->next != NULL){
-
+        while($currentNode->next !== NULL){
             if($i == $index){
                 $currentNode->next = $currentNode->next->next;
-                return $this->head;
+                $this->total--;
+                return;
             }
             $i++;
             $currentNode = $currentNode->next;
         }
-
-
-
-        return $this->head;
     }
 }
 

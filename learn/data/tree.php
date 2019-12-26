@@ -1,69 +1,112 @@
 <?php
-    class Node {
-        public $data = null;
-        public $parent = null;
-        public $left = null;
-        public $right = null;
-    }
+/**
+ * Created by PhpStorm.
+ * User: root
+ * Date: 2019/12/25
+ * Time: 16:51
+ */
 
-    #使用数组构造完全二叉树
-    function build_cbtree($a) {
-        $root = new Node();
-        $root->data = $a[0];
+ class TreeNode {
+     public $val = null;
+     public $left = null;
+     public $right = null;
+     public $parent = null;
+     function __construct($value) { $this->val = $value; }
+ }
 
-        for ($i = 1; $i < count($a); $i++) {
-            $node = new Node();
-            $node->data = $a[$i];
-            insert_node($root, $node);
+ class BinaryTree{
+
+     public $tree = NULL;
+
+     /**数组 创建二叉树
+      * @param array $arr
+      * @return null|TreeNode
+      */
+     public function create(array $arr=[]){
+        if(empty($arr)){
+            return NULL;
         }
 
-        return $root;
-    }
+        if($this->tree == NULL){
+            $this->tree = new TreeNode($arr[0]);
+        }
 
-    #插入完全二叉树节点
-    function insert_node($root, $inode) {
-        #使用树的广度优先遍历顺序取出节点，直到找到第一个左右子节点没满的节点，将待插入节点插入节点左边或右边
-        $queue = array();
-        array_unshift($queue, $root);
+        $len = count($arr);
+        for($i = 1;$i < $len;$i++){
+            $node = new TreeNode($arr[$i]);
+            $this->tree = $this->insert($this->tree,$node);
+        }
+        return $this->tree;
+     }
 
-        while (!empty($queue)) {
-            $cnode = array_pop($queue);
-            if ($cnode->left == null) {
-                $cnode->left = $inode;
-                $inode->parent = $cnode;
-                return $root;
-            } else {
-                array_unshift($queue, $cnode->left);
+     /**二叉树中插入节点
+      * @param TreeNode|NULL $tree 树
+      * @param TreeNode|NULL $node 节点
+      * @return TreeNode
+      */
+     public function insert(TreeNode $tree = NULL,TreeNode $node = NULL){
+        if($node == NULL){
+            return $tree;
+        }
+        if($tree == NULL){
+            return $node;
+        }
+        $queue = [];
+
+        array_unshift($queue,$tree);
+
+        while(!empty($queue)){
+            $currentNode = array_pop($queue);
+            if($currentNode->left == NULL){
+                $currentNode->left = $node;
+                $node->parent = $currentNode;
+                return $tree;
+            }else{
+                array_unshift($queue,$currentNode->left);
             }
-            if ($cnode->right == null) {
-                $cnode->right = $inode;
-                $inode->parent = $cnode;
-                return $root;
-            } else {
-                array_unshift($queue, $cnode->right);
+            if($currentNode->right == NULL){
+                $currentNode->right = $node;
+                $node->parent = $currentNode;
+                return $tree;
+            }else{
+                array_unshift($queue,$currentNode->right);
             }
+
+
         }
 
-        return $root;
-    }
+        return $tree;
+     }
 
-    #树的广度优先遍历
-    function bf_traverse($root) {
-        $queue = array();
-        array_unshift($queue, $root);
+     /**
+      * 输出二叉树的值
+      */
+     public function display(){
+        $queue = [];
+         array_unshift($queue, $this->tree);
 
-        while (!empty($queue)) {
-            $cnode = array_pop($queue);
-            echo $cnode->data . " ";
-            if ($cnode->left !== null) array_unshift($queue, $cnode->left);
-            if ($cnode->right !== null) array_unshift($queue, $cnode->right);
-        }
+         while (!empty($queue)) {
+             $currentNode = array_pop($queue);
+             echo "{$currentNode->val}\n";
+             if ($currentNode->left !== null) {
+                 array_unshift($queue, $currentNode->left);
+             }
+             if ($currentNode->right !== null) {
+                 array_unshift($queue, $currentNode->right);
+             }
+         }
 
-        echo "<br>";
-    }
+         echo "输出完毕\n";
 
-    $a = array(1,2,3,4,5);
-    $root = build_cbtree($a);
-    print_r($root);
-    //bf_traverse($root); #广度优先遍历
-?>
+     }
+ }
+
+
+
+ $arr = [1,2,3,4,5,6];
+
+
+$tree = new BinaryTree();
+$res  = $tree->create($arr);
+print_r($tree->tree);
+$tree->display();
