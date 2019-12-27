@@ -7,17 +7,7 @@ class Solution {
      */
     function findDuplicate($nums) {
 
-        $end = count($nums) ;
-
-        if($end == 2){
-            return $nums[0];
-        }
-        sort($nums);
-        for($i = 0;$i < $end;$i+=2){
-            if(){
-
-            }
-        }
+        
 
     }
 }
