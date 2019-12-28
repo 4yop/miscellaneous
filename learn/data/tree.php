@@ -78,6 +78,29 @@
         return $tree;
      }
 
+     function sortedArrayToBST($nums) {
+         // 定义变量在赋值严重影响性能 $len = count($nums) - 1;
+         return $this->buildBST($nums, 0, count($nums) - 1);
+     }
+
+     public function buildBST($nums, $front, $rear)
+     {
+         if ($front > $rear) {
+             return null;
+         }
+
+         $mid = floor(($front + $rear) / 2);
+         // 很多人喜欢下面的写法，个人认为上面的写法更好理解
+         //$mid = $front + floor(($rear - $front) / 2);
+         $node = new TreeNode($nums[$mid]);
+         $node->left  = $this->buildBST($nums, $front, $mid - 1);
+         $node->right = $this->buildBST($nums, $mid + 1, $rear);
+
+         return $node;
+     }
+
+
+
      /**
       * 输出二叉树的值
       */
@@ -103,10 +126,10 @@
 
 
 
- $arr = [1,2,3,4,5,6];
-
-
-$tree = new BinaryTree();
-$res  = $tree->create($arr);
-print_r($tree->tree);
-$tree->display();
+// $arr = [1,2,3,4,5,6];
+//
+//
+//$tree = new BinaryTree();
+//$res  = $tree->sortedArrayToBST($arr);
+//print_r($res);
+//$tree->display();
