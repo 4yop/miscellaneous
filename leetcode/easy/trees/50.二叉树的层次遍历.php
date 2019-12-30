@@ -11,43 +11,41 @@ require_once "../../../learn/data/tree.php";
 class Solution {
 
 
-    function maxDepth($root) {
+    function levelOrder($root) {
         if($root == NULL){
-            return 0;
+            return [];
         }
-        $root->depth = 1;
+        $root->index = 0;
         $queue = [$root];
-        $depth = 0;
+        $res = [];
+
         while(!empty($queue)){
             $current = array_pop($queue);
-            $currentDepth = $current->depth;//当前深度
-            if($depth < $currentDepth){
-                $depth = $currentDepth;
-            }
-            if($current->left !== NULL){
-                $current->left->depth = $currentDepth+1;
+            $i = $current->index;
+            $res[$i][] = $current->val;
+            if($current->left != NULL){
+                $current->left->index = $i + 1;
                 array_unshift($queue,$current->left);
             }
-            if($current->right !== NULL){
-                $current->right->depth = $currentDepth+1;
+            if($current->right != NULL){
+                $current->right->index = $i + 1;
                 array_unshift($queue,$current->right);
             }
-
         }
-        return $depth;
+        return $res;
     }
 }
 
 
 
 
-$arr = [3,9,20,null,null,15,7];
+$arr = [5,1,4,null,null,3,6];
 
 
 $root = (new BinaryTree())->create($arr);
 
 
-$res = (new Solution())->maxDepth($root);
+$res = (new Solution())->levelOrder($root);
 
-echo $res;
+var_dump($res);
 
