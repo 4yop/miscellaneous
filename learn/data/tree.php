@@ -102,10 +102,21 @@
 
 
      /**
-      * 输出二叉树的值
+      * 迭代 输出二叉树的值
       */
-     public function display(){
-        $queue = [];
+     public function display($type = ''){
+         if($type){
+             $this->digui($this->tree);
+         }else{
+             $this->diedai();
+         }
+     }
+
+     /**
+      * 迭代 输出二叉树的值
+      */
+     public function diedai(){
+         $queue = [];
          array_unshift($queue, $this->tree);
 
          while (!empty($queue)) {
@@ -120,16 +131,28 @@
          }
 
          echo "输出完毕\n";
+     }
 
+     /**
+      * 递归 输出二叉树的值
+      */
+     public function digui($tree){
+        if($tree == NULL){
+            //echo "输出完毕\n";
+            return;
+        }
+        echo "{$tree->val}\n";
+        $this->digui($tree->left);
+        $this->digui($tree->right);
      }
  }
 
 
 
-// $arr = [1,2,3,4,5,6];
-//
-//
-//$tree = new BinaryTree();
-//$res  = $tree->sortedArrayToBST($arr);
+ $arr = [1,2,3,4,5,6];
+
+
+$tree = new BinaryTree();
+$res  = $tree->create($arr);
 //print_r($res);
-//$tree->display();
+$tree->display(0);
