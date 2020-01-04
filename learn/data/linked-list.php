@@ -16,6 +16,17 @@ class ListNode {
 class LinkedList {
     public $listNode = NULL;
 
+    /**根据数组创建 链表
+     * @param array $arr
+     * @return null
+     */
+    public function create($arr = []){
+        array_map(function($val){
+            $node = new ListNode($val);
+            $this->insert($node);
+        },$arr);
+        return $this->listNode;
+    }
     /**末尾插入结点
      * @param ListNode|NULL $node 结点
      */

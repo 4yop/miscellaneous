@@ -12,35 +12,20 @@ class Solution {
 
 
     function isValidBST($root) {
-        $queue = [$root];
-
-        while(!empty($queue)){
-            $current = array_pop($queue);
-
-
-
-            if($current->left !== NULL){
-
-                if($current->val <= $current->left->val){
-                    return false;
-                }
-
-                array_unshift($queue,$current->left);
-            }
-            if($current->right !== NULL){
-
-                if($current->val >= $current->right->val){
-                    return false;
-                }
-
-                array_unshift($queue,$current->right);
-            }
-
-
-
-        }
-        return true;
+        return $this->helper($root,NULL,NULL);
     }
+
+     function helper($node, $lower, $upper) {
+        if ($node == null) return true;
+
+        $val = $node->val;
+        if ($lower != null && $val <= $lower) return false;
+        if ($upper != null && $val >= $upper) return false;
+
+        if (! $this->helper($node->right, $val, $upper)) return false;
+        if (! $this->helper($node->left, $lower, $val)) return false;
+        return true;
+      }
 }
 
 
