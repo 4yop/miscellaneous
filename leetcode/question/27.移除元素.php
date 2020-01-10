@@ -10,18 +10,14 @@ class Solution {
 
     function removeElement($nums, $val) {
         $i = 0;
-        $j = key(end($nums));
-        while($i < $j){
-            if($nums[$i] == $val){
-                unset($nums);
-            }
-            if($nums[$j] == $val){
-                unset($nums);
+        $j = 0;
+        while($i < count($nums)){
+            if($nums[$i] != $val){
+                $nums[$j] = $nums[$i];
             }
             $i++;
-            $j--;
         }
-        return count($nums);
+        return $nums;
     }
 }
 
