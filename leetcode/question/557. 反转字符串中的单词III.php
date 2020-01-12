@@ -13,8 +13,7 @@ class Solution {
      * @return Integer[][]
      */
     function reverseWords($s) {
-        $arr = explode(' ',$s);
-        $arr = array_map('strrev',explode(' ',$s));
+
 
         return implode(' ',array_map('strrev',explode(' ',$s)));
     }
