@@ -1,16 +1,21 @@
 <?php
 
-//
-// class TreeNode {
-//      public $val = null;
-//      public $left = null;
-//      public $right = null;
-//      function __construct($value) { $this->val = $value; }
-//  }
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     public $val = null;
+ *     public $left = null;
+ *     public $right = null;
+ *     function __construct($value) { $this->val = $value; }
+ * }
+ */
 require_once "../../learn/data/tree.php";
 class Solution {
 
-
+    /**
+     * @param TreeNode $root
+     * @return Integer[][]
+     */
     function maxDepth($root) {
         if($root == NULL){
             return 0;
@@ -34,20 +39,34 @@ class Solution {
             }
 
         }
+
+
         return $depth;
+    }
+
+    public $depth = 0;
+    function maxDepth1($root){
+        $this->re($root);
+        return $this->depth;
+    }
+    //递归 recursion
+    function re($tree = NULL,$depth = 1){
+        if($tree === NULL ){
+            return;
+        }
+        if($this->depth < $depth){
+            $this->depth = $depth;
+        }
+        $this->re($tree->left,$depth+1);
+        $this->re($tree->right,$depth+1);
     }
 }
 
-
-
-
 $arr = [3,9,20,null,null,15,7];
 
+$tree = new BinaryTree();
+$root = $tree->create($arr);
 
-$root = (new BinaryTree())->create($arr);
+$res = (new Solution())->maxDepth1($root);
 
-
-$res = (new Solution())->maxDepth($root);
-
-echo $res;
-
+print_r($res);
