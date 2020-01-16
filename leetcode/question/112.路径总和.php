@@ -18,8 +18,11 @@ class Solution {
      */
     public $sum = 0;
     function hasPathSum($root, $sum) {
-        if($root === NULL){
+        if($root === NULL || ( $root->val >= $sum && ($root->left !== NULL || $root->right !== NULL) ) ){
             return false;
+        }
+        if($root->val >= $sum && $root->left === NULL && $root->right === NULL){
+            return true;
         }
         $this->sum = $sum;
         return $this->helper($root);
