@@ -34,11 +34,22 @@ class Solution {
     }
 
     public $res = [];
+    public $stack = [];
     function inorderTraversal1($root){
-
+        $this->re($root);
+        return $this->res;
     }
     //递归 recursion
-    function re($tree = NULL){
+    function re($curr = NULL){
+        if($curr !== NULL && $curr->val !== NULL){
+            if($curr->left !== NULL && $curr->left->val !== NULL){
+                $this->re($curr->left);
+            }
+            $this->res[] = $curr->val;
+            if($curr->right !== NULL && $curr->right->val !== NULL){
+                $this->re($curr->right);
+            }
+        }
 
     }
 }
