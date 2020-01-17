@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /*开关按钮 start*/
+        .onoffswitch {
+            margin: 0 0.2rem;
+            position: relative;
+            width: 1.106666rem;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .onoffswitch-checkbox {
+            display: none;
+        }
+
+        .onoffswitch-label {
+            display: block;
+            overflow: hidden;
+            cursor: pointer;
+            border: 0.02rem solid  #DFDFDF;
+            border-radius: 20px;
+            width: 1.333333rem;
+            height: 0.4rem;
+        }
+
+        .onoffswitch-inner {
+            display: block;
+            width: 200%;
+            margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-inner:before,
+        .onoffswitch-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 0.4rem;
+            padding: 0;
+            line-height: 0.4rem;
+            font-size: 0.253333rem;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        .onoffswitch-inner:before {
+            content: "";
+            padding-left: 13px;
+            background-color: #D7F1EB;
+            color: #FFFFFF;
+        }
+
+        .onoffswitch-inner:after {
+            content: "";
+            padding-right: 0.173333rem;
+            background-color: #ECECEC;
+            color: #FAFAFA;
+            text-align: right;
+        }
+
+        .onoffswitch-switch {
+            display: block;
+            width: 0.4rem;
+            height: 0.4rem;
+            background: #2bbc9d;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            border-radius: 50%;
+            transition: all 0.3s ease-in 0s;
+        }
+
+        .onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+
+        .onoffswitch-checkbox:checked+.onoffswitch-label .onoffswitch-switch {
+            left: 0px;
+        }
+        /*开关按钮 end*/
+    </style>
+</head>
+<body>
+    <div>
+        <span>开启</span>
+        <div class="onoffswitch">
+            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="chushui" checked>
+            <label class="onoffswitch-label" for="chushui">
+                <span class="onoffswitch-inner"></span>
+                <span class="onoffswitch-switch"></span>
+            </label>
+        </div>
+        <span>关闭</span>
+    </div>
+</body>
+</html>

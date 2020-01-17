@@ -1,3 +1,6 @@
+reboot
+#重启
+
 cp [oldname] [newname]
 #复制文件 newname特殊符号"." 写成 ".\"
 
@@ -12,6 +15,21 @@ find / -name [filename]
 
 pwd
 #当前路径
+
+
+rename [oldname] [newname] [oldname]
+#将旧名称改为新名称
+
+mv [path/oldfile] [path/newfile]
+#将旧文件移动到新地方(或重命名)
+
+
+wget
+#下载
+
+curl
+#
+
 
 ls
 ll
