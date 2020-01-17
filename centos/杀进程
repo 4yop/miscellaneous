@@ -1,0 +1,11 @@
+占用端口得端口{port}
+
+netstat -npl | grep {port}
+
+获取pid 后：
+
+kill {pid}
+完
+
+nohup {指令} > {path/file.txt &}
+将结果打印在文件里

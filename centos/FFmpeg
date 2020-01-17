@@ -1,0 +1,11 @@
+ffmpeg -re -i test.mp4 -vcodec libx264 -acodec aac -f flv  -strict -2 rtmp://47.107.54.191:1935/rtmplive/rtmp
+
+这个快点？？？？
+ffmpeg -re -i test.mp4 -vcodec libx264 -acodec aac -f flv  -strict -2 rtmp://47.107.54.191:1935/hls/stream
+
+
+ffmpeg -re -i test.mp4 -c copy -f flv rtmp://localhost:1935/live/movie
+
+
+
+ffmpeg -re -i test.mp4  rtmp://47.107.54.191:1935/rtmplive/rtmp

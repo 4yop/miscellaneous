@@ -1,0 +1,8 @@
+
+zip {newname.zip} {filename}
+
+打包详细目录下的所有文件
+tar -cxf {newname.tar} xx/*
+
+如果无权限
+chmod 777 newname.tar
