@@ -1,0 +1,13 @@
+ios 只有 a 和button 能点
+
+
+别的
+1.加 css{cursor: pointer;}
+2.元素上  onclick="void(0);"
+3 委托 给 a 或 button
+如：
+document.addEventListener('click', function (e) {
+  if (e.target && e.target.matches('#btn')) {
+    window.alert('hello ios safari')
+  }
+})

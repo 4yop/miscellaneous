@@ -1,0 +1,40 @@
+卸载
+which -a git   得到{path}
+cd {path}
+rm -rf git *
+yum -y remove git
+
+安装
+yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-devel
+yum install git
+
+创建用户组
+grounpadd git
+创建用户
+user git -g git
+
+
+
+pos-receive 内容
+#!/bin/bash
+git --work-tree=/usr/share/nginx/html/lzh_live checkout -f
+
+给执行权限
+chmod +x post-receive
+
+建立仓库
+git init newrepo
+
+
+克隆
+git clone {git://xxxx.git} {pathname}
+
+
+拉取更新
+git pull
+
+解决冲突
+Please, commit your changes or stash them before you can merge
+git stash
+git pull
+git stash pop

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv=”X-UA-Compatible” content=”IE=edge,chrome=1″/>
+
+    <!-- HTML5 shim for IE8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <title></title>
+</head>
+<body>
+
+
+</body>
+</html>
+
+<script>
+    window.AESKey = '';
+    // 判断浏览器是否支持placeholder属性
+    function isSupportPlaceholder() {
+        var input = document.createElement('input');
+        return 'placeholder' in input;
+    };
+    (function() {
+        //判断是否是IE浏览器，包括Edge浏览器
+        function IEVersion() {
+            //取得浏览器的userAgent字符串
+            var userAgent = navigator.userAgent;
+            //判断是否IE浏览器
+            var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1;
+            if (isIE) {
+                var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+                reIE.test(userAgent);
+                var fIEVersion = parseFloat(RegExp["$1"]);
+                if (fIEVersion < 9 || !isSupportPlaceholder()) {
+                    return true;
+                }
+            } else {
+                return false;
+            }
+        }
+        var tpl = [
+            '<div class="browser-tips" style="margin:0 auto;text-align: center;">',
+            '<img style="display: inline-block;margin:100px 0 20px 0;" src="error.png">',
+            '<p style="font-size: 20px;color:#000;line-height: 32px;">为了给您提供更优质的网页浏览体验，建议使用IE11及以上版本的浏览器</p>',
+            '<p><a href="https://support.microsoft.com/zh-tw/help/17621/internet-explorer-downloads">下载</a></p>',
+            '</div>'
+        ].join('');
+
+        window.onload = function() {
+            if (IEVersion()) {
+                document.write(tpl);
+            }
+        };
+        window.siteName = "";
+    })();
+</script>
+

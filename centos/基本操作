@@ -1,0 +1,28 @@
+
+
+reboot 重启
+
+
+cd xx/xx 去哪文件夹
+cd .. 上级目录
+pwd 当前路径
+
+
+
+
+
+find / -name xxx 找名字有 xxx 得的文件
+
+rm xxx 删除xxx
+
+rename old new old  名称为old的改名为new
+
+mkdir xxx 新建文件夹xxx
+
+
+
+复制
+cp -r xx/a xx/b
+
+移动或重名命
+mv /xx/oldname  /xx/newname
