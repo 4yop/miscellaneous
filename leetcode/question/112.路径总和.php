@@ -16,46 +16,25 @@ class Solution {
      * @param TreeNode $root
      * @return Integer[][]
      */
-    public $sum = 0;
     function hasPathSum($root, $sum) {
-        if($root === NULL || ( $root->val >= $sum && ($root->left !== NULL || $root->right !== NULL) ) ){
+        if($root === NULL){
             return false;
         }
-        if($root->val >= $sum && $root->left === NULL && $root->right === NULL){
-            return true;
+        $sum -= $root->val;
+        if($root->left === NULL && $root->right === NULL){
+            return $sum === 0;
         }
-        $this->sum = $sum;
-        return $this->helper($root);
+        return $this->hasPathSum($root->left,$sum) || $this->hasPathSum($root->right,$sum);
     }
 
-    /**
-     * @param TreeNode|NULL $curr
-     * @param int $currSum 当前和
-     * @return bool|void
-     */
-    function helper(TreeNode $curr = NULL,$currSum = 0){
-        if($curr === NULL || $curr->val === NULL){
-            return;
-        }
-        $currSum += $curr->val;
-        if($currSum === $this->sum){
-            return true;
-        }
-        if($this->helper($curr->left,$currSum) === true){
-            return true;
-        }
-        if($this->helper($curr->right,$currSum) === true){
-            return true;
-        }
-        return false;
-    }
+
 }
 
-$arr = [1,2];
+$arr = [-2,null,-3];
 
 $tree = new BinaryTree();
 $root = $tree->create($arr);
 
-$res = (new Solution())->hasPathSum($root,1);
+$res = (new Solution())->hasPathSum($root,5);
 
 var_dump($res);
