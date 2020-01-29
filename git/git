@@ -23,7 +23,7 @@ git --work-tree=/usr/share/nginx/html/lzh_live checkout -f
 chmod +x post-receive
 
 建立仓库
-git init newrepo
+git init newrepo --bare
 
 
 克隆

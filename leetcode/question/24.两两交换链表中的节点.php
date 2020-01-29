@@ -10,27 +10,13 @@ class Solution {
 
 
     function swapPairs($head) {
-        if($head === NULL){
-            return $head;
-        }
-        $curr = $head;
-        while($curr !== NULL){
-
-            $next = $curr->next;
-            $nextnext = $next->next;
-
-            $curr->next = $nextnext;
-            $next->next = $curr;
-
-            $curr = $nextnext;
-        }
-        return $head;
+        echo json_encode($head);
     }
 
 
 }
 
-$head = [1,2,3,4];
+$head = [1,2,3,4,5,6];
 $n = 0;
 
 //生成链表
@@ -45,5 +31,5 @@ while($i < count($head)){
 
 $solution = new Solution();
 
-$res = $solution->swapPairs($node,2);
+$res = $solution->swapPairs($node);
 print_r($res);

@@ -25,7 +25,7 @@ class Solution {
         }
         return $s;
     }
-
+    //递归
     function reverseString1($s){
         $i = 0;
         $j = count($s) - 1;
