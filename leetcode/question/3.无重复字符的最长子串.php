@@ -23,7 +23,7 @@ class Solution {
             $count = strlen($str) > $count ? strlen($str) : $count;
         }
         return $count;
-        
+
     }
 }
 
