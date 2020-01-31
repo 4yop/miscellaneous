@@ -34,10 +34,7 @@ class Solution {
                 array_pop($arr);
             }
         }
-        /**$nums = [1,2];
-         *$vlaue == 1,$arr = [1],$arr = [1,2];$res=[ [1,2]];$arr = [];
-         *$value == 2,$arr = [2],$arr = [2,1];$res= [[1,2],[2,1]];$arr = [];
-         */
+
     }
 }
 

@@ -24,11 +24,11 @@ class Solution {
             return $arr[$value];
         },str_split($digits));
 
-        $this->dfs($dig);
+        $this->helper($dig);
 
     }
 
-    function dfs($dig = [],$arr = []){
+    function helper($dig = [],$arr = []){
 
 
 
