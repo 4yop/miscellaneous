@@ -22,16 +22,17 @@ class Solution {
 
         }
 
-        foreach ($queue as $v){
-            list($x,$y) = $v;
+        foreach($queue as $v){
+            list($a,$b) = $v;
 
-            for ($i = 0;$i < count($matrix[$x]);$i++){
-                $matrix[$x][$i] = 0;
+            for ($i = 0;$i < count($matrix[$a]);$i++){
+                $matrix[$a][$i] = 0;
             }
 
-            for ($j = 0;$i < count($matrix);$j++){
-                $matrix[$j][$x] = 0;
+            for ($i = 0;$i < count($matrix);$i++){
+                $matrix[$i][$b] = 0;
             }
+
         }
         return $matrix;
     }
