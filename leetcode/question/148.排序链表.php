@@ -10,46 +10,38 @@ class Solution {
 
 
     function sortList($head) {
-        $currentNode = $head;
-        $res = NULL;
-        while($currentNode !== NULL){
-            $next = $currentNode->next;
-            $res = $this->insertNode($res,$currentNode);
-            $currentNode = $next;
+        if($head == null || $head->next == null) return $head;
+        $fast = $head->next;
+        $slow = $head;
+        while($fast != null && $fast->next != null){
+            $slow = $slow->next;
+            $fast = $fast->next->next;
         }
-        return $res;
+        $tmp = $slow->next;
+        $slow->next = null;
+        $left = $this->sortList($head);
+        $right = $this->sortList($tmp);
+        $dummy = new ListNode(0);
+        $h = $dummy;
+        while($left != null && $right != null){
+            if($left->val < $right->val){
+                $h->next = $left;
+                $left = $left->next;
+            }else{
+                $h->next = $right;
+                $right = $right->next;
+            }
+            $h = $h->next;
+        }
+        $h->next = ($left != null)?$left:$right;
+        return $dummy->next;
+
     }
 
-    function insertNode($listNode=NULL,$node){
-        if($listNode == NULL){
-            return $node;
-        }
-        $node->next = NULL;
-        $currentNode = new ListNode(-1);
-        $currentNode->next = $listNode;
-        if($node->val <= $currentNode->next->val){
-            $node->next = $currentNode->next;
-            return $node;
-        }
-        $flag = false;//是否插入了
-        while($currentNode->next !== NULL){
-            if($node->val <= $currentNode->next->val){
-                $next = $currentNode->next;
-                $node->next = $next;
-                $currentNode->next = $node;
-                $flag = true;
-                break;
-            }
-            $currentNode = $currentNode->next;
-        }
-        if(!$flag){
-            $currentNode->next = $node;
-        }
-        return $listNode;
-    }
+
 }
 
-$head = [4,2,1,3];
+$head = [4,2,1,3,5];
 $n = 0;
 
 //生成链表
