@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "添加地址",
+    "usingComponents": {
+      "i-nav-bar": "../../components/navbar/index"
+    }
+}

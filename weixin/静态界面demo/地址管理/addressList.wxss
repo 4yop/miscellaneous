@@ -1,0 +1,82 @@
+page{
+  background: rgb(247, 247, 247);
+}
+
+.pad-30{
+  padding-left:5%; 
+  padding-right:3%; 
+}
+
+.item{
+  display: flex;
+  background: #FFF;
+  margin-bottom: 10rpx;
+}
+.item-checked{
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.item-address{
+  width: 70%;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx; 
+}
+
+.item-address-detail{
+  line-height: 50rpx;
+}
+
+.item-address-long{
+  width: 80%;
+}
+
+.item-checked-img{
+  width: 50rpx;
+  height:50rpx;
+}
+
+.item-right{
+  color: red;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.item-op{
+  width: 50%;
+  text-align: center;
+}
+
+.item-bottom{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.item-bottom view,.item-bottom navigator{
+  width: 33.33333%;
+  text-align: center;
+  line-height: 80rpx;
+  height:80rpx;
+  display: inline-block;
+  
+}
+
+.white-btn{
+  background: #FFF;
+  color:#000;
+}
+.green-btn{
+  color:#FFF;
+  background: rgb(6, 186, 4);
+}
+.red-btn{
+  color:#FFF;
+  background: rgb(233, 59, 61);
+}
+.item-half view,.item-half navigator{
+  width: 50%;
+}

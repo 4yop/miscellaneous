@@ -1,0 +1,42 @@
+<i-nav-bar navbar-data="{{nvabarData}}"></i-nav-bar>
+
+<view class="top_line"></view>
+<view>
+    <view class="add_item">
+        <text class="item_text">收货人:</text>
+        <input class="item_input" maxlength="10" bindinput="bindNameInput" placeholder="请输入收货人" value="{{name}}"/>
+    </view>
+    <view class="add_item">
+        <text class="item_text">手机号:</text>
+        <input type="number" class="item_input" maxlength="11" bindinput="bindMobileInput" placeholder="请输入手机号" value="{{mobile}}"/>
+    </view>
+
+    <view class="add_item">
+        <text class="item_text">邮政编码:</text>
+        <input class="item_input_1" type="number" maxlength="6" bindinput="bindZipCodeInput" placeholder="请输入邮政编码,可留空" value="{{zip_code}}"/>
+    </view>
+
+    <picker mode="region" bindchange="changeRegion">
+    <view class="add_item">
+        <text class="item_text">所在地区:</text>
+        <input class="item_input_1" disabled placeholder="请选择地区" value="{{province}}{{city}}{{area}}"/>
+    </view>
+    </picker>
+    
+    <view class="add_item">
+        <text class="item_text">详细地址:</text>
+        <textarea class="item_input_1 textarea" maxlength="45" bindinput="bindAddressInput" placeholder="请输入详细地址" value="{{detail}}"></textarea>
+    </view>
+
+    <view class="add_item">
+        <text class="item_text">智能识别:</text>
+        <textarea bindinput="autoKnow" class="item_input_1 textarea1" placeholder="复制整段文字:如 广东省湛江市赤坎区金沙湾 130-0000-0000 刘星" type="text" value="{{autoKnowText}}" ></textarea>
+    </view>
+
+
+    <view class="add_address" bindtap="addAddress">
+        <view class="add">
+            <text>保存</text>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,10 @@
+{
+    "navigationBarTitleText": "地址管理",
+    "navigationBarBackgroundColor": "#FFF",
+    "enablePullDownRefresh": true,
+    "navigationBarTextStyle": "black",
+    "usingComponents": {
+      "i-nav-bar": "../../components/navbar/index",
+      "i-load-more": "../../components/load-more/index"
+    }
+}

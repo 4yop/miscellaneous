@@ -1,0 +1,44 @@
+<i-nav-bar navbar-data="{{nvabarData}}"></i-nav-bar>
+
+
+<view style="padding-bottom:70rpx;" >
+  <i-load-more iClass="loadMore" wx:if="{{addressData.length < 1}}" loading="{{false}}" tip="--还没有地址--"></i-load-more>
+
+  <block wx:for="{{addressData}}">
+  <view class="item {{fromType>0?'':'pad-30'}}" >
+      <view class="item-checked" bindtap="checkAddr" data-index="{{index}}" data-id="{{item.id}}" wx:if="{{fromType}}">
+        
+        <image class="item-checked-img" src="{{item.id == select_id ? '../../images/checkbox-checked.png': '../../images/checkbox-disabled.png'}}"></image>
+        
+      </view>
+      
+      <view class="item-address {{fromType>0?'':'item-address-long'}}" >
+        <view>{{item.name}};{{item.mobile}}</view>
+        <view class="item-address-detail">{{item.province}}{{item.city}}{{item.area}}{{item.detail}}</view>
+      </view>
+      
+      <view class="item-right">
+        <navigator url="/qidian_sqlife/pages/user/addressAdd?id={{item.id}}" class="item-op" data-id="{{item.id}}">
+          编辑
+        </navigator>
+        <view class="item-op" bindtap="delAddress" data-index="{{index}}" data-id="{{item.id}}">
+          删除
+        </view>
+      </view>
+  </view>
+  </block>
+  
+  <i-load-more iClass="loadMore" wx:if="{{addressData.length > 0}}" loading="{{is_load}}" tip="{{loadText}}"></i-load-more>
+
+
+
+ 
+
+</view>
+
+  <view class="item-bottom {{fromType?'':'item-half'}}">
+    <view class="white-btn" bindtap="backOrder" wx:if="{{fromType>0}}">确定选择</view>
+    <view class="green-btn" bindtap="getWxAddress">微信导入</view>
+    <navigator url="/qidian_sqlife/pages/user/addressAdd" class="red-btn">新增地址</navigator>
+    
+  </view>
