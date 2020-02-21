@@ -85,7 +85,7 @@ $arr = [1,null,2,null,3];
 
 $tree = new BinaryTree();
 $root = $tree->create($arr);
-print_r($root);exit;
+
 $res = (new Solution())->isBalanced($root);
 
 var_dump($res);
