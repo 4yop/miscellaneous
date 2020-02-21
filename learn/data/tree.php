@@ -36,7 +36,22 @@
             $node = new TreeNode($arr[$i]);
             $this->tree = $this->insert($this->tree,$node);
         }
+        $this->helper($this->tree);
         return $this->tree;
+     }
+
+     public function helper($root){
+        if($root === NULL){
+            return;
+        }
+        if(!isset($root->left->val) || $root->left->val === NULL){
+            $root->left = NULL;
+        }
+        if(!isset($root->right->val) || $root->right->val === NULL){
+            $root->right = NULL;
+        }
+        $this->helper($root->left);
+        $this->helper($root->right);
      }
 
      /**二叉树中插入节点
@@ -61,14 +76,14 @@
                 $currentNode->left = $node;
                 $node->parent = $currentNode;
                 return $tree;
-            }else{
+            }elseif($currentNode->left->val !== NULL){
                 array_unshift($queue,$currentNode->left);
             }
             if($currentNode->right == NULL){
                 $currentNode->right = $node;
                 $node->parent = $currentNode;
                 return $tree;
-            }else{
+            }elseif($currentNode->right->val !== NULL){
                 array_unshift($queue,$currentNode->right);
             }
 
