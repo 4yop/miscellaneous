@@ -41,12 +41,12 @@ class Solution {
     }
     //递归 recursion
     function re($curr = NULL){
-        if($curr !== NULL && $curr->val !== NULL){
-            if($curr->left !== NULL && $curr->left->val !== NULL){
+        if($curr !== NULL){
+            if($curr->left !== NULL){
                 $this->re($curr->left);
             }
             $this->res[] = $curr->val;
-            if($curr->right !== NULL && $curr->right->val !== NULL){
+            if($curr->right !== NULL){
                 $this->re($curr->right);
             }
         }
@@ -59,6 +59,6 @@ $arr = [1,2,3,4,5,6,NULL];
 $tree = new BinaryTree();
 $root = $tree->create($arr);
 
-$res = (new Solution())->inorderTraversal($root);
+$res = (new Solution())->inorderTraversal1($root);
 
 print_r($res);
