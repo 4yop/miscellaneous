@@ -1,0 +1,19 @@
+下载后xdebug.dll后
+php.ini里配置
+[Xdebug]
+xdebug.profiler_output_dir=D:/phpstudy_pro/Extensions/php_log/php7.3.4nts.xdebug.profiler
+xdebug.trace_output_dir=D:/phpstudy_pro/Extensions/php_log/php7.3.4nts.xdebug.trace
+zend_extension=D:/phpstudy_pro/Extensions/php/php7.3.4nts/ext/php_xdebug.dll
+xdebug.remote_enable=On
+xdebug.remote_handler=dbgp
+xdebug.remote_host=localhost
+xdebug.remote_port=9100
+xdebug.idekey = PHPSTORM
+xdebug.collect_params=1
+xdebug.collect_return=1
+xdebug.auto_trace=Off
+xdebug.profiler_enable=Off
+
+phpstorm 里 file->setting->php->debug->bug
+右上角配置域名
+点甲虫开始
