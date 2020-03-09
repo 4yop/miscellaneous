@@ -1,5 +1,5 @@
 <?php
-// 234. 回文链表
+
 class ListNode {
     public $val = 0;
     public $next = null;

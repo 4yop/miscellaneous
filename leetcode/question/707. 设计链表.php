@@ -6,14 +6,19 @@ class ListNode {
   function __construct($val) { $this->val = $val; }
 }
 
-class MyLinkedList {
-    /**
+class MyLinkedList
+{
+
+    public $head;
+    private $size;
+
+    /*
      * Initialize your data structure here.
      */
-    public $linkedList = NULL;
-    public $total = 0;
-    function __construct() {
-
+    function __construct()
+    {
+        $this->head = new ListNode(0);
+        $this->size = 0;
     }
 
     /**
@@ -21,19 +26,19 @@ class MyLinkedList {
      * @param Integer $index
      * @return Integer
      */
-    function get($index) {
-        if($index < $this->total){
-            $currentNode = $this->linkedList;
-            $i = 0;
-            while($currentNode !== NULL){
-                if($i == $index){
-                    return $currentNode->val;
-                }
-                $i++;
-                $currentNode = $currentNode->next;
+    function get($index)
+    {
+        $p = $this->head;
+        $i = 0;
+        while ($i <= $index) {
+            $p = $p->next;
+            if ($p == null) {
+                return -1;
             }
+            $i++;
         }
-        return -1;
+
+        return $p->val;
     }
 
     /**
@@ -41,11 +46,13 @@ class MyLinkedList {
      * @param Integer $val
      * @return NULL
      */
-    function addAtHead($val) {
-        $node = new ListNode($val);
-        $node->next = $this->linkedList;
-        $this->linkedList = $node->next;
-        $this->total++;
+    function addAtHead($val)
+    {
+        $new_node = new ListNode($val);
+        $new_node->next = $this->head->next;
+        $this->head->next = $new_node;
+        $this->size++;
+        return null;
     }
 
     /**
@@ -53,14 +60,17 @@ class MyLinkedList {
      * @param Integer $val
      * @return NULL
      */
-    function addAtTail($val) {
-        $node = new ListNode($val);
-        $currentNode = $this->linkedList;
-        while($currentNode !== NULL){
-            $currentNode = $currentNode->next;
+    function addAtTail($val)
+    {
+        $p = $this->head;
+        while ($p->next != null) {
+            $p = $p->next;
         }
-        $currentNode = $node;
-        $this->total++;
+
+        $new_node = new ListNode($val);
+        $p->next = $new_node;
+        $this->size++;
+        return null;
     }
 
     /**
@@ -69,31 +79,32 @@ class MyLinkedList {
      * @param Integer $val
      * @return NULL
      */
-    function addAtIndex($index, $val) {
-        $node = new ListNode($val);
-        if($index <= 0){
-            $node->next = $this->linkedList;
-            $this->linkedList = $node;
-        }else{
-            $currentNode = new ListNode(-1);
-            $currentNode->next = $this->linkedList;
-            $flag = false;//是否加了
-            $i = 0;
-            while($currentNode->next !== NULL ){
-                if($i == $index){
-                    $next = $currentNode->next;
-                    $node->next = $next;
-                    $currentNode->next = $node;
+    //注意三种情况，1.index<size，2.index>size 3.index=size
+    function addAtIndex($index, $val)
+    {
+        $p = $this->head;
+        $i = 0;
+        if ($index == $this->size) {
+            //index==size,直接放在链表末尾
+            $this->addAtTail($val);
+        } else {
+
+            while ($i < $index) {
+                $p = $p->next;
+                //非正常，index>size,直接返回
+                if ($p == null) {
                     return;
                 }
                 $i++;
-                $currentNode = $currentNode->next;
             }
-            if($this->total == $index){
-                $currentNode->next = $node;
-            }
+            //正常情况，获得index前面的指针，然后插入
+            $new_node = new ListNode($val);
+            $new_node->next = $p->next;
+            $p->next = $new_node;
+            $this->size++;
         }
 
+        return;
     }
 
     /**
@@ -101,24 +112,41 @@ class MyLinkedList {
      * @param Integer $index
      * @return NULL
      */
-    function deleteAtIndex($index) {
-        if($index >= $this->total){
-            return;
-        }
-        $currentNode = new ListNode(-1);
-        $currentNode->next = $this->linkedList;
+    //删除操作，注意关键节点，index=size 的时候，
+    function deleteAtIndex($index)
+    {
+        $p = $this->head;
         $i = 0;
-        while($currentNode->next !== NULL){
-            if($i == $index){
-                $currentNode->next = $currentNode->next->next;
-                $this->total--;
+        while ($i < $index) {
+            $p = $p->next;
+            if ($p == null) {
                 return;
             }
             $i++;
-            $currentNode = $currentNode->next;
         }
+
+        //index=size的时候 p->next为null
+        if($p->next == null){
+            return;
+        }
+
+        $p->next = $p->next->next;
+        $this->size--;
+        return;
     }
 }
+
+/**
+ * Your MyLinkedList object will be instantiated and called as such:
+ * $obj = MyLinkedList();
+ * $ret_1 = $obj->get($index);
+ * $obj->addAtHead($val);
+ * $obj->addAtTail($val);
+ * $obj->addAtIndex($index, $val);
+ * $obj->deleteAtIndex($index);
+ */
+
+
 
 /**
  * Your MyLinkedList object will be instantiated and called as such:

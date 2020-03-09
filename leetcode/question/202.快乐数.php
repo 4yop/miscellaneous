@@ -3,23 +3,28 @@
 class Solution {
 
 
-    function isHappy($num) {
+    function isHappy($n) {
+
+
         $log = [];
-        while($num != 1 || in_array($num,$log)){
+        while($log[$n] < 2){
+            $sum = 0;
+            $n = str_split($n);
+            for($i = 0;$i<count($n);$i++){
+                $sum += $n[$i] * $n[$i];
+            }
 
-            $log[] = $num;
-
-            $arr = str_split($num);
-            $num = 0;
-            foreach ($arr as $v){
-                $num += pow($v,2);
+            if($sum === 1){
+                return true;
+            }else{
+                $n = $sum;
+                $log[$sum]++;
             }
         }
-        //return $num;
-        return $num == 1 ? true : false;
+        return false;
     }
 }
 
 $so = new Solution();
 $res = $so->isHappy(19);
-print_r($res);
+var_dump($res);

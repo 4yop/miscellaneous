@@ -18,52 +18,59 @@ class Solution {
      */
 
     function buildTree($preorder, $inorder) {
-        if(empty($preorder)){
-            return NULL;
-        }
+
         $val = array_shift($preorder);
         $res = new TreeNode($val);
-
         $queue = [$res];
 
         $index = array_search($val,$inorder);
-
-        $left = array_slice($inorder,0,$index);
-        $right = array_key_exists($index+1,$inorder)? array_slice($inorder,$index+1) : [];
-        $queue2 = [$left,$right];
+        $left = array_splice($inorder,0,$index);
+        $right = array_splice($inorder,$index+1);
+        $que2 = [$left,$right];
         while(!empty($preorder)){
-            $curr = array_shift($preorder);
-            $q = array_shift($queue);
 
-            $left = array_shift($queue2);
-            if( empty($left) ){
-                $q->left = null;
-            }else{
-                $q->left = new TreeNode($curr);
-                $index = array_search($curr,$left);
-                $queue2[] = array_slice($left,0,$index);
-                $queue2[] = array_key_exists($index+1,$left)? array_slice($left,$index+1) : [];
-                $queue[] = $q;
+
+            $node = array_shift($queue);
+            if($node === NULL){
+                continue;
             }
-
-            $curr = array_shift($preorder);
-            $q = array_shift($queue);
-            $right = array_shift($queue2);
-            if( empty($right) ){
-                $q->right = null;
+            $val = array_shift($preorder);
+            $left = array_shift($que2);
+            if(empty($left) ){
+                $node->left = NULL;
             }else{
-                $q->left = new TreeNode($curr);
-                $index = array_search($curr,$right);
-                $queue2[] = array_slice($right,0,$index);
-                $queue2[] = array_key_exists($index+1,$right)? array_slice($right,$index+1) : [];
-                $queue[] = $q;
+                $node->left = new TreeNode($val);
+
+                $index = array_search($val,$left);
+                $l = array_splice($left,0,$index);
+                $r = array_splice($left,$index+1);
+                array_push($que2,$l,$r);
+
+            }
+            $queue[] = $node->left;
+
+            if(!empty($preorder)){
+
+                $val = array_shift($preorder);
+                $right = array_shift($que2);
+
+                if(empty($right) ){
+                    $node->right = NULL;
+                }else{
+                    $node->right = new TreeNode($val);
+
+                    $index = array_search($val,$right);
+                    $l = array_splice($right,0,$index);
+                    $r = array_splice($right,$index+1);
+                    array_push($que2,$l,$r);
+
+                }
+                $queue[] = $node->right;
             }
 
         }
-        return $p;
 
-
-
+        return $res;
 
        // $this->helper();
 
