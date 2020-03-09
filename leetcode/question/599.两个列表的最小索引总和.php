@@ -9,33 +9,20 @@ class Solution {
 
 
     function findRestaurant($list1, $list2) {
-        $max = max(count($list1),count($list2));
-        $i = 0;
 
+        $res = PHP_INT_MAX;
+        $key = "";
 
-
-        $log1 = [];
-        $log2 = [];
-
-        $min = PHP_INT_MAX;
-        $key = '';
-
-        while($i < $max){
-
-            if(!array_key_exists($list1[$i],$log1)) $log1[$list1[$i]] = $i;
-            if(!array_key_exists($list2[$i],$log1)) $log2[$list2[$i]] = $i;
-
-            if(array_key_exists($list1[$i],$log1) && array_key_exists($list1[$i],$log2) && $min > $log1[$list1[$i]] + $log2[$list1[$i]]){
-                $min = $log1[$list1[$i]] + $log2[$list1[$i]];
-                $key = $list1[$i];
+        $arr = array_merge_recursive(array_flip($list1),array_flip($list2));
+        foreach ($arr as $k => $v){
+            if(is_array($v)){
+                $sum = array_sum($v);
+                if($sum < $res){
+                    $res = $sum;
+                    $key = $k;
+                }
             }
-            if(array_key_exists($list2[$i],$log1) && array_key_exists($list2[$i],$log2) && $min > $log1[$list2[$i]] + $log2[$list2[$i]]){
-                $min = $log1[$list2[$i]] + $log2[$list2[$i]];
-                $key = $list2[$i];
-            }
-            $i++;
         }
-
         return $key;
     }
 
