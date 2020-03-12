@@ -20,6 +20,19 @@ class Solution {
         }
         return $res;
     }
+
+
+    function  f1($J, $S) {
+        if(empty($J)) return 0;
+
+        $res = 0;
+        $strlen = strlen($J);
+        for($i = 0;$i < $strlen;$i++){
+            $res += substr_count($S,$J[$i]);
+        }
+        return $res;
+    }
+
 }
 
 

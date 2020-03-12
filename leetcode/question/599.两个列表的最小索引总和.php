@@ -10,20 +10,17 @@ class Solution {
 
     function findRestaurant($list1, $list2) {
 
-        $res = PHP_INT_MAX;
-        $key = "";
-
-        $arr = array_merge_recursive(array_flip($list1),array_flip($list2));
-        foreach ($arr as $k => $v){
-            if(is_array($v)){
-                $sum = array_sum($v);
-                if($sum < $res){
-                    $res = $sum;
-                    $key = $k;
-                }
+        $min = PHP_INT_MAX;
+        $res = [];
+        $hash = array_flip($list1);
+        foreach($list2 as $k => $v){
+            if(array_key_exists($v,$hash) && $min >= $k + $hash[$v]){
+                $min = $k + $hash[$v];
+                $res[$min][] = $v;
             }
         }
-        return $key;
+        ksort($res);
+        return current($res);
     }
 
 }
@@ -31,6 +28,6 @@ class Solution {
 $so = new Solution();
 $s = 7; $nums = [2,3,1,2,4,3];
 
-$res = $so->findRestaurant(["Shogun", "Tapioca Express", "Burger King", "KFC"],
-    ["KFC", "Shogun", "Burger King"]);
+$res = $so->findRestaurant(["Shogun","Tapioca Express","Burger King","KFC"],
+["KFC","Burger King","Tapioca Express","Shogun"]);
 print_r($res);
