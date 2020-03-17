@@ -30,10 +30,10 @@ class Solution {
             $left = 0;
             $right = $point -1;
         }else{
-            $left = $point -1;
+            $left = $point;
             $right = $count - 1;
         }
-//        print_r(compact('left','right','point'));exit;
+
         while($left <= $right){
             $mid = (int)( ($left + $right)/2 );
             if($target == $nums[$mid]){
@@ -49,7 +49,6 @@ class Solution {
 }
 
 $so = new Solution();
-$nums = array(2,2,3,3);
-$val = 3;
+
 $res = $so->search([3,1],1);
 print_r($res);
