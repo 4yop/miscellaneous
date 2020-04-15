@@ -10,52 +10,37 @@ class Solution {
 
 
     function addTwoNumbers($l1, $l2) {
-        $p1 = $l1;
-        $p2 = $l2;
-        $len1 = 0;
-        $len2 = 0;
-        while($p1 != NULL || $p2 != NULL){
-            if($p1 != NULL){
-                $len1++;
-                $p1 = $p1->next;
-            }
-            if($p2 != NULL){
-                $len2++;
-                $p2 = $p2->next;
-            }
-        }
-
-        if($len1 > $len2){
-            $diff = $len1 - $len2;
-            while($diff > 0){
-                $t = new ListNode(0);
-                $t->next = $l2;
-                $l2 = $t;
-                $diff--;
-            }
-        }else if($len2 < $len1){
-            $diff = $len2 - $len1;
-            while($diff > 0){
-                $t = new ListNode(0);
-                $t->next = $l1;
-                $l1 = $t;
-                $diff--;
-            }
-        }
-        $temp = new ListNode(0);
-        $curr = $temp;
-        while($l1 != NULL || $l2 != NULL){
-            $val = $l1->val + $l2->val;echo "$l1->val + $l2->val = $val\n";
-            if($val >= 10){
-                $curr->val = $curr->val + 1;
-                $val -= 10;
-            }
-            $curr->next = new ListNode($val);
-            $curr = $curr->next;
+        $a1 = [];
+        $a2 = [];
+        while($l1 !== NULL){
+            $a1[] = $l1->val;
             $l1 = $l1->next;
+        }
+        while($l2 !== NULL){
+            $a2[] = $l2->val;
             $l2 = $l2->next;
         }
-        return $temp->next;
+        $res = NULL;
+        $ten = 0;//满10就变1
+        while(!empty($a1) || !empty($a2) || $ten){
+            $sum = $ten;
+            if(!empty($a1)){
+                $sum += array_pop($a1);
+            }
+            if(!empty($a2)){
+                $sum += array_pop($a2);
+            }
+            if($sum >= 10){
+                $sum -= 10;
+                $ten = 1;
+            }else{
+                $ten = 0;
+            }
+            $node = new ListNode($sum);
+            $node->next = $res;
+            $res = $node;
+        }
+        return $res;
     }
 }
 
@@ -72,7 +57,7 @@ while($i < count($l1)){
     $current = $current->next;
 }
 
-$l2 = [5,6,4];
+$l2 = [7,5,6,4];
 $n = 0;
 
 //生成链表
