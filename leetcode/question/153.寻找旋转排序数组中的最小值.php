@@ -4,25 +4,22 @@
 class Solution {
 
     function findMin($nums) {
-        $count = count($nums);
-        if( $count == 1 ){
+        $left = 0;
+        $right = count($nums)-1;
+        if ($right == 0 || $nums[0] < $nums[$right]) {
             return $nums[0];
         }
-
-        $left = 0;
-        $right = $count - 1;
-
-        while($left <= $right && $right - $left > 1){
+        while($left<=$right){
             $mid = $left + floor(($right - $left)/2);
-            if($nums[$left] <= $nums[$right]){
-                return $nums[$left];
-            }elseif($nums[$mid] < $nums[$left] && $nums[$left] > $nums[$right]){
-                $right = $mid;
+            if($nums[$mid] > $nums[$mid+1]) return $nums[$mid+1];
+            if($nums[$mid] < $nums[$mid-1]) return $nums[$mid];
+            if($nums[0]<$nums[$mid]){
+                $left = $mid + 1;
             }else{
-                $left = $mid;
+                $right = $mid - 1;
             }
         }
-        return $nums[$left] > $nums[$right] ? $nums[$right] : $nums[$left];
+        return null;
     }
 }
 
