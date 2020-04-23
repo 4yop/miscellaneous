@@ -79,40 +79,43 @@ class address
     }
 
 
-    private function getDetail($address)
-    {
-        $add = $address;
-        preg_match('/(.*?(省|自治区|北京市|天津市|上海市|重庆市))+(.*?(市|自治州|地区|区划|县))+(.*?(区|县|镇|乡|街道))/', $address, $matches);
+    //根据地图来查
+    private function getDetail($address){
 
-        if (count($matches) > 1) {
-            $province = $matches[1];
-            $address = str_replace($province, '', $address);
-        }
+        $tx_map_key = "你的腾讯地图key";
+        $url = "https://apis.map.qq.com/ws/geocoder/v1/?address={$address}&key={$tx_map_key}";
+        $res = file_get_contents($url);
+        $res = json_decode($res,true);
 
-        preg_match('/(.*?(市|自治州|地区|区划|县))/', $address, $matches);
-        if (count($matches) > 1) {
-            $city = $matches[count($matches) - 2];
-            $address = str_replace($city, '', $address);
-        }
-        preg_match('/(.*?(区|县|镇|乡|街道))/', $address, $matches);
-        if (count($matches) > 1) {
-            $area = $matches[count($matches) - 2];
-            $address = str_replace($area, '', $address);
-        }
-        //将省市区替换掉 就剩下详情地址了
-        $detail = str_replace($province, '', $address);
-        $detail = str_replace($city, '', $detail);
-        $detail = str_replace($area, '', $detail);
+        if($res && $res['status'] == 0) {
+            $address_components = $res['result']['address_components'];
+            $province = $address_components['province'];
+            $city = $address_components['city'];
+            $area = $address_components['district'];
 
+            if ($province && $city && $area) {
+
+                //将省市区替换掉 就剩下详情地址了
+                $detail = str_replace($province, '', $address);
+                $detail = str_replace($city, '', $detail);
+                $detail = str_replace($area, '', $detail);
+
+                return [
+                    'province' => $province,
+                    'city' => $city,
+                    'area' => $area,
+                    'detail' => $detail,
+                ];
+            }
+        }
         return [
-            'province' => isset($province) ? preg_replace("/\\d+/", '', $province) : '',
-            'city' => isset($city) ? preg_replace("/\\d+/", '', $city) : '',
-            'area' => isset($area) ? preg_replace("/\\d+/", '', $area) : '',
-            'detail' => $detail,
+            'province' => '',
+            'city' => '',
+            'area' => '',
+            'detail' => $address,
         ];
-
-
     }//end getDetail
+
 
 
 }

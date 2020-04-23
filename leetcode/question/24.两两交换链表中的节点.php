@@ -10,13 +10,13 @@ class Solution {
 
 
     function swapPairs($head) {
-        echo json_encode($head);
+
     }
 
 
 }
 
-$head = [1,2,3,4,5,6];
+$head = [1,2,3,4];
 $n = 0;
 
 //生成链表
