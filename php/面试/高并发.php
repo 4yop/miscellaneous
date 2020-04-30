@@ -185,8 +185,116 @@ BAT提供的CDN服务
 可用naxin apache varnish squid trafficserver 做7层负载均衡和cache
 使用squid反向代理，nginx反向代理
 ---------------------------------------
+独立图片服务器
+概念
+
+独立的必要性
+分担服务器I/O负载-将耗费资源的图片服务分离出来，提高服务器的性能和稳定性
+可专门对图片服务进行优化，为图片服务设置针对性的缓存方案，减少带宽成本，提高访问速度
+提交网站可扩展新，通过增加图片服务器，提高图片吞吐能力
+
+采用独立域名
+原因:同一域名浏览器的并发连接数有限制，突破浏览器连接数的限制
+由于cookie,对缓存不利，大部分webcache都只缓存不带cookie请求，导致每次图片请求都不能命中cache
+
+独立后的问题
+同步：NFS共享方式，利用FTP同步
+
 ---------------------------------------
+动态语言静态化
+概念
+
+什么是
+将php等动态语言的逻辑代码生成静态html文件，用户访问动态脚本重定向到静态html文件的过程
+对实时性要求不高的页面用(不经常改动的)
+
+为什么
+动态脚本通常会做逻辑计算和数据查询，访问量越大，服务器压力越大
+访问量大时可能会造成CPU负载过高，数据库服务器压力过大
+静态化可减轻逻辑处理压力，降低数据库服务器查询压力
+
+实现
+使用模板引擎
+使用smarty的缓存机制生成静态HTML缓存文件
+$smarty->cahe_dir = $ROOT."/cache";//缓存目录
+$smarty->caching = true;//是否开启缓存
+$smarty->cahe_lifetime = "3600";//缓存时间
+$smarty->display(string template,string cahe_id,string complie_id);
+
+ob系列函数
+ob_start();//打开输出控制缓冲
+ob_get_contents();//返回输出缓冲区内容
+ob_clean();//清空输出层缓冲区
+ob_end_flush();//送出输出缓冲区内容并关闭缓冲
+
+
+使用
+
+ob_start();
+
+要输出的内容,html
+
+ob_get_contents();
+ob_end_flush();
+fopen()（file_put_content）写入进html
+判断是否缓存过期  filemtime
+<?php
+    $cache_name = md5(__FILE__).".html";
+    $expire_time = 10;//过期时间
+    //如果当前文件有改动或缓存到时间，就更新缓存
+    if(filemtime(__FILE__) <= filemtime($cache_name) && file_exists($cache_name) && filemtime($cache_name) + $expire_time >= $_SERVER['REQUEST_TIME']){
+        include $cache_name;
+        exit;
+    }
+    ob_start();
+    echo "<h1>当前时间是：".date('Y-m-d H:i:s')."</h1>";
+    $contents = ob_get_contents();
+    file_put_contents($cache_name,$contents);
+    ob_end_flush();
+?>
 ---------------------------------------
+数据库缓存
+
+概念
+mysql（关系型数据库）数据存储在磁盘中，高并发场景下，业务应用对mysql增删改查操作造成巨大I/O开销和查询压力，对数据库和服务器都是一种巨大压力，为解决此类问题，缓存数据的概念应运而生
+
+为什么
+极大地解决数据库服务器压力
+提高应用数据的响应速度
+
+形式：内存缓存，文件缓存
+场景：
+实时性
+
+
+使用查询缓存
+启用：
+query_cache_type (0:不使用，1：始终用，2:按需要使用)
+query_cache_type 为 1时，不用：
+SELECT SQL_NO_CACHE * FROM `table` WHERE condition;
+query_cache_type 为 2时，按需用：
+SELECT SQL_CACHE * FROM `table` WHERE condition;
+
+quert_cache_size:默认内存为0，则为无法使用查询缓存
+1。在ini改 query_cache_size=128M 
+2。 SET GLOBAL quert_cache_size = 134217728;
+
+第二次查询的SQL完全一样才会使用缓存
+SHOW STATIC LIKE `Qcache_hits`;查看命中次数
+表结构，数据 改变时，查询缓存的数据不再有效
+
+清理
+FLUSH QUERY CACHE;//清理查询换内存碎片
+RESET QUERY CACHE;//移出所有查询缓存
+FLUSH TABLES;//关闭所有打开的表，同时清空所有查询缓存的内容
+
+memcache
+
+redis
+
+其他
+session
+session_set_value_handler
 ---------------------------------------
 ---------------------------------------
 ---------------------------------------
