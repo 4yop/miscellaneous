@@ -296,6 +296,46 @@ redis
 session
 session_set_value_handler
 ---------------------------------------
+web服务器的负载均衡
+七层负载均衡
+nginx proxy
+内置策略：IP Hash ，加权轮询
+
+加权轮询：先将请求都分给高权重的机器，直到该机器的权值降到了比其他机器低，才开始将请求分给下一个高权重的机器
+当所有后端机器都down掉是，nginx立即将所有机器的标志位清成初始状态，以避免造成所有的机器都处在timeout状态
+IP Hash:流程和轮询很类似，算法和具体策略有些变化，变相的轮询
+
+
+扩展策略：fair策略，通用hash，一致性hash
+fair策略：根据后端服务器的响应时间判断负载情况，选出负载最轻的机器进行分流
+通用hash：nginx内置的变量为key进行hash，一致性hash采用了nginx内置一致性hash环，支持memcache
+
+nginx配置
+http{
+    #upstream 名称
+    upstream cluster{
+        #server 服务器地址 weight=权重
+        server srv1;
+        server srv2;
+        server srv3;
+    }
+    server{
+        listen 80;
+        location /{
+            #proxy_pass http://(upstream名称)
+            proxy_pass http://cluster;
+            #为了区分
+            add_header REAK_SERVER 8082;
+        }
+    }
+}
+
+
+四层负载均衡
+通过报文中的目标地址和端口，再加上负载均衡设备设置的服务器选择方式，决定最终选择的内部服务器
+LVS : NAT,DR,TUN 三种方式
+
+
 ---------------------------------------
 ---------------------------------------
 ---------------------------------------

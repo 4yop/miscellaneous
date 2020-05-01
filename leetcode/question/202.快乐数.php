@@ -27,25 +27,24 @@ class Solution {
     //递归
     public $hash = [];
     function isHappy2($n){
-        $strlen = strlen($n);
-        if($strlen < 2 || $this->hash[$n] > 0){
-            return false;
-        }
-
-        $this->hash[$n] = 1;
-        $sum = 0;echo $n[0];
-        for ($i = 0;$i < $strlen;$i++){
-            echo $n[$i];exit;
-            $sum += ($n[$i]*$n[$i]);
-        }
-
-        if($sum == 1){
+        if($n == 1){
             return true;
         }
-//        else{
-//            return $this->isHappy2($sum);
-//        }
+        $strlen = strlen($n);
+        if(isset($this->hash[$n]) || $n == 4 ){
+            return false;
+        }
+        $this->hash[$n] = 1;
+        $sum = 0;
+        $n = (string)$n;
+        for ($i = 0;$i < $strlen;$i++){
+            $sum += ($n[$i]*$n[$i]);
+        }
+        return $this->isHappy2($sum);
+
     }
+
+
 
 }
 
