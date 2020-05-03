@@ -27,6 +27,10 @@ class Solution {
         }
         return $res;
     }
+
+    function sortColors1($nums){
+
+    }
 }
 
 $so = new Solution();
