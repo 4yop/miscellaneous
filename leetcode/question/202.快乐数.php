@@ -30,21 +30,33 @@ class Solution {
         if($n == 1){
             return true;
         }
+<<<<<<< HEAD
         $n = (string) $n;
+=======
+>>>>>>> cb82f794a68c21c16d742d49b535ce739269ea32
         $strlen = strlen($n);
-        if($strlen < 2 || $this->hash[$n] > 0){
+        if(isset($this->hash[$n]) || $n == 4 ){
             return false;
         }
-
         $this->hash[$n] = 1;
         $sum = 0;
+<<<<<<< HEAD
+=======
+        $n = (string)$n;
+>>>>>>> cb82f794a68c21c16d742d49b535ce739269ea32
         for ($i = 0;$i < $strlen;$i++){
             $sum += ($n[$i]*$n[$i]);
         }
-
         return $this->isHappy2($sum);
 
+<<<<<<< HEAD
+        return $this->isHappy2($sum);
+
+=======
+>>>>>>> cb82f794a68c21c16d742d49b535ce739269ea32
     }
+
+
 
 }
 
