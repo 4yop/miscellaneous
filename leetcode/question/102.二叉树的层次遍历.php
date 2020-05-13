@@ -16,7 +16,7 @@ class Solution {
      * @param TreeNode $root
      * @return Integer[][]
      */
-    function levelOrder($root) {
+    function levelOrder2($root) {
         if($root == NULL){
             return [];
         }
@@ -39,6 +39,33 @@ class Solution {
         }
         return $res;
     }
+
+    function levelOrder($root){
+        if($root === NULL){
+            return [];
+        }
+        $res = [];
+        $queue = [$root];
+        $level = 0;
+        while(!empty($queue)){
+            $count = count($queue);
+
+            for($i = 0;$i < $count;$i++){
+                $node = array_shift($queue);
+                $res[$level][] = $node->val;
+                if($node->left !== NULL){
+                    $queue[] = $node->left;
+                }
+                if($node->right !== NULL){
+                    $queue[] = $node->right;
+                }
+            }
+
+            $level++;
+        }
+        return $res;
+    }
+
 
     public $res = [];
     function levelOrder1($root){
@@ -64,6 +91,6 @@ $arr = [3,9,20,null,null,15,7];
 $tree = new BinaryTree();
 $root = $tree->create($arr);
 
-$res = (new Solution())->levelOrder1($root);
+$res = (new Solution())->levelOrder($root);
 
 print_r($res);
