@@ -24,7 +24,7 @@ class Solution {
      */
 
     public $res = [];
-    function levelOrderBottom($root) {
+    function levelOrderBottom1($root) {
         $this->helper($root);
         return $this->res;
     }
@@ -41,9 +41,33 @@ class Solution {
         $this->helper($root->left,$index+1);
         $this->helper($root->right,$index+1);
     }
+
+    function levelOrderBottom($root){
+        if($root === NULL){
+            return [];
+        }
+        $res = [];
+        $queue = [$root];
+        while(!empty($queue)){
+            $count = count($queue);
+            $tmp = [];
+            for($i = 0;$i < $count;$i++){
+                $node = array_shift($queue);
+                $tmp[] = $node->val;
+                if($node->left !== NULL){
+                    $queue[] = $node->left;
+                }
+                if($node->right !== NULL){
+                    $queue[] = $node->right;
+                }
+            }
+            array_unshift($res,$tmp);
+        }
+        return $res;
+    }
 }
 
-$arr = [];
+$arr =[1,2];
 
 $tree = new BinaryTree();
 $root = $tree->create($arr);
