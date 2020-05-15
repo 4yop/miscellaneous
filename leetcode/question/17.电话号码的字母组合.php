@@ -7,7 +7,7 @@
 
 class Solution {
 
-    public $res = [];
+
     function letterCombinations($digits) {
         $arr =[
             2 => ['a','b','c'],
@@ -20,19 +20,33 @@ class Solution {
             9 => ['w','x','y','z'],
         ];
 
-        $dig = array_map(function ($value) use ($arr){
-            return $arr[$value];
-        },str_split($digits));
+        $len = strlen($digits);
+        $queue = array_map(function($val){return [$val];},$arr[$digits[0]]);
+        $res = [];
 
-        $this->helper($dig);
+        while(!empty($queue)){
+            $node = array_shift($queue);
+            $start = count($node);
 
+            for ($i = $start;$i<$len;$i++){
+                foreach ($arr[$i] as $v){
+                    if(!in_array($v,$node)){
+                        $temp = $node;
+                        $temp[] = $v;
+                        if(count($temp) == $len){
+                            $res[] = $temp;
+                        }else{
+                            $queue[] = $temp;
+                        }
+
+                    }
+                }
+            }
+        }
+        return $res;
     }
 
-    function helper($dig = [],$arr = []){
 
-
-
-    }
 }
 
 $so = new Solution();
