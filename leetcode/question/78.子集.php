@@ -15,7 +15,7 @@ class Solution {
         for($i = 0;$i < count($queue);$i++){
             $temp = $queue[$i];
             foreach ($nums as $v){
-                if(!in_array($v,$queue[$i])){
+                if(!in_array($v,$queue[$i]) && $v > max($queue[$i])){
                     $temp[] = $v;
                     $queue[] = $temp;
                 }
