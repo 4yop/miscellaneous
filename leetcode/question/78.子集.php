@@ -8,21 +8,15 @@
 class Solution {
 
     function subsets($nums) {
-        $queue = array_map(function($val){
-                    return [$val];
-                 },$nums);
-
-        for($i = 0;$i < count($queue);$i++){
-            $temp = $queue[$i];
-            foreach ($nums as $v){
-                if(!in_array($v,$queue[$i]) && $v > max($queue[$i])){
-                    $temp[] = $v;
-                    $queue[] = $temp;
-                }
+        $queue = [[]];
+        $i = 0;
+        foreach ($nums as $v){
+            while($i < count($queue)){
+                $temp1 = $queue[$i];
+                $temp2 = $queue[$i];
+                $i++;
             }
         }
-        $queue[] = [];
-        return $queue;
     }
 }
 
