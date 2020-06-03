@@ -21,27 +21,22 @@ class Solution {
         ];
 
         $len = strlen($digits);
-        $queue = array_map(function($val){return [$val];},$arr[$digits[0]]);
+        $queue = [[]];
         $res = [];
-
-        while(!empty($queue)){
+        $i= 0;
+        while($i < $queue){
             $node = array_shift($queue);
-            $start = count($node);
-
-            for ($i = $start;$i<$len;$i++){
-                foreach ($arr[$i] as $v){
-                    if(!in_array($v,$node)){
+            for($i = 0;$i<$len;$i++){
+                if(!array_key_exists($digits[$i],$queue)){
+                    foreach ($arr[$digits[$i]] as $k=>$v){
                         $temp = $node;
-                        $temp[] = $v;
-                        if(count($temp) == $len){
-                            $res[] = $temp;
-                        }else{
-                            $queue[] = $temp;
-                        }
-
+                        $temp[$digits[$i]] = $v;
+                        $queue[] = ;
                     }
+
                 }
             }
+            $i++;
         }
         return $res;
     }
@@ -53,4 +48,4 @@ $so = new Solution();
 $nums = "23";
 $val = 3;
 $res = $so->letterCombinations($nums);
-var_dump($res);
+print_r($res);
