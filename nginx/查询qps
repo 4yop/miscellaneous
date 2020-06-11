@@ -1,0 +1,2 @@
+ cat access.log | awk '{print $4}' | uniq -c | sort -n
+ #顺序 QPS
