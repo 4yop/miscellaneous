@@ -10,7 +10,19 @@ class Solution {
 
 
     function swapPairs($head) {
+        $curr = $head;
+        $res = new ListNode(-1);
+        $q = $res;
+        while($curr != null){
 
+            $q->next = $curr->next;
+            $q->next->next = $curr;
+
+            $q = $q->next->next;
+
+            $curr = $curr->next->next;
+        }
+        return $res;
     }
 
 
