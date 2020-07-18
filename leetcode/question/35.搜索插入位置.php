@@ -25,9 +25,13 @@ class Solution {
     //二分查找
     function searchInsert1($nums, $target) {
 
-        while(){
+        $left = 0;
+        $right = count($nums) - 1;
+
+        while($left < $right){
 
         }
+
 
     }
 }
