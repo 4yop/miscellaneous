@@ -8,23 +8,35 @@ class ListNode {
 
 class Solution {
 
-
+    //迭代
     function swapPairs($head) {
-        $curr = $head;
-        $res = new ListNode(-1);
-        $q = $res;
-        while($curr != null){
-
-            $q->next = $curr->next;
-            $q->next->next = $curr;
-
-            $q = $q->next->next;
-
-            $curr = $curr->next->next;
+        $listNode = new ListNode(-1);
+        $listNode->next = $head;
+        $prevNode = $listNode;
+        while ($head !== null && $head->next !== null ) {
+            $firstNode = $head;
+            $secondNode = $head->next;
+            $prevNode->next = $secondNode;
+            $firstNode->next = $secondNode->next;
+            $secondNode->next = $firstNode;
+            $prevNode = $firstNode;
+            $head = $firstNode->next;
         }
-        return $res;
+        return $listNode->next;
     }
 
+    //递归
+    function swapPairs1($head) {
+        if($head === null || $head->next === null ){
+            return null;
+        }
+        $firstNode = $head;
+        $secondNode = $head->next;
+        $firstNode->next = $this->swapPairs1($secondNode->next);
+        $secondNode->next = $firstNode;
+
+        return $secondNode;
+    }
 
 }
 
@@ -43,5 +55,5 @@ while($i < count($head)){
 
 $solution = new Solution();
 
-$res = $solution->swapPairs($node);
+$res = $solution->swapPairs1($node);
 print_r($res);
