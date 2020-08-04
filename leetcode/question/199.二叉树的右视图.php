@@ -16,31 +16,36 @@ class Solution {
      * @param TreeNode $t2
      * @return TreeNode
      */
-    function rightSideView1($root) {
-        $root->index = 0;
-        $queue = [$root];
+    function rightSideView($root) {
+
+        $queue = [ [$root] ];
         $res = [];
-        while(!empty($queue)){
+        while (!empty($queue))
+        {
             $node = array_shift($queue);
-            $index = $node->index;
-            $next_index = $index + 1;
-            if(!array_key_exists($index,$res)) {
-                $res[$index] = $node->val;
+            $res[] = end($node)->val;
+            $arr = [];
+            foreach ($node as $value)
+            {
+                if ($value->left !== null)
+                {
+                    $arr[] = $value->left;
+                }
+                if ($value->right !== null)
+                {
+                    $arr[] = $value->right;
+                }
             }
-            if($node->right !== null){
-                $node->right->index = $next_index;
-                $queue[] = $node->right;
-            }
-            if($node->left !== null){
-                $node->left->index = $next_index;
-                $queue[] = $node->left;
+            if (!empty($arr))
+            {
+                $queue[] = $arr;
             }
 
         }
         return $res;
     }
     public $res = [];
-    function rightSideView($root){
+    function rightSideView1($root){
         $this->helper($root);
         return $this->res;
     }
