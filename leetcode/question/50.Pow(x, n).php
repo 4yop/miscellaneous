@@ -24,5 +24,5 @@ class Solution {
 }
 
 $solution = new Solution();
-$res = $solution->myPow(4,5);
+$res = $solution->myPow(2,10);
 print_r($res);

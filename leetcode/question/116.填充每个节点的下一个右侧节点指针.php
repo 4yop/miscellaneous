@@ -22,35 +22,28 @@ class Solution {
      * @param TreeNode $root
      * @return TreeNode
      */
-    function flatten($root) {
-        $res = new TreeNode($root->val);
-        $curr = $res;
-        $queue = [];
-        if ($root->left !== null) {
-            array_push($queue,$root->left);
-        }
+    //递归
+    public $temp = [];
+    public function connect($root) {
+
+        $this->helper($root);
+        return $root;
+    }
+
+    public function helper($root,$level = 0) {
+        $next = array_key_exists($level,$this->temp) ? $this->temp[$level] : null;
+        $this->temp[$level] = $root;
+        $root->next = $next;
         if ($root->right !== null) {
-            array_push($queue,$root->right);
+            $this->helper($root->right,$level + 1);
         }
-
-        while (!empty($queue)) {
-            $node = array_shift($queue);
-
-            $curr->right = $node;
-            $curr->left = null;
-
-            if ($node->left !== null) {
-                array_push($queue,$node->left);
-            }
-            if ($node->right !== null) {
-                array_push($queue,$node->right);
-            }
-
+        if ($root->left !== null) {
+            $this->helper($root->left,$level + 1);
         }
-        return $res;
     }
 
 
+    
 }
 $arr = [1,2,5,3,4,6];
 $tree = new BinaryTree();

@@ -12,25 +12,49 @@ class Solution {
 
     /**
      * @param ListNode $head
-     * @param Integer $k
-     * @return Integer
+     * @return ListNode
      */
-    //双指针
-    function kthToLast($head, $k) {
-        $p1= $head;
-        $p2 = $head;
-        $i = 0;
-        while($p1 !== null){
-            if($i >= $k){
-                $p2 = $p2->next;
+    //哈希表
+    function removeDuplicateNodes($head) {
+        $node = $head;
+        $hash = [ $node->val => 1 ];
+        while($node !== null && $node->next !== null){
+            if ( isset($hash[$node->next->val])  )
+            {
+                $node->next = $node->next->next;
+            }
+            else
+            {
+                $hash[$node->next->val] = 1;
+                $node = $node->next;
+            }
+        }
+        return $head;
+    }
+    //二重循环 超时
+    function removeDuplicateNodes1($head) {
+        $p1 = $head;
+        while($p1 !== null)
+        {
+            $p2 = $p1;
+            while($p2->next !== null)
+            {
+
+                if($p2->next->val === $p1->val)
+                {
+                    $p2->next = $p2->next->next;
+                }
+                else
+                {
+                    $p2 = $p2->next;
+                }
             }
             $p1 = $p1->next;
-            $i++;
         }
-        return $p2->val;
+        return $head;
     }
 }
-$head = [1,2,3,4,5];
+$head = [1, 2, 3, 3, 2, 1];
 $n = 3;
 
 //生成链表
@@ -45,5 +69,5 @@ while($i < count($head)){
 
 $solution = new Solution();
 
-$res = $solution->kthToLast($node,2);
+$res = $solution->removeDuplicateNodes1($node);
 print_r($res);

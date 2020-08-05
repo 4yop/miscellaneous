@@ -17,17 +17,17 @@ class Solution {
             return 1;
         }
         //找出比$n 小的平方数
-//        $nums = [];
-//        for($i = 1;$i * $i < $n;$i++){
-//            $nums[] = $i * $i;
-//        }
+        $nums = [];
+        for($i = 1;$i * $i < $n;$i++){
+            $nums[] = $i * $i;
+        }
         $res = PHP_INT_MAX;
         $queue = [['num'=>$n,'count'=>0]];
         while(!empty($queue)){
             $curr = array_shift($queue);
 
-            for($i = 1;$i * $i < $n;$i++){
-                $v = $i * $i;
+            foreach ($nums as $v){
+
                 if($curr['num'] - $v  == 0 ){
                     if($curr['count']+1 < $res){
                         $res = $curr['count']+1;
@@ -35,6 +35,9 @@ class Solution {
                     continue;
                 }
                 if($curr['num'] - $v < 0){
+                    continue;
+                }
+                if($curr['count']+1 >= $res){
                     continue;
                 }
                 $q = [
