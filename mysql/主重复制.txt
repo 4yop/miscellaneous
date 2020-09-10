@@ -1,0 +1,46 @@
+1.先查看主从服务器的MYSQL的版本是否一致
+
+#登录 mysql
+mysql -uroot -p
+#查看mysql版本
+select vesrion();
+
+2.主从服务器都修改配置文件 my.cnf
+[mysqld]
+log-bin=mysql-bin   //[必须]启用二进制日志
+server-id=222      //[必须]服务器唯一ID，默认是1，一般取IP最后一段
+
+3.重启主 重服务器的mysql
+
+4.在主服务器上建立帐户并授权slave:
+GRANT REPLICATION SLAVE ON *.* TO '用户名'@'%' IDENTIFIED BY '密码';
+
+5.主服务器状态查询
+show master status;
++------------------+----------+--------------+------------------+-------------------+
+| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB | Executed_Gtid_Set |
++------------------+----------+--------------+------------------+-------------------+
+| mysql-bin.000016 |      429 |              |                  |                   |
++------------------+----------+--------------+------------------+-------------------+
+
+7、配置从服务器slave
+master_log_file 对于主服务器的 File
+master_log_pos 对于主服务器的 Position
+
+change master to master_host='主服务器域名',master_user='用户名',master_password='密码',
+master_log_file='mysql-bin.000016',master_log_pos=429;
+
+#启动
+start slave;
+
+8.检查状态
+show slave status\G;
+
+Slave_IO_Running: Yes    //此状态必须YES
+Slave_SQL_Running: Yes     //此状态必须YES
+
+9.测试
+主的建库,从能看
+从的建库,主没得看
+
+
