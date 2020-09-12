@@ -3299,8 +3299,5 @@ INSERT INTO `area` VALUES (3260, 3259, '1998', '659003', '图木舒克市', '79.
 INSERT INTO `area` VALUES (3261, 3134, '1994', '659004', '五家渠市', '87.54324', '44.166756', 'city');
 INSERT INTO `area` VALUES (3262, 3261, '1994', '659004', '五家渠市', '87.54324', '44.166756', 'district');
 INSERT INTO `area` VALUES (3263, 850, '320589', '320589', '高新区', '120', '30', 'district');
-INSERT INTO `area` VALUES (3268, 1, '0', '0', '其他', '0', '0', 'province');
-INSERT INTO `area` VALUES (3269, 3268, '0', '0', '其他', '0', '0', 'city');
-INSERT INTO `area` VALUES (3270, 3269, '0', '0', '其他', '0', '0', 'district');
 INSERT INTO `area` VALUES (3271, 1409, '0536', '370787', '高新区', '119', '36', 'district');
 
