@@ -17,40 +17,40 @@ class Solution {
      * @return Integer[][]
      */
     function inorderTraversal($root) {
-        $res = [];
         $stack = [];
-        $curr = $root;
-        while( ($curr->val !== NULL && $curr !== NULL) || !empty($stack) ){
-            while($curr->val !== NULL && $curr !== NULL){
-                array_push($stack,$curr);
-                $curr = $curr->left;
+        $res = [];
+        while ($root !== null || !empty($stack)) {
+            while ($root !== null) {
+                $stack[] = $root;
+                $root = $root->left;
             }
-
-            $curr = array_pop($stack);
-            $res[] = $curr->val;
-            $curr = $curr->right;
+            $root = array_pop($stack);
+            $res[] = $root->val;
+            $root = $root->right;
         }
         return $res;
     }
 
+
+
+    //递归
     public $res = [];
-    public $stack = [];
-    function inorderTraversal1($root){
-        $this->re($root);
+    function inorderTraversal1($root) {
+        if ($root === null) {
+            return [];
+        }
+        $this->helper($root);
         return $this->res;
     }
-    //递归 recursion
-    function re($curr = NULL){
-        if($curr !== NULL){
-            if($curr->left !== NULL){
-                $this->re($curr->left);
-            }
-            $this->res[] = $curr->val;
-            if($curr->right !== NULL){
-                $this->re($curr->right);
-            }
-        }
 
+    function helper($root) {
+        if ($root->left !== null) {
+            $this->helper($root->left);
+        }
+        $this->res[] = $root->val;
+        if ($root->right !== null) {
+            $this->helper($root->right);
+        }
     }
 }
 

@@ -36,8 +36,25 @@ class Solution {
         }
         return $res;
     }
-
-
+    //递归
+    public $res = [];
+    public function postorderTraversal1($root)
+    {
+        if ($root !== null) {
+            $this->helper($root);
+        }
+        return $this->res;
+    }
+    public function helper($root)
+    {
+        if ($root->left !== null) {
+            $this->helper($root->left);
+        }
+        if ($root->right !== null) {
+            $this->helper($root->right);
+        }
+        $this->res[] = $root->val;
+    }
 }
 
 $arr = [1,2,3,4,5,6,7];

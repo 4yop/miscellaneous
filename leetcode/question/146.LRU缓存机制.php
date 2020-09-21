@@ -5,7 +5,7 @@ class LRUCache {
      */
     public $arr = [];
     public $cap = 0;
-    public $count = 0;
+
     function __construct($capacity) {
         $this->cap = $capacity;
     }
@@ -31,15 +31,10 @@ class LRUCache {
      */
     function put($key, $value) {
 
-        if ($this->get($key) != -1) {
-            $this->arr[$key] = $value;
-            return;
-        }else if ($this->cap <= $this->count) {
+        if ($this->get($key) == -1 && $this->cap <= count($this->arr)) {
             reset($this->arr);
             $k = key($this->arr);
             unset($this->arr[$k]);
-        }else{
-            $this->count++;
         }
         $this->arr[$key] = $value;
     }
