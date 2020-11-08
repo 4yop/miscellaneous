@@ -14,35 +14,31 @@ class Solution {
 
     /**
      * @param TreeNode $root
+     * @param Integer $sum
      * @return Integer[][]
      */
     public $res = [];
+    //递归
     function pathSum($root, $sum) {
-        if($root === NULL){
-            return [];
-        }
-        $this->helper($root,[$root->val],$sum);
+        $this->helper($root,$sum);
         return $this->res;
     }
 
-    function helper($root,$path,$sum){
-        if($root->left === NULL && $root->right === NULL){
-            if(array_sum($path) == $sum){
-                $this->res[] = $path;
-            }
-            return;
+    function helper ($root,$sum,$arr = []) {
+        if ($root === null) {
+            return ;
         }
-        if($root->left !== NULL){
-            $p1 = $path;
-            $p1[] = $root->left->val;
-            $this->helper($root->left,$p1,$sum);
+        $sum -= $root->val;
+        $arr[] = $root->val;
+        if ($root->left === null && $root->right === null && $sum == 0) {
+            $this->res[] = $arr;
+            return ;
         }
-        if($root->right !== NULL){
-            $p2 = $path;
-            $p2[] = $root->right->val;
-            $this->helper($root->right,$p2,$sum);
-        }
+        $this->helper($root->left,$sum,$arr);
+        $this->helper($root->right,$sum,$arr);
+
     }
+    
 }
 
 $arr = [5,4,8,11,null,13,4,7,2,5,1];
