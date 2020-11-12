@@ -9,3 +9,7 @@ kill {pid}
 
 nohup {指令} > {path/file.txt &}
 将结果打印在文件里
+#根据名称查进程
+ps -ef | grep xxx
+
+pstree -anp | grep xxx.php

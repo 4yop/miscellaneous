@@ -1,0 +1,12 @@
+
+docker pull nginx:latest
+
+docker images
+
+docker run -d -p 9509:80 nginx
+
+docker ps
+
+docker exec it <CONTAINER_ID> bash
+
+docker commit <CONTAINER_ID> <name>

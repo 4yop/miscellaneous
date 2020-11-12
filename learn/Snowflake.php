@@ -75,4 +75,4 @@ class Snowflake
 }
 
 
-echo Snowflake::createOnlyId();
+//echo Snowflake::createOnlyId();

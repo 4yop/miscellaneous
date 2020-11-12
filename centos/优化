@@ -1,0 +1,40 @@
+1.关闭多余的东西，看自启的，不要的关了
+2.关闭多余的控制台，占用内存
+3.修改默认的历史命令的缓存尺寸
+默认1000个
+vim /etc/profile
+HISTSIZE=想要的个数
+4.内核的参数优化
+ulimit -n     65535  查看每个程序最多打开文件的数量
+ulimit -Sn  65535  改
+
+vim /etc/sysctl.conf
+加入以下参数
+
+net.ipv4.tcp_fin_timeout = 30
+net.ipv4.tcp_keepalive_time = 1200
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_tw_recycle = 1
+net.ipv4.ip_local_port_range = 1024 65000
+net.ipv4.tcp_max_syn_backlog = 8192
+net.ipv4.tcp_max_tw_buckets = 5000
+
+
+net.ipv4.tcp_fin_timeout : 如果连接由本端要求关闭，保持在FIN-WAIT-2状态时的时间
+net.ipv4.tcp_keepalive_time : 当keepalive 启动时，tcp发送keepalive消息的频度。默认2小时
+net.ipv4.tcp_syncookies : 开启syn cookie功能，可以防范少量syn攻击
+net.ipv4.tcp_tw_reuse : 允许time_wait状态的连接被重用于新的连接
+net.ipv4.tcp_tw_recycle : 开启 time_wait 套按字的快速回收
+net.ipv4.ip_local_port_range : 向外连接的商品范围，默认值很小32768~61000
+net.ipv4.tcp_max_syn_backlog : 默认为1024加大可以容纳更多的等待连接数
+net.ipv4.tcp_max_tw_buckets  : 系统同时保持在time_wait状态套接字的最大数量,超过这个数量，系统会打印警告并立即清除，默认是180000，这种状态的套接字太多会拖慢服务器
+
+
+执行以下命令使配置立即生效
+/sbin/sysctl -p
+
+
+
+
+

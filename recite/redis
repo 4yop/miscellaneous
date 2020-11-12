@@ -1,0 +1,65 @@
+redis特点
+key value
+消耗内存
+单个key最大512M
+
+数据结构
+string 字符串
+list 列表
+set 集合
+sorted set 有序集合
+hashes  哈希
+
+
+内存清除策略
+noeviction:禁止驱逐，达到内存限制后返回错误
+allkeys-lru:回收最少使用的键（LRU）
+volatile-lru:回收最少使用的设置有过期时间的键（LRU）
+allkeys-random:随机回收键
+volatile-random:随机回收设置有过期时间的键
+volatile-ttl:回收设置有过期时间的里存活时间最短的值
+
+设置最大内存
+maxmemory
+默认淘汰策略
+config get maxmemory-policy
+maxmemory-policy noeviction
+
+淘汰策略
+定时删除：为key设置定时器，到时间就立即删除
+惰性删除：获取key时检查是否过期
+定期删除：每隔段时间对 设置了过期的key进行检查并删除已过期的
+config get hz
+默认为10，1秒检查10次
+
+
+redis缓存和mysql 数据一致（脏读）问题
+原因1:mysql单机,一个正在写，一个正在读，脏读
+原因2:主重复制的延迟的脏读
+方案1:采用延时双删策略
+
+public function update($key,$data) {
+    $this->redis->del($key);
+    $this->redis->set($key,$data);
+    usleep(500000);
+    $this->redis->del($key);
+}
+
+方案2:MySQL binlog增量发布订阅消费+消息队列+增量数据更新到redis
+
+持久化
+RDB:将内存数据生产快照同步到磁盘，（耗时间，易丢失数据）
+AOF:将所有写的指令记录在日志（恢复慢，体积大）
+
+雪崩，穿透，击穿
+缓存穿透：指查询一个不存在的数据,每次都要查询数据库,可能让数据库的压力变大
+解决:1.对空的结果集也进行缓存，过期时间设置短一些,
+    2.布隆过滤器 bitmap
+缓存击穿:设置了过期时间的key，在高并发时正好过期,请求全打在数据库上
+解决:1.使用互斥锁,第一个进去的设置（setNx）互斥锁成功再取数据库数据更新到缓存
+    2.设置永不过期,用一个脚本定时更新缓存数据
+缓存雪崩:缓存大面积的失效
+解决:1.过期时间设置随机数，不要过于集中
+
+
+Redis锁的过期时间小于业务的执行时间该如何续期

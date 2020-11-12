@@ -41,3 +41,7 @@ git stash pop
 
 
 git reset --hard xxx
+
+Package caouecs/laravel-lang is abandoned
+, you should avoid using it. Use https://
+github.com/Laravel-Lang/lang instead
