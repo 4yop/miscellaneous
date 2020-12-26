@@ -9,6 +9,7 @@ class ListNode {
 class Solution {
 
     //迭代
+    //O(n) O(1)
     function reverseList($head) {
         if($head === NULL){
             return NULL;
@@ -28,8 +29,24 @@ class Solution {
     }
 
     //递归
+    //O(n) O(n)
+    function reverseList1($head)
+    {
+        if ($head === null || $head->next === null)
+        {
+            return $head;
+        }
+        $p = $this->reverseList($head->next);
+        $head->next->next = $head;
+        $head->next = null;
+        return $p;
+    }
+
+
+
+    //递归
     public $res = NULL;
-    function reverseList1($head){
+    function reverseList2($head){
         $this->helper($head);
         return $this->res;
     }
