@@ -1,0 +1,5 @@
+#传到本地
+sz [filename]
+
+#选择上传
+rz [select_file]

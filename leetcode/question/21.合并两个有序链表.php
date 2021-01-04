@@ -9,22 +9,34 @@ class ListNode {
 class Solution {
 
     //迭代
-    function mergeTwoLists($l1, $l2) {
+    //O(m+n) O(1)
+    function mergeTwoLists($l1, $l2)
+    {
+        if ($l1 === null)
+        {
+            return $l2;
+        }
+        if ( $l2 === null )
+        {
+            return $l1;
+        }
 
         $res = new ListNode(-1);
-        $curr = $res;
-
-        while($l1 !== NULL && $l2 !== NULL){
-            if($l1->val <= $l2->val){
-                $curr->next = $l1;
+        $p = $res;
+        while ( $l1 !== null && $l2 !== null )
+        {
+            if ($l2->val > $l1->val) {
+                $p->next = $l1;
                 $l1 = $l1->next;
             }else{
-                $curr->next = $l2;
+                $p->next = $l2;
                 $l2 = $l2->next;
             }
-            $curr = $curr->next;
+
+            $p = $p->next;
         }
-        $curr->next = $l1 === NULL ? $l2 : $l1;
+        $p->next = $l1 !== null ? $l1 : $l2;
+
         return $res->next;
     }
 

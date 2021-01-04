@@ -18,21 +18,9 @@ class Solution {
      * @return ListNode
      */
     function getIntersectionNode($headA, $headB) {
-
-        var_dump($headA);
-        var_dump($headB);exit;
-
-
         $A = $headA;
         $B = $headB;
-
-        while(true){
-            if($A == $B){
-                var_dump($A);
-                var_dump($B);
-                exit;
-            }
-            echo "A:{$A->val},B:{$B->val}\n";
+        while($A !== $B){
             $A = $A == null ? $headB : $A->next;
             $B = $B == null ? $headA : $B->next;
         }

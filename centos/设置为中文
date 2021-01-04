@@ -1,0 +1,11 @@
+#安装
+yum groupinstall chinese-support
+
+#编辑
+vi /etc/sysconfig/i18n
+
+#内容
+LANG="zh_CN.UTF-8"
+
+#设置
+export LANG="zh_CN.UTF-8"

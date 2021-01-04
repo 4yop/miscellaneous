@@ -42,6 +42,44 @@ class Solution {
         }
         return true;
     }
+
+    //中序遍历为升序
+    function isValidBST($root) {
+        if ($root === null)
+        {
+            return true;
+        }
+        $this->last = PHP_INT_MIN;
+        return $this->helper($root);
+    }
+
+    function helper($root)
+    {
+        if ($root === null)
+        {
+            return true;
+        }
+
+
+
+        if ( !$this->helper($root->left) ) {
+            return false;
+        }
+
+        if ($this->last >= $root->val) {
+            return false;
+        }
+
+        $this->last = $root->val;
+        if ( !$this->helper($root->right) ) {
+            return false;
+        }
+
+        return true;
+
+    }
+
+
 }
 
 $arr = [1,1];
