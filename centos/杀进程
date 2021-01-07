@@ -13,3 +13,9 @@ nohup {指令} > {path/file.txt &}
 ps -ef | grep xxx
 
 pstree -anp | grep xxx.php
+
+#不存在返回0
+ps axu|grep "进程名"|grep -v "grep"|wc -l
+
+#查pid列完全匹配 pid  689
+ps axo pid | grep -w "[pid的值]"
