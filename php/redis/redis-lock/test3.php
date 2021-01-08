@@ -13,7 +13,7 @@
 
 
     //cli_set_process_title('php-lock');
-    require_once __DIR__ . '/../src/RedLock.php';
+    require_once  'RedLock.php';
     $servers = [
         ['127.0.0.1', 6379, 0.01],
         //['127.0.0.1', 6378, 0.01],

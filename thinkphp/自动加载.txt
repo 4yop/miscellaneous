@@ -1,0 +1,4 @@
+
+
+①tp5在 base.php --> \think\Loader::register(); spl_autoload_register
+  tp6  verdor/autoload.php  getLoader()
