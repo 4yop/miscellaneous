@@ -9,7 +9,7 @@
 
 
     $key = "lock:test";
-    $ttl = 10000;
+    $ttl = 3000;
 
 
     //cli_set_process_title('php-lock');
@@ -30,9 +30,9 @@
     } else {
         print "Lock not acquired\n";exit;
     }
-    sleep(15);
+    sleep(4);
 
     $redLock->unlock($lock);
 
     //$watch->wait();
-    echo 'hi,解锁了'."\n";
+    echo 'hi,解锁了'."\n";exit;

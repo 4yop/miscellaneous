@@ -11,7 +11,7 @@ class RedLock
     private $servers = array();
     private $instances = array();//多个redis的连接
 
-    private $watchDog = false;//watchdog 的文件的指针
+
 
     function __construct(array $servers, $retryDelay = 200, $retryCount = 3)
     {
@@ -84,11 +84,6 @@ class RedLock
             $this->unlockInstance($instance, $resource, $token);
         }
 
-        if ($this->watchDog != false)
-        {
-            pclose($this->watchDog);
-        }
-
     }
 
     /*
@@ -120,6 +115,7 @@ class RedLock
     private function watchDog($resource,$ttl)
     {
         $pid = getmypid();
+        //echo "php watchdog.php {$pid} {$resource} {$ttl}";return;
         return popen("php watchdog.php {$pid} {$resource} {$ttl}",'r');
     }
 

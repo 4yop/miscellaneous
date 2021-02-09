@@ -1,6 +1,7 @@
 <?php
     class WatchDog
     {
+        protected $handle = false;
         public function __construct()
         {
 
@@ -81,19 +82,38 @@
         //定时检查
         public function cornCheck(int $pid,string $key,string $ttl)
         {
-            $redLock = $this->getRedis();
-            $sleep_time = $this->getSleepTime($ttl);
-            $i = 0;
-            while ($this->isProcessExecuting($pid)) {
-                $redLock->renewal($key, $ttl);
-                $i++;
-                var_dump("第{$i}次,续锁完成,pid:{$pid},间隔:{$sleep_time}微秒\n");
-                usleep($sleep_time);
+            try {
+                $redLock = $this->getRedis();
+                $sleep_time = $this->getSleepTime($ttl);
+                $i = 0;
+                while ($this->isProcessExecuting($pid)) {
+                    $redLock->renewal($key, $ttl);
+                    $i++;
+                    $this->log("第{$i}次,续锁完成,pid:{$pid},间隔:{$sleep_time}微秒");
+                    usleep($sleep_time);
+                }
+            }catch (\Exception $e) {
+                $this->log($e->getMessage());
+                if ($this->handle != false) {
+                    fclose($this->handle);
+                }
+                throw new \Exception($e->getMessage());
             }
-
+            if ($this->handle != false) {
+                fclose($this->handle);
+            }
             return true;
         }
 
+        public function log(string $txt)
+        {
+            $time = date('[ Y-m-d H:i:s ]');
+            $log = "{$time} {$txt} \n";
+            if ($this->handle == false) {
+                $this->handle = fopen('watch-dog.log','a');
+            }
+            fwrite($this->handle,$log);
+        }
 
     }
 
