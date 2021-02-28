@@ -1,0 +1,10 @@
+
+alias  新名字 = "指令"
+重启就失效
+
+
+永久：
+①vim ~/.bashrc
+②写入alias 新名字='指令',保存
+③source ~/.bashrc,保存并生效
+④alias 查看所有设置了的
