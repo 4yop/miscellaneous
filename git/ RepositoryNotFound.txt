@@ -1,0 +1,10 @@
+问题:
+Access deined: Repository Not Found
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+
+解决：
+git remote set-url origin [仓库地址]
