@@ -1,0 +1,12 @@
+
+
+ [InvalidArgumentException]
+  Could not find package laravel/laravel with stability stable.
+
+
+  原因 ： 可能镜像出问题了
+  切换 composer 镜像地址
+
+  国外 :  composer config -g repo.packagist composer https://packagist.org
+
+  国内 ： composer config -g repo.packagist composer https://packagist.phpcomposer.com
