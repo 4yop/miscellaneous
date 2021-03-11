@@ -1,0 +1,14 @@
+
+Failed to decode response: zlib_decode(): data error
+Retrying with degraded mode, check https://getcomposer.org/doc/articles/troubleshooting.md#degraded-mode for more info
+Downloading (100%)
+
+  [ErrorException]
+  zlib_decode(): data error
+
+
+
+编辑php.ini，修改zlib扩展相关配置：
+
+zlib.output_compression = On
+zlib.output_compression_level = 5
