@@ -74,7 +74,6 @@ class Solution {
         if ( !$this->helper($root->right) ) {
             return false;
         }
-
         return true;
 
     }
