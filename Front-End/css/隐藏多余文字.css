@@ -5,7 +5,7 @@
     white-space: nowrap;
 
 }
-
+/*3行 多的就隐藏*/
 *{
     overflow:hidden;
 
@@ -14,4 +14,13 @@
     -webkit-box-orient:vertical;
 
     -webkit-line-clamp:3;
+}
+
+/*自动换行*/
+*{
+    table-layout: fixed;
+    /*word-wrap: break-all;*/
+    word-break: normal;
+    overflow: hidden;
+    word-wrap: break-word;
 }
