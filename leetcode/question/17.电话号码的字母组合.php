@@ -21,23 +21,12 @@ class Solution {
         ];
 
         $len = strlen($digits);
-        $queue = [[]];
         $res = [];
-        $i= 0;
-        while($i < $queue){
-            $node = array_shift($queue);
-            for($i = 0;$i<$len;$i++){
-                if(!array_key_exists($digits[$i],$queue)){
-                    foreach ($arr[$digits[$i]] as $k=>$v){
-                        $temp = $node;
-                        $temp[$digits[$i]] = $v;
-                        $queue[] = ;
-                    }
 
-                }
-            }
-            $i++;
-        }
+
+
+
+
         return $res;
     }
 
