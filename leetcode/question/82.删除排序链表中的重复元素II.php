@@ -19,7 +19,23 @@ class Solution {
      * @return ListNode
      */
     function deleteDuplicates($head) {
+        $node = new ListNode(-1);
+        $node->next = $head;
+        $curr = $node;
 
+
+        while ($curr->next !== null && $curr !== null)
+        {
+            if ($curr->next->val !== $curr->next->next->val) {
+                $curr = $curr->next;
+                continue;
+            }
+            while ($curr->next->val === $curr->next->next->val) {
+                $curr->next->next = $curr->next->next->next;
+            }
+            $curr = $curr->next->next;
+        }
+        return $node->next;
     }
 }
 
