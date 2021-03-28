@@ -1,5 +1,15 @@
 {
     "require": {
-        "swoole/ide-helper": "@dev"
+        "swoole/ide-helper": "@dev",
+        "phpunit/phpunit": "^9.5",
+        "spatie/array-to-xml": "^2.15"
+    },
+    "autoload": {
+        "psr-4": {
+            "designPattern\\": "PHP/designPattern/"
+        },
+        "files":[
+            "PHP/helper/xml.php"
+        ]
     }
 }
