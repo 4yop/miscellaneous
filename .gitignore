@@ -12,3 +12,13 @@ phpstorm/settings/options/ide.general.xml
 phpstorm/settings/options/databaseDrivers.xml
 phpstorm/settings/options/colors.scheme.xml
 phpstorm/settings/codestyles/Default.xml
+dailyPractice/designPattern/DAY_2021_03_29/Adapter/User.php
+dailyPractice/designPattern/DAY_2021_03_29/Adapter/UserAdapter.php
+dailyPractice/designPattern/DAY_2021_03_29/Observer/Mail.php
+dailyPractice/designPattern/DAY_2021_03_29/Observer/ObserverInterface.php
+dailyPractice/designPattern/DAY_2021_03_29/Observer/Order.php
+dailyPractice/designPattern/DAY_2021_03_29/Observer/Sms.php
+dailyPractice/designPattern/DAY_2021_03_29/Observer/Test.php
+dailyPractice/designPattern/DAY_2021_03_29/Singleton/Db.php
+dailyPractice/designPattern/DAY_2021_03_29/Singleton/Singleton.php
+dailyPractice/designPattern/DAY_2021_03_29/Singleton/Test.php
