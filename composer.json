@@ -6,7 +6,8 @@
     },
     "autoload": {
         "psr-4": {
-            "designPattern\\": "PHP/designPattern/"
+            "designPattern\\": "PHP/designPattern/",
+            "dailyPractice\\": "dailyPractice/"
         },
         "files":[
             "PHP/helper/xml.php"

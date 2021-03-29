@@ -21,6 +21,7 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         'd' => 
         array (
             'designPattern\\' => 14,
+            'dailyPractice\\' => 14,
         ),
         'W' => 
         array (
@@ -53,6 +54,10 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         'designPattern\\' => 
         array (
             0 => __DIR__ . '/../..' . '/PHP/designPattern',
+        ),
+        'dailyPractice\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/dailyPractice',
         ),
         'Webmozart\\Assert\\' => 
         array (
