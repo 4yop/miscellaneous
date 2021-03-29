@@ -27,4 +27,10 @@ class Pracice
     {
         return (self::$class)::createPractice();
     }
+
+    public function test()
+    {
+        return (self::$class)::testPractice();
+    }
+
 }

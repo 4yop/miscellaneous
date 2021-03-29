@@ -26,15 +26,23 @@
 //
 //
 
-    print_r($argv);
+    //print_r($argv);
 
 
-$argv[1];
-$argv[2];
+    if (!isset($argv[3]))
+    {
+        $argv[3] = 'create';
+    }
 
-    if ($argv[1] === 'pracice' && $argv[2] !== null)
+    if ($argv[1] === 'pracice' && $argv[2] !== null && $argv[3] == 'create')
     {
         (new \dailyPractice\Pracice($argv[2]))->create();
+    }
+
+    //php index.php  pracice dp test
+    if ($argv[1] === 'pracice' && $argv[2] !== null && $argv[3] == 'test')
+    {
+        (new \dailyPractice\Pracice($argv[2]))->test();
     }
 
 
