@@ -25,7 +25,7 @@
 //    new \designPattern\Strategy\StrategyTest();
 //
 //
-
+    new \designPattern\DependencyInjection\Test();
     //print_r($argv);
 
 
