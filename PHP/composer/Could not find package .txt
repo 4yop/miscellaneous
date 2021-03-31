@@ -10,3 +10,5 @@
   国外 :  composer config -g repo.packagist composer https://packagist.org
 
   国内 ： composer config -g repo.packagist composer https://packagist.phpcomposer.com
+
+  阿里 ： composer config -g repo.packagist composer https://mirrors.aliyun.com/composer

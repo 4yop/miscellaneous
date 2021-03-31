@@ -25,7 +25,7 @@
 //    new \designPattern\Strategy\StrategyTest();
 //
 //
-    new \designPattern\DependencyInjection\Test();
+    //new \designPattern\DependencyInjection\Test();
     //print_r($argv);
 
 
@@ -45,5 +45,10 @@
         (new \dailyPractice\Pracice($argv[2]))->test();
     }
 
+    if ($argv[1] === 'leetcode' && $argv[2] !== null)
+    {
+        $argv[2] = intval($argv[2]);
+        (new \leetcode\Question($argv[2]))->exec();
+    }
 
 
