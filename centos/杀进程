@@ -1,6 +1,7 @@
 占用端口得端口{port}
 
 netstat -npl | grep {port}
+netstat -natp
 
 获取pid 后：
 
