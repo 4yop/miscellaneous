@@ -18,9 +18,14 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         array (
             'phpDocumentor\\Reflection\\' => 25,
         ),
+        'l' => 
+        array (
+            'leetcode\\' => 9,
+        ),
         'd' => 
         array (
             'designPattern\\' => 14,
+            'dailyPractice\\' => 14,
         ),
         'W' => 
         array (
@@ -50,9 +55,17 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
+        'leetcode\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/leetcode',
+        ),
         'designPattern\\' => 
         array (
             0 => __DIR__ . '/../..' . '/PHP/designPattern',
+        ),
+        'dailyPractice\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/dailyPractice',
         ),
         'Webmozart\\Assert\\' => 
         array (
