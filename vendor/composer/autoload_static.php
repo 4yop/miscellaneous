@@ -11,6 +11,7 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         'ea27631169c06747aea4341ba383bb6d' => __DIR__ . '/../..' . '/PHP/helper/xml.php',
+        '7fa303cf66a04678f48af7858db6bdd2' => __DIR__ . '/../..' . '/PHP/helper/file.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -40,6 +41,10 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         array (
             'Prophecy\\' => 9,
             'PhpParser\\' => 10,
+        ),
+        'F' => 
+        array (
+            'Faker\\' => 6,
         ),
         'D' => 
         array (
@@ -86,6 +91,10 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         'PhpParser\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/php-parser/lib/PhpParser',
+        ),
+        'Faker\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
         ),
         'Doctrine\\Instantiator\\' => 
         array (

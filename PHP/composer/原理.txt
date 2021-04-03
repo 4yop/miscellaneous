@@ -1,0 +1,11 @@
+
+autoload_real.php 类的 getLoader();
+
+getLoader{
+    加载vendor的
+    1.引入 platform_check ,检查环境是否有误,检测php版本
+    2. $loader =  \Composer\Autoload\ClassLoader("vendor目录");
+    3.引入 autoload_static,getInitializer 给 $loader加4个属性
+    4.$loader->register(true) ,   spl_autoload_register(array($this, 'loadClass'), true, $prepend); 惰性加载
+    5.require, autoload_static的$file数组里的所有文件
+}

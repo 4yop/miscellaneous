@@ -2,7 +2,8 @@
     "require": {
         "swoole/ide-helper": "@dev",
         "phpunit/phpunit": "^9.5",
-        "spatie/array-to-xml": "^2.15"
+        "spatie/array-to-xml": "^2.15",
+        "fzaninotto/faker": "^1.9"
     },
     "autoload": {
         "psr-4": {
@@ -11,7 +12,8 @@
             "leetcode\\": "leetcode/"
         },
         "files":[
-            "PHP/helper/xml.php"
+            "PHP/helper/xml.php",
+            "PHP/helper/file.php"
         ]
     }
 }

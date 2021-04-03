@@ -10,4 +10,5 @@ return array(
     '320cde22f66dd4f5d3fd621d3e88b98f' => $vendorDir . '/symfony/polyfill-ctype/bootstrap.php',
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'ea27631169c06747aea4341ba383bb6d' => $baseDir . '/PHP/helper/xml.php',
+    '7fa303cf66a04678f48af7858db6bdd2' => $baseDir . '/PHP/helper/file.php',
 );

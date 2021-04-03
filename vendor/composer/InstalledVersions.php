@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '25cb08c0c31c5f73bfb2c4cecd6fca71a1446adf',
+    'reference' => 'd03086560ff385fe044a60c61b1bb2c8bbc2ac82',
     'name' => '__root__',
   ),
   'versions' => 
@@ -42,7 +42,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '25cb08c0c31c5f73bfb2c4cecd6fca71a1446adf',
+      'reference' => 'd03086560ff385fe044a60c61b1bb2c8bbc2ac82',
     ),
     'doctrine/instantiator' => 
     array (
@@ -52,6 +52,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'd56bf6102915de5702778fe20f2de3b2fe570b5b',
+    ),
+    'fzaninotto/faker' => 
+    array (
+      'pretty_version' => 'v1.9.2',
+      'version' => '1.9.2.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '848d8125239d7dbf8ab25cb7f054f1a630e68c2e',
     ),
     'myclabs/deep-copy' => 
     array (
