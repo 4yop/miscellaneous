@@ -2,11 +2,34 @@ TCP
 面向连接,可靠的传输协议
 
 三次握手
+
+c->s : seq = x
+s->c : ack = x+1,seq = y
+c->s : ack = 1
+
 四次挥手
+s->c : fin 1:x
+c->s : seq 1:y,fin=x
+c->s : ack=x
+s->c : ack
 
 
 连接：资源的开辟
 
+tcpdump 命令
 
+socket : 套接字，资源，插座,四元组
+四元组 : ip:port + ip:port 唯一
+queue:
 
-socket : 套接字，资源，插座
+port : 65535个
+
+linux 网卡配置
+/etc/sysconfig/network-scripts/ifcfg-eth0
+
+route 指令
+
+问题：
+1.为什么端口最大65535
+2.ip为什么255最大
+3.三次握手，四次挥手
