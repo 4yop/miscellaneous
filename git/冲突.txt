@@ -5,3 +5,13 @@ Please, commit your changes or stash them before you can merge.
 
 #git stash  git pull  git stash pop
 #git reset --hard  git pull
+
+回滚上个版本
+git reset --hard HEAD^
+
+2.
+Pull is not possible because you have unmerged files.
+Please, fix them up in the work tree, and then use 'git add/rm <file>' as appropriate to mark resolution, or use 'git commit -a'.
+
+git reset --hard FETCH_HEAD
+git pull
