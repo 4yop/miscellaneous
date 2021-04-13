@@ -24,7 +24,8 @@ class Question
             {
                 echo $this->path.$file."\n";
                 echo "\n leetCode question \n";
-                include $this->path.$file;return;
+                include $this->path.$file;
+                return;
             }
         }
         echo "\n leetcode 没这个编号的\n";

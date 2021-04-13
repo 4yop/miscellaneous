@@ -1,39 +1,18 @@
 <?php
 
-    class ListNode {
-        public $val = 0;
-        public $next = null;
-        function __construct($val) { $this->val = $val; }
-    }
-    //通过数组生成链表
-    function buildListNodeByArr($head = [])
-    {
-        if (empty($head)) {
-            return null;
-        }
-        $node = new ListNode($head[0]);
-        $current = $node;
-        $i = 1;
-        while($i < count($head)){
-            $val = $head[$i++];
-            $current->next = new ListNode($val);
-            $current = $current->next;
-        }
-        return $node;
-    }
+namespace leetcode\common;
 
-    /**
-     * Definition for a binary tree node.
-     * Class TreeNode
+
+use leetcode\common\{TreeNode,ListNode};
+class Base
+{
+
+    /**根据数组生成二叉树
+     * @param array $arr
+     * @return TreeNode|null
      */
-    class TreeNode {
-        public $val = null;
-        public $left = null;
-        public $right = null;
-        function __construct($value) { $this->val = $value; }
-    }
-    //通过数组生成二叉树
-    function buildTreeNodeByArr($arr = []) {
+    public static function buildTreeNodeByArr(array $arr = [])
+    {
         if ($arr[0] === null)
         {
             return null;
@@ -61,3 +40,31 @@
         }
         return $treeNode;
     }
+
+
+    /**根据数组生成链表
+     * @param array $head
+     * @return \leetcode\common\ListNode|null
+     */
+    function buildListNodeByArr(array $head = [])
+    {
+        if ($head[0] === null) {
+            return null;
+        }
+        $node = new ListNode($head[0]);
+        $current = $node;
+        $i = 1;
+        while($i < count($head)){
+            $val = $head[$i++];
+            $current->next = new ListNode($val);
+            $current = $current->next;
+        }
+        return $node;
+    }
+}
+
+
+
+
+
+
