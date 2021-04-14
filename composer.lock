@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c6b374f0006ce923b6862c69a37f1067",
+    "content-hash": "c902bb9646140a32364b0babecf4420f",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -2027,16 +2027,16 @@
         },
         {
             "name": "swoole/ide-helper",
-            "version": "dev-master",
+            "version": "4.6.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swoole/ide-helper.git",
-                "reference": "3382a1844afb206cac064252f6b8b50115bf72bb"
+                "reference": "11bc5af94512ed3bfaa31a97302f78d4074dae22"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swoole/ide-helper/zipball/3382a1844afb206cac064252f6b8b50115bf72bb",
-                "reference": "3382a1844afb206cac064252f6b8b50115bf72bb",
+                "url": "https://api.github.com/repos/swoole/ide-helper/zipball/11bc5af94512ed3bfaa31a97302f78d4074dae22",
+                "reference": "11bc5af94512ed3bfaa31a97302f78d4074dae22",
                 "shasum": "",
                 "mirrors": [
                     {
@@ -2051,7 +2051,6 @@
                 "squizlabs/php_codesniffer": "~3.5.0",
                 "symfony/filesystem": "~4.0"
             },
-            "default-branch": true,
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2066,9 +2065,9 @@
             "description": "IDE help files for Swoole.",
             "support": {
                 "issues": "https://github.com/swoole/ide-helper/issues",
-                "source": "https://github.com/swoole/ide-helper/tree/4.5.4"
+                "source": "https://github.com/swoole/ide-helper/tree/4.6.5"
             },
-            "time": "2020-09-16T00:12:52+00:00"
+            "time": "2021-04-09T15:40:39+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2261,9 +2260,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "swoole/ide-helper": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

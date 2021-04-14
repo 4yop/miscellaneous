@@ -1,6 +1,6 @@
 {
     "require": {
-        "swoole/ide-helper": "@dev",
+        "swoole/ide-helper": "^4.6",
         "phpunit/phpunit": "^9.5",
         "spatie/array-to-xml": "^2.15",
         "fzaninotto/faker": "^1.9"

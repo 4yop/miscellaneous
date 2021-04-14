@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'd03086560ff385fe044a60c61b1bb2c8bbc2ac82',
+    'reference' => '971de413e6a53b6617dcaf86e4e41c8ed73d6f56',
     'name' => '__root__',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'd03086560ff385fe044a60c61b1bb2c8bbc2ac82',
+      'reference' => '971de413e6a53b6617dcaf86e4e41c8ed73d6f56',
     ),
     'doctrine/instantiator' => 
     array (
@@ -323,13 +323,12 @@
     ),
     'swoole/ide-helper' => 
     array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
+      'pretty_version' => '4.6.5',
+      'version' => '4.6.5.0',
       'aliases' => 
       array (
-        0 => '9999999-dev',
       ),
-      'reference' => '3382a1844afb206cac064252f6b8b50115bf72bb',
+      'reference' => '11bc5af94512ed3bfaa31a97302f78d4074dae22',
     ),
     'symfony/polyfill-ctype' => 
     array (

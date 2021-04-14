@@ -24,12 +24,7 @@ class RedisWithReentrantLock
 
     private function currentLockers() {
 
-        $refs = \Thread::getCurrentThread ();
 
-        if ($refs != null)
-        {
-
-        }
 
     }
 
