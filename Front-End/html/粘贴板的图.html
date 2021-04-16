@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+<textarea id="result" style="width:800px; height:600px; resize:none"></textarea>
+<div id="editor" contenteditable="true" style="border:1px solid #ccc">
+    paste here
+</div>
+</body>
+<script>
+    var editor = document.getElementById('editor');
+
+    editor.addEventListener('paste', function(e){
+        console.log(e);
+        setTimeout("updateDivContent()", 0);
+    });
+
+    function updateDivContent(){
+        for (var i=0;i<editor.childNodes.length;i++) {
+            var node = editor.childNodes[i];
+            if(node.nodeName == "IMG"){
+                result = node.src;
+            }
+        }
+        for (var i=0;i<editor.childNodes.length;i++) {
+            editor.removeChild(editor.childNodes[i]);
+        }
+        console.log(result);
+        document.getElementById('result').value = result;
+    }
+</script>
+</html>

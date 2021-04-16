@@ -10,14 +10,24 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        '9b552a3cc426e3287cc811caefa3cf53' => __DIR__ . '/..' . '/topthink/think-helper/src/helper.php',
+        '35fab96057f1bf5e7aba31a8a6d5fdde' => __DIR__ . '/..' . '/topthink/think-orm/stubs/load_stubs.php',
         'ea27631169c06747aea4341ba383bb6d' => __DIR__ . '/../..' . '/PHP/helper/xml.php',
         '7fa303cf66a04678f48af7858db6bdd2' => __DIR__ . '/../..' . '/PHP/helper/file.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        't' => 
+        array (
+            'think\\' => 6,
+        ),
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+        ),
+        'o' => 
+        array (
+            'oauth\\' => 6,
         ),
         'l' => 
         array (
@@ -39,6 +49,8 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         ),
         'P' => 
         array (
+            'Psr\\SimpleCache\\' => 16,
+            'Psr\\Log\\' => 8,
             'Prophecy\\' => 9,
             'PhpParser\\' => 10,
         ),
@@ -54,11 +66,20 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
     );
 
     public static $prefixDirsPsr4 = array (
+        'think\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/topthink/think-helper/src',
+            1 => __DIR__ . '/..' . '/topthink/think-orm/src',
+        ),
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'oauth\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/PHP/oauth',
         ),
         'leetcode\\' => 
         array (
@@ -83,6 +104,14 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         'Spatie\\ArrayToXml\\' => 
         array (
             0 => __DIR__ . '/..' . '/spatie/array-to-xml/src',
+        ),
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
+        'Psr\\Log\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
         ),
         'Prophecy\\' => 
         array (

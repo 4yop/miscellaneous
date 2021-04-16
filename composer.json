@@ -3,10 +3,12 @@
         "swoole/ide-helper": "^4.6",
         "phpunit/phpunit": "^9.5",
         "spatie/array-to-xml": "^2.15",
-        "fzaninotto/faker": "^1.9"
+        "fzaninotto/faker": "^1.9",
+        "topthink/think-orm": "^2.0"
     },
     "autoload": {
         "psr-4": {
+            "oauth\\" : "PHP/oauth/",
             "designPattern\\": "PHP/designPattern/",
             "dailyPractice\\": "dailyPractice/",
             "leetcode\\": "leetcode/"

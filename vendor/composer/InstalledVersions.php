@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '971de413e6a53b6617dcaf86e4e41c8ed73d6f56',
+    'reference' => 'ce687a61902da3e48b8e3417b6197243a504f6d8',
     'name' => '__root__',
   ),
   'versions' => 
@@ -42,7 +42,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '971de413e6a53b6617dcaf86e4e41c8ed73d6f56',
+      'reference' => 'ce687a61902da3e48b8e3417b6197243a504f6d8',
     ),
     'doctrine/instantiator' => 
     array (
@@ -191,6 +191,24 @@ private static $installed = array (
       array (
       ),
       'reference' => 'c73c6737305e779771147af66c96ca6a7ed8a741',
+    ),
+    'psr/log' => 
+    array (
+      'pretty_version' => '1.1.3',
+      'version' => '1.1.3.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '0f73288fd15629204f9d42b7055f72dacbe811fc',
+    ),
+    'psr/simple-cache' => 
+    array (
+      'pretty_version' => '1.0.1',
+      'version' => '1.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '408d5eafb83c57f6365a3ca330ff23aa4a5fa39b',
     ),
     'sebastian/cli-parser' => 
     array (
@@ -371,6 +389,24 @@ private static $installed = array (
       array (
       ),
       'reference' => '75a63c33a8577608444246075ea0af0d052e452a',
+    ),
+    'topthink/think-helper' => 
+    array (
+      'pretty_version' => 'v3.1.4',
+      'version' => '3.1.4.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'c28d37743bda4a0455286ca85b17b5791d626e10',
+    ),
+    'topthink/think-orm' => 
+    array (
+      'pretty_version' => 'v2.0.39',
+      'version' => '2.0.39.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '39a9d0a0e52d9b8bad9d98484d8484cdf5b683a7',
     ),
     'webmozart/assert' => 
     array (
