@@ -14,12 +14,17 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         '35fab96057f1bf5e7aba31a8a6d5fdde' => __DIR__ . '/..' . '/topthink/think-orm/stubs/load_stubs.php',
         'ea27631169c06747aea4341ba383bb6d' => __DIR__ . '/../..' . '/PHP/helper/xml.php',
         '7fa303cf66a04678f48af7858db6bdd2' => __DIR__ . '/../..' . '/PHP/helper/file.php',
+        '6809217f566c8ed573b36559f00fb0a9' => __DIR__ . '/../..' . '/PHP/helper/environment.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         't' => 
         array (
             'think\\' => 6,
+        ),
+        'q' => 
+        array (
+            'qrcodeLogin\\' => 12,
         ),
         'p' => 
         array (
@@ -58,10 +63,19 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         array (
             'Faker\\' => 6,
         ),
+        'E' => 
+        array (
+            'Endroid\\QrCode\\' => 15,
+        ),
         'D' => 
         array (
             'Doctrine\\Instantiator\\' => 22,
             'DeepCopy\\' => 9,
+            'DASPRiD\\Enum\\' => 13,
+        ),
+        'B' => 
+        array (
+            'BaconQrCode\\' => 12,
         ),
     );
 
@@ -70,6 +84,10 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         array (
             0 => __DIR__ . '/..' . '/topthink/think-helper/src',
             1 => __DIR__ . '/..' . '/topthink/think-orm/src',
+        ),
+        'qrcodeLogin\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/PHP/qrcodeLogin',
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
@@ -125,6 +143,10 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         array (
             0 => __DIR__ . '/..' . '/fzaninotto/faker/src/Faker',
         ),
+        'Endroid\\QrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/endroid/qr-code/src',
+        ),
         'Doctrine\\Instantiator\\' => 
         array (
             0 => __DIR__ . '/..' . '/doctrine/instantiator/src/Doctrine/Instantiator',
@@ -132,6 +154,14 @@ class ComposerStaticInit8ea05196271f81faac3828513a5dd4b7
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'DASPRiD\\Enum\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dasprid/enum/src',
+        ),
+        'BaconQrCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/bacon/bacon-qr-code/src',
         ),
     );
 

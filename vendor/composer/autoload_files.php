@@ -13,4 +13,5 @@ return array(
     '35fab96057f1bf5e7aba31a8a6d5fdde' => $vendorDir . '/topthink/think-orm/stubs/load_stubs.php',
     'ea27631169c06747aea4341ba383bb6d' => $baseDir . '/PHP/helper/xml.php',
     '7fa303cf66a04678f48af7858db6bdd2' => $baseDir . '/PHP/helper/file.php',
+    '6809217f566c8ed573b36559f00fb0a9' => $baseDir . '/PHP/helper/environment.php',
 );

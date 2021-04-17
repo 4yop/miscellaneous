@@ -52,3 +52,4 @@
     }
 
 
+    var_dump(is_cli());
