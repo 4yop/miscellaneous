@@ -7,10 +7,10 @@ c->s : seq = x
 s->c : ack = x+1,seq = y
 c->s : ack = 1
 
-四次挥手
+四次挥手(释放资源)
 s->c : fin 1:x
-c->s : seq 1:y,fin=x
-c->s : ack=x
+c->s : ack 1:y,fin=x
+c->s : fin=x
 s->c : ack
 
 
@@ -20,10 +20,10 @@ tcpdump 命令
 
 socket : 套接字，资源，插座,四元组
 四元组 : ip:port + ip:port 唯一
-queue:
+queue: fd
 
 port : 65535个
-
+对某端口最多建立65535个连接
 linux 网卡配置
 /etc/sysconfig/network-scripts/ifcfg-eth0
 

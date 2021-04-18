@@ -10,8 +10,6 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 use Hyperf\HttpServer\Router\Router;
-use App\Controller\admin\HomeController;
-
 
 Router::addRoute(['GET', 'POST', 'HEAD'], '/', 'App\Controller\IndexController@index');
 
@@ -20,7 +18,6 @@ Router::get('/favicon.ico', function () {
 });
 
 
-
-Router::addGroup('/admin/',function () {
-    Router::get('',[HomeController::class,'index']);
+Router::addServer('ws', function () {
+    Router::get('/', 'App\Controller\WebSocketController');
 });
