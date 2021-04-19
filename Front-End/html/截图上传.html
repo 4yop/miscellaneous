@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+
+
+
+
+<div class="paste-img-div">
+    <div class="paste-img" onpaste="updateDivContent();"  id="editor" contenteditable="true" style="border:1px solid #ccc">
+        将一张截图复制到这
+    </div>
+    <div style="background-color:brown;">
+        <a class="btn_add_short_content" href="javascript:void(0);" onclick='uploadPasteImg()'>上传截图</a>
+        <a class="btn_add_short_content" href="javascript:void(0);" onclick='delPasteImg()'>删除截图</a>
+        <a class="btn_add_short_content" href="javascript:void(0);" onclick='$(".paste-img-div").toggle();'>关闭</a>
+    </div>
+</div>
+
+
+<script>
+
+
+    function updateDivContent(){
+        setTimeout(function () {
+            var img = $('#editor img').eq(0);
+            let html = " ";
+            if (img) {
+                //console.log(img.attr('src'));
+                html = "<img width='100%' height='100%' src='" + img.attr('src') + "'>";
+            }
+            $('#editor').html(html);
+        },100);
+    }
+
+    function delPasteImg() {
+        $('#editor').html("将一张截图复制到这");
+    }
+
+    function uploadPasteImg()
+    {
+        if ( !$('#editor img').eq(0) )
+        {
+            alert("没有图");
+            return;
+        }
+
+        var base64Img = $('#editor img').eq(0).attr('src');
+        var file = base64ToFile(base64Img);
+
+        if (!file) {
+            console.log("转失败");
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append('do_action','action.file_upload');
+        formData.append('Filedata',file);
+        $.ajax({
+            type: "POST",
+            url:"",//后台接口
+            data: formData,
+            dataType: "json",
+            processData : false,
+            contentType : false,
+            success: function(res){
+                console.log(res.files[0].url);
+                window.location.reload();
+            },
+            error : function (e) {
+                console.log(e);
+            }
+        });
+    }
+
+
+    //base64转文件对象
+    function base64ToFile(data) {
+
+        // 将base64 的图片转换成file对象上传 atob将ascii码解析成binary数据
+        let binary = atob(data.split(',')[1]);
+        let mime = data.split(',')[0].match(/:(.*?);/)[1];
+        let array = [];
+        for (let i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        let fileData = new Blob([new Uint8Array(array)], {
+            type: mime,
+        });
+
+        let file = new File([fileData], `${new Date().getTime()}.png`, { type: mime });
+
+        return file;
+
+    }
+</script>
+
+</body>
+</html>
+
+<style>
+    .paste-img-div{
+        position: fixed;
+        left:50%;
+        top:50%;
+        /*display:none;*/
+        transform:translate(-50%,-50%);
+    }
+    .paste-img{
+        width:300px;
+        height:300px;
+        border:1px solid red;
+        display:block;
+        background-color: #FFFBE5;
+    }
+    .btn_add_short_content{
+        background-color: #0cb083;
+        color: #fff;
+        text-align: center;
+        line-height: 30px;
+        padding: 0 10px;
+        border-radius: 10px;
+        width:50px;
+    }
+</style>
+
+
