@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Api;
 
 use App\Controller\AbstractController;
+use App\Request\Api\LoginRequest;
 use App\Request\Api\RegisterRequest;
 use App\Service\MemberService;
 use Hyperf\HttpServer\Contract\RequestInterface;
@@ -22,7 +23,13 @@ class MemberController  extends AbstractController
      * @Inject()
      * @var MemberService
      */
-    protected $memberService;
+    private $memberService;
+
+    /**
+     * @Inject()
+     * @var \Hyperf\Contract\SessionInterface
+     */
+    private $session;
 
     public function index(RequestInterface $request, ResponseInterface $response)
     {
@@ -36,7 +43,20 @@ class MemberController  extends AbstractController
      */
     public function register(RegisterRequest $request)
     {
-        $this->memberService($request->username,$request->password);
+        $this->memberService->register($request->username,$request->password);
+    }
+
+    /**
+     * @RequestMapping(path="/login", methods="get,post")
+     * @param LoginRequest $request
+     */
+    public function login(LoginRequest $request)
+    {
+        $this->memberService->login($request->username,$request->password);
+        return [
+            'token' => $this->session->getId(),
+        ];
     }
 
 }
+
