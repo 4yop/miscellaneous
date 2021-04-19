@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+
+
+
+
+<<div class="paste-img-div">
+    <div class="paste-img" onpaste="updateDivContent();" onchange="changePasteImgText()" onkeypress="changePasteImgText()"  onkeydown="changePasteImgText()" onkeyup="changePasteImgText()" id="editor" contenteditable="true" style="border:1px solid #ccc">
+        <p>将一张截图粘贴到这,<br>然后点击【上传截图】按钮</p>
+    </div>
+    <div style="background-color:brown;line-height:40px;">
+        <a class="btn_add_short_content" href="javascript:void(0);" onclick='uploadPasteImg()'>上传截图</a>
+        <a class="btn_add_short_content" href="javascript:void(0);" onclick='delPasteImg()'>删除截图</a>
+        <a class="btn_add_short_content" href="javascript:void(0);" onclick='$(".paste-img-div").toggle();'>关闭</a>
+        <a class="btn_add_short_content" href="javascript:void(0);" onclick='showTip()'>怎么截图?</a>
+    </div>
+</div>
+
+
+<script>
+
+        
+
+    function changePasteImgText()
+    {
+        var img = $('#editor img').eq(0);
+        //console.log(img.attr('src'));
+        let html = "<p>将一张截图粘贴到这,<br>然后点击【上传截图】按钮</p>";
+
+        let src = img.attr('src');
+        console.log(src);
+        if (isBase64(src)) {
+            //console.log(img.attr('src'));
+            html = "<img src='" + src + "'>";
+        }
+        $('#editor').html(html);
+    }
+
+
+
+
+    function updateDivContent(){
+        setTimeout(function () {
+            changePasteImgText();
+        },100);
+    }
+
+    function delPasteImg() {
+        $('#editor').html("<p>将一张截图粘贴到这,<br>然后点击【上传截图】按钮</p>");
+    }
+
+    function uploadPasteImg()
+    {
+        var base64Img = $('#editor img').eq(0).attr('src');
+        if ( !base64Img || base64Img == '' )
+        {
+            layer.alert("没有图");
+            return;
+        }
+
+
+
+        if (!isBase64(base64Img)) {
+            layer.alert("图片非截图");
+            return;
+        }
+
+        var file = base64ToFile(base64Img);
+        if (!file) {
+            console.log("转换失败");
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append('do_action','action.file_upload');
+        formData.append('Filedata',file);
+        $.ajax({
+            type: "POST",
+            url:"",//后台接口
+            data: formData,
+            dataType: "json",
+            processData : false,
+            contentType : false,
+            success: function(res){
+                console.log(res.files[0].url);
+                window.location.reload();
+            },
+            error : function (e) {
+                console.log(e);
+            }
+        });
+    }
+
+
+    function isBase64(str) {
+        if(str == undefined || str === '' || str.trim() === ''){
+            return false;
+        }
+        if(str.indexOf('data:image')>-1){
+            return true;
+        }
+        return false;
+    }
+
+    function base64ToFile(data) {
+
+        // 将base64 的图片转换成file对象上传 atob将ascii码解析成binary数据
+        let binary = atob(data.split(',')[1]);
+        let mime = data.split(',')[0].match(/:(.*?);/)[1];
+        let array = [];
+        for (let i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+        }
+        let fileData = new Blob([new Uint8Array(array)], {
+            type: mime,
+        });
+
+        let file = new File([fileData], `${new Date().getTime()}.png`, { type: mime });
+
+        return file;
+
+    }
+
+    function showTip()
+    {
+        let content = '1.使用微信等工具截图(推荐)<br>'
+            +
+            '2.电脑打开 C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Accessories 文件夹 找到[截图工具],没有找到还是使用第一种方法<br>'
+            +
+            '3.点 <a target="_blank" href="https://www.baidu.com/s?wd=%E7%94%B5%E8%84%91%E6%80%8E%E4%B9%88%E6%88%AA%E5%9B%BE" style="text-decoration: underline;color:red;">这里</a> 查看';
+        layer.alert(content);
+    }
+
+</script>
+
+
+
+<style>
+    .paste-img-div{
+        position: fixed;
+        left:50%;
+        top:50%;
+        display:none;
+        transform:translate(-50%,-50%);
+    }
+    .paste-img{
+        width:300px;
+        height:300px;
+        border:1px solid red;
+        display:block;
+        background-color: #FFFBE5;
+        text-align: center;
+        /*line-height:300px;*/
+        overflow: hidden;
+    }
+
+    .paste-img img
+    {
+        display:block;
+        width:300px;
+        height:300px;
+    }
+
+    .btn_add_short_content{
+        background-color: #0cb083;
+        color: #fff;
+        text-align: center;
+        line-height: 30px;
+        padding: 0 10px;
+        border-radius: 10px;
+        width:50px;
+    }
+    #editor p{
+        margin-top:131px;
+    }
+</style>
+
+
+
+
+
