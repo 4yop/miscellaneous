@@ -30,6 +30,7 @@ return array(
     'App\\Model\\Model' => $baseDir . '/app/Model/Model.php',
     'App\\Process\\AsyncQueueConsumer' => $baseDir . '/app/Process/AsyncQueueConsumer.php',
     'App\\Request\\Api\\ApiRequest' => $baseDir . '/app/Request/Api/ApiRequest.php',
+    'App\\Request\\Api\\LoginRequest' => $baseDir . '/app/Request/Api/LoginRequest.php',
     'App\\Request\\Api\\RegisterRequest' => $baseDir . '/app/Request/Api/RegisterRequest.php',
     'App\\Service\\MemberService' => $baseDir . '/app/Service/MemberService.php',
     'Attribute' => $vendorDir . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',

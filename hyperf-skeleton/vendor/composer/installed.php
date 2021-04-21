@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => 'a33ddca00a89d4b8026b34ef8c09ee256188a39f',
     'name' => 'hyperf/hyperf-skeleton',
   ),
   'versions' => 
@@ -252,12 +252,12 @@
     ),
     'hyperf/database' => 
     array (
-      'pretty_version' => 'v2.1.10',
-      'version' => '2.1.10.0',
+      'pretty_version' => 'v2.1.15',
+      'version' => '2.1.15.0',
       'aliases' => 
       array (
       ),
-      'reference' => '4e5d3e5a02d7d4316f8b99595cf0889e3baafed2',
+      'reference' => 'a094528e2a9a93f025d2c9ddd0fbb64add33adde',
     ),
     'hyperf/db-connection' => 
     array (
@@ -369,12 +369,12 @@
     ),
     'hyperf/hyperf-skeleton' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => 'a33ddca00a89d4b8026b34ef8c09ee256188a39f',
     ),
     'hyperf/logger' => 
     array (

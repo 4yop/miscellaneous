@@ -12,6 +12,6 @@ class ApiRequest extends FormRequest
 {
     public function failedValidation(ValidatorInterface $validator)
     {
-        throw new ParameterException(500,$validator->errors()->first());
+        throw new ParameterException($validator->errors()->first(),500);
     }
 }

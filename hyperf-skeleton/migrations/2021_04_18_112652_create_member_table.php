@@ -12,7 +12,7 @@ class CreateMemberTable extends Migration
      */
     public function up(): void
     {
-        Schema::create('member', function (Blueprint $table) {
+        Schema::create('members', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('username',16)
                     ->nullable(false)
@@ -36,6 +36,6 @@ class CreateMemberTable extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tb_member');
+        Schema::dropIfExists('members');
     }
 }

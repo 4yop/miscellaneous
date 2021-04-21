@@ -9,7 +9,7 @@ use Throwable;
 
 class NotFoundException extends BusinessException
 {
-    public function __construct(int $code = MessageCode::NOT_FOUND, string $message = '找不到', Throwable $previous = null)
+    public function __construct(string $message = '找不到', int $code = MessageCode::NOT_FOUND, Throwable $previous = null)
     {
         parent::__construct($code, $message, $previous);
     }

@@ -9,7 +9,7 @@ use Throwable;
 
 class ParameterException extends BusinessException
 {
-    public function __construct(int $code = MessageCode::NOT_FOUND, string $message = '参数有误', Throwable $previous = null)
+    public function __construct(string $message = '参数有误',int $code = MessageCode::NOT_FOUND,  Throwable $previous = null)
     {
         parent::__construct($code, $message, $previous);
     }

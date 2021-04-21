@@ -672,6 +672,7 @@ class ComposerStaticInit58fad9c6caa70e2478d2d35b00d362a8
         'App\\Model\\Model' => __DIR__ . '/../..' . '/app/Model/Model.php',
         'App\\Process\\AsyncQueueConsumer' => __DIR__ . '/../..' . '/app/Process/AsyncQueueConsumer.php',
         'App\\Request\\Api\\ApiRequest' => __DIR__ . '/../..' . '/app/Request/Api/ApiRequest.php',
+        'App\\Request\\Api\\LoginRequest' => __DIR__ . '/../..' . '/app/Request/Api/LoginRequest.php',
         'App\\Request\\Api\\RegisterRequest' => __DIR__ . '/../..' . '/app/Request/Api/RegisterRequest.php',
         'App\\Service\\MemberService' => __DIR__ . '/../..' . '/app/Service/MemberService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',

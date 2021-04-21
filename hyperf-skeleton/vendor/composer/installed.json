@@ -1961,24 +1961,18 @@
         },
         {
             "name": "hyperf/database",
-            "version": "v2.1.10",
-            "version_normalized": "2.1.10.0",
+            "version": "v2.1.15",
+            "version_normalized": "2.1.15.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/database.git",
-                "reference": "4e5d3e5a02d7d4316f8b99595cf0889e3baafed2"
+                "reference": "a094528e2a9a93f025d2c9ddd0fbb64add33adde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/database/zipball/4e5d3e5a02d7d4316f8b99595cf0889e3baafed2",
-                "reference": "4e5d3e5a02d7d4316f8b99595cf0889e3baafed2",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/hyperf/database/zipball/a094528e2a9a93f025d2c9ddd0fbb64add33adde",
+                "reference": "a094528e2a9a93f025d2c9ddd0fbb64add33adde",
+                "shasum": ""
             },
             "require": {
                 "hyperf/utils": "~2.1.0",
@@ -1997,7 +1991,7 @@
                 "doctrine/dbal": "Required to rename columns (^3.0).",
                 "roave/better-reflection": "Required to use ModelCommand (^4.0)."
             },
-            "time": "2021-03-14T09:49:28+00:00",
+            "time": "2021-04-16T08:49:34+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -10605,5 +10599,52 @@
             "install-path": "../zircote/swagger-php"
         }
     ],
-    "dev": true
+    "dev": true,
+    "dev-package-names": [
+        "composer/semver",
+        "composer/xdebug-handler",
+        "friendsofphp/php-cs-fixer",
+        "hamcrest/hamcrest-php",
+        "hyperf/devtool",
+        "hyperf/testing",
+        "hyperf/watcher",
+        "mockery/mockery",
+        "myclabs/deep-copy",
+        "phar-io/manifest",
+        "phar-io/version",
+        "php-cs-fixer/diff",
+        "phpspec/prophecy",
+        "phpstan/phpstan",
+        "phpunit/php-code-coverage",
+        "phpunit/php-file-iterator",
+        "phpunit/php-invoker",
+        "phpunit/php-text-template",
+        "phpunit/php-timer",
+        "phpunit/phpunit",
+        "sebastian/cli-parser",
+        "sebastian/code-unit",
+        "sebastian/code-unit-reverse-lookup",
+        "sebastian/comparator",
+        "sebastian/complexity",
+        "sebastian/diff",
+        "sebastian/environment",
+        "sebastian/exporter",
+        "sebastian/global-state",
+        "sebastian/lines-of-code",
+        "sebastian/object-enumerator",
+        "sebastian/object-reflector",
+        "sebastian/recursion-context",
+        "sebastian/resource-operations",
+        "sebastian/type",
+        "sebastian/version",
+        "swoole/ide-helper",
+        "symfony/event-dispatcher",
+        "symfony/event-dispatcher-contracts",
+        "symfony/filesystem",
+        "symfony/options-resolver",
+        "symfony/polyfill-php70",
+        "symfony/process",
+        "symfony/stopwatch",
+        "theseer/tokenizer"
+    ]
 }

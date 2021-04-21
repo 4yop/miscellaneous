@@ -9,7 +9,7 @@ use Throwable;
 
 class MemberNoLoginException extends BusinessException
 {
-    public function __construct(int $code = MessageCode::MEMBER_NO_LOGIN, string $message = '未登录', Throwable $previous = null)
+    public function __construct(string $message = '未登录',int $code = MessageCode::MEMBER_NO_LOGIN,  Throwable $previous = null)
     {
         parent::__construct($code, $message, $previous);
     }

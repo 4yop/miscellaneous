@@ -43,7 +43,9 @@ class MemberController  extends AbstractController
      */
     public function register(RegisterRequest $request)
     {
-        $this->memberService->register($request->username,$request->password);
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $this->memberService->register($username,$password);
     }
 
     /**
