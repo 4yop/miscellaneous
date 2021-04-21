@@ -7,6 +7,11 @@
 
 class Solution {
 
+    //暴力法
+    // m = strlen($haystack)
+    // n = strlen($needle)
+    // 时间复杂度为  O(m*n)
+    // 空间复杂度为 O(1)
     /**
      * @param String $haystack
      * @param String $needle
@@ -37,10 +42,20 @@ class Solution {
         }
         return -1;
     }
+
+    //kmp
+    function strStr1($haystack,$needle)
+    {
+
+
+    }
 }
 
 $so = new Solution();
 $nums = "";
-$val = "";
+$val = "1";
 $res = $so->strStr($nums,$val);
+print_r($res);
+
+$res = $so->strStr1($nums,$val);
 print_r($res);

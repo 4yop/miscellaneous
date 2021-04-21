@@ -5,14 +5,14 @@ use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Migrations\Migration;
 use Hyperf\DbConnection\Db;
 
-class CreateTbMemberTable extends Migration
+class CreateMemberTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('tb_member', function (Blueprint $table) {
+        Schema::create('member', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('username',16)
                     ->nullable(false)

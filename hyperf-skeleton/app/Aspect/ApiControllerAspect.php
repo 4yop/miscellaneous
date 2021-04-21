@@ -2,6 +2,7 @@
 namespace App\Aspect;
 
 
+use App\Controller\Api\MemberController;
 use App\Controller\IndexController;
 use Hyperf\Di\Annotation\Aspect;
 use Hyperf\Di\Aop\AbstractAspect;
@@ -13,7 +14,8 @@ use Hyperf\Di\Aop\ProceedingJoinPoint;
 class ApiControllerAspect extends AbstractAspect
 {
     public $classes = [
-        IndexController::class. '::' . 'index',
+        IndexController::class,
+        MemberController::class,
     ];
 
 
@@ -28,10 +30,10 @@ class ApiControllerAspect extends AbstractAspect
 
         if (null == $result || (is_array($result) && !isset($result['code'])) )
         {
-            $result['message'] = "";
+            $result['message'] = isset($result['message'])?:'';
             $result['code'] = 0;
         }elseif(is_object($result) && !isset($result->code)){
-            $result->message = "";
+            $result->message = isset($result->message)?:'';;
             $result->code = 0;
         }
         return $result;

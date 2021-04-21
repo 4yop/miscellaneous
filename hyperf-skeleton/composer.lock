@@ -1568,23 +1568,17 @@
         },
         {
             "name": "hyperf/database",
-            "version": "v2.1.10",
+            "version": "v2.1.15",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hyperf/database.git",
-                "reference": "4e5d3e5a02d7d4316f8b99595cf0889e3baafed2"
+                "reference": "a094528e2a9a93f025d2c9ddd0fbb64add33adde"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hyperf/database/zipball/4e5d3e5a02d7d4316f8b99595cf0889e3baafed2",
-                "reference": "4e5d3e5a02d7d4316f8b99595cf0889e3baafed2",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/hyperf/database/zipball/a094528e2a9a93f025d2c9ddd0fbb64add33adde",
+                "reference": "a094528e2a9a93f025d2c9ddd0fbb64add33adde",
+                "shasum": ""
             },
             "require": {
                 "hyperf/utils": "~2.1.0",
@@ -1631,7 +1625,7 @@
                 "pull-request": "https://github.com/hyperf/hyperf/pulls",
                 "source": "https://github.com/hyperf/hyperf"
             },
-            "time": "2021-03-14T09:49:28+00:00"
+            "time": "2021-04-16T08:49:34+00:00"
         },
         {
             "name": "hyperf/db-connection",
@@ -1645,13 +1639,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/hyperf/db-connection/zipball/410e3e9b9f11875fdd671e567ade01753d60e8ef",
                 "reference": "410e3e9b9f11875fdd671e567ade01753d60e8ef",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "shasum": ""
             },
             "require": {
                 "hyperf/database": "~2.1.0",
