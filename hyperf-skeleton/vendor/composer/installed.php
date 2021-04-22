@@ -1,12 +1,12 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => 'v2.1.2',
-    'version' => '2.1.2.0',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '31be73c5af115a82f852e92b16b666e81781260f',
     'name' => 'hyperf/hyperf-skeleton',
   ),
   'versions' => 
@@ -169,6 +169,15 @@
       ),
       'reference' => 'ec3ca3272f20e2be1cda74d7bd8f5de728ae50ba',
     ),
+    'hyperf/constants' => 
+    array (
+      'pretty_version' => 'v2.1.0',
+      'version' => '2.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '055c124a4bf24d224e1d9258d8671900b35a4699',
+    ),
     'hyperf/contract' => 
     array (
       'pretty_version' => 'v2.1.3',
@@ -288,12 +297,12 @@
     ),
     'hyperf/hyperf-skeleton' => 
     array (
-      'pretty_version' => 'v2.1.2',
-      'version' => '2.1.2.0',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '31be73c5af115a82f852e92b16b666e81781260f',
     ),
     'hyperf/logger' => 
     array (
@@ -700,8 +709,8 @@
     array (
       'provided' => 
       array (
-        0 => '1.0',
-        1 => '1.0.0',
+        0 => '1.0.0',
+        1 => '1.0',
       ),
     ),
     'psr/simple-cache' => 

@@ -1,0 +1,4 @@
+[ErrorException]
+putenv() has been disabled for security reasons
+
+因为 putenv() 被禁用了

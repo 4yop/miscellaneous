@@ -25,12 +25,12 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => 'v2.1.2',
-    'version' => '2.1.2.0',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '31be73c5af115a82f852e92b16b666e81781260f',
     'name' => 'hyperf/hyperf-skeleton',
   ),
   'versions' => 
@@ -193,6 +193,15 @@ private static $installed = array (
       ),
       'reference' => 'ec3ca3272f20e2be1cda74d7bd8f5de728ae50ba',
     ),
+    'hyperf/constants' => 
+    array (
+      'pretty_version' => 'v2.1.0',
+      'version' => '2.1.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '055c124a4bf24d224e1d9258d8671900b35a4699',
+    ),
     'hyperf/contract' => 
     array (
       'pretty_version' => 'v2.1.3',
@@ -312,12 +321,12 @@ private static $installed = array (
     ),
     'hyperf/hyperf-skeleton' => 
     array (
-      'pretty_version' => 'v2.1.2',
-      'version' => '2.1.2.0',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '31be73c5af115a82f852e92b16b666e81781260f',
     ),
     'hyperf/logger' => 
     array (
@@ -724,8 +733,8 @@ private static $installed = array (
     array (
       'provided' => 
       array (
-        0 => '1.0',
-        1 => '1.0.0',
+        0 => '1.0.0',
+        1 => '1.0',
       ),
     ),
     'psr/simple-cache' => 
@@ -1384,7 +1393,6 @@ self::$canGetVendors = method_exists('Composer\Autoload\ClassLoader', 'getRegist
 $installed = array();
 
 if (self::$canGetVendors) {
-
 foreach (ClassLoader::getRegisteredLoaders() as $vendorDir => $loader) {
 if (isset(self::$installedByVendor[$vendorDir])) {
 $installed[] = self::$installedByVendor[$vendorDir];

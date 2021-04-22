@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
+    'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Php73\\' => array($vendorDir . '/symfony/polyfill-php73'),
@@ -44,7 +44,6 @@ return array(
     'Laminas\\ZendFrameworkBridge\\' => array($vendorDir . '/laminas/laminas-zendframework-bridge/src'),
     'Laminas\\Stdlib\\' => array($vendorDir . '/laminas/laminas-stdlib/src'),
     'Laminas\\Mime\\' => array($vendorDir . '/laminas/laminas-mime/src'),
-    'Installer\\' => array($baseDir . '/installer'),
     'Hyperf\\Utils\\' => array($vendorDir . '/hyperf/utils/src'),
     'Hyperf\\Testing\\' => array($vendorDir . '/hyperf/testing/src'),
     'Hyperf\\Server\\' => array($vendorDir . '/hyperf/server/src'),
@@ -67,6 +66,7 @@ return array(
     'Hyperf\\DbConnection\\' => array($vendorDir . '/hyperf/db-connection/src'),
     'Hyperf\\Database\\' => array($vendorDir . '/hyperf/database/src'),
     'Hyperf\\Contract\\' => array($vendorDir . '/hyperf/contract/src'),
+    'Hyperf\\Constants\\' => array($vendorDir . '/hyperf/constants/src'),
     'Hyperf\\Config\\' => array($vendorDir . '/hyperf/config/src'),
     'Hyperf\\Command\\' => array($vendorDir . '/hyperf/command/src'),
     'Hyperf\\Cache\\' => array($vendorDir . '/hyperf/cache/src'),
