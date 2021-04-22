@@ -45,7 +45,10 @@ class MemberController
      */
     public function login(LoginRequest $request)
     {
-
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $member = $this->memberService->login($username,$password);
+        
     }
 
 }
