@@ -23,6 +23,11 @@ class MemberController
      */
     private $memberService;
 
+    /**
+     * @Inject()
+     * @var \Hyperf\Contract\SessionInterface
+     */
+    private $session;
 
     public function index(RequestInterface $request, ResponseInterface $response)
     {
@@ -48,7 +53,10 @@ class MemberController
         $username = $request->input('username');
         $password = $request->input('password');
         $member = $this->memberService->login($username,$password);
-        
+        $this->session->set('member', $member);
+        return [
+            'x-session-id'=>$this->session->getId()
+        ];
     }
 
 }

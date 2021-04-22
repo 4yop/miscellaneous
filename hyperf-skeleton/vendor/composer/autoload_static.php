@@ -101,6 +101,7 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
             'Hyperf\\Utils\\' => 13,
             'Hyperf\\Translation\\' => 19,
             'Hyperf\\Testing\\' => 15,
+            'Hyperf\\Session\\' => 15,
             'Hyperf\\Server\\' => 14,
             'Hyperf\\Redis\\' => 13,
             'Hyperf\\Process\\' => 15,
@@ -343,6 +344,10 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'Hyperf\\Testing\\' => 
         array (
             0 => __DIR__ . '/..' . '/hyperf/testing/src',
+        ),
+        'Hyperf\\Session\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hyperf/session/src',
         ),
         'Hyperf\\Server\\' => 
         array (
@@ -1597,6 +1602,17 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'Hyperf\\Server\\SwooleEvent' => __DIR__ . '/..' . '/hyperf/server/src/SwooleEvent.php',
         'Hyperf\\Server\\SwooleServerFactory' => __DIR__ . '/..' . '/hyperf/server/src/SwooleServerFactory.php',
         'Hyperf\\Server\\SwowServer' => __DIR__ . '/..' . '/hyperf/server/src/SwowServer.php',
+        'Hyperf\\Session\\ConfigProvider' => __DIR__ . '/..' . '/hyperf/session/src/ConfigProvider.php',
+        'Hyperf\\Session\\FlashTrait' => __DIR__ . '/..' . '/hyperf/session/src/FlashTrait.php',
+        'Hyperf\\Session\\Handler\\FileHandler' => __DIR__ . '/..' . '/hyperf/session/src/Handler/FileHandler.php',
+        'Hyperf\\Session\\Handler\\FileHandlerFactory' => __DIR__ . '/..' . '/hyperf/session/src/Handler/FileHandlerFactory.php',
+        'Hyperf\\Session\\Handler\\NullHandler' => __DIR__ . '/..' . '/hyperf/session/src/Handler/NullHandler.php',
+        'Hyperf\\Session\\Handler\\RedisHandler' => __DIR__ . '/..' . '/hyperf/session/src/Handler/RedisHandler.php',
+        'Hyperf\\Session\\Handler\\RedisHandlerFactory' => __DIR__ . '/..' . '/hyperf/session/src/Handler/RedisHandlerFactory.php',
+        'Hyperf\\Session\\Middleware\\SessionMiddleware' => __DIR__ . '/..' . '/hyperf/session/src/Middleware/SessionMiddleware.php',
+        'Hyperf\\Session\\Session' => __DIR__ . '/..' . '/hyperf/session/src/Session.php',
+        'Hyperf\\Session\\SessionManager' => __DIR__ . '/..' . '/hyperf/session/src/SessionManager.php',
+        'Hyperf\\Session\\SessionProxy' => __DIR__ . '/..' . '/hyperf/session/src/SessionProxy.php',
         'Hyperf\\Testing\\Client' => __DIR__ . '/..' . '/hyperf/testing/src/Client.php',
         'Hyperf\\Testing\\HttpClient' => __DIR__ . '/..' . '/hyperf/testing/src/HttpClient.php',
         'Hyperf\\Testing\\HttpMessage\\Upload\\UploadedFile' => __DIR__ . '/..' . '/hyperf/testing/src/HttpMessage/Upload/UploadedFile.php',

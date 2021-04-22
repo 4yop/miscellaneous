@@ -50,6 +50,7 @@ return array(
     'Hyperf\\Utils\\' => array($vendorDir . '/hyperf/utils/src'),
     'Hyperf\\Translation\\' => array($vendorDir . '/hyperf/translation/src'),
     'Hyperf\\Testing\\' => array($vendorDir . '/hyperf/testing/src'),
+    'Hyperf\\Session\\' => array($vendorDir . '/hyperf/session/src'),
     'Hyperf\\Server\\' => array($vendorDir . '/hyperf/server/src'),
     'Hyperf\\Redis\\' => array($vendorDir . '/hyperf/redis/src'),
     'Hyperf\\Process\\' => array($vendorDir . '/hyperf/process/src'),
