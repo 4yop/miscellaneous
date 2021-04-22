@@ -8,7 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 use App\Exception\BusinessException;
 use Throwable;
 
-class ApiExceptionHandler
+class ApiExceptionHandler extends ExceptionHandler
 {
     public function handle(Throwable $throwable, ResponseInterface $response)
     {
