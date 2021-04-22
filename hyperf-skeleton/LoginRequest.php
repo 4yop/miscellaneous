@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Request;
+namespace App\Request\Api;
 
 
 
 use Hyperf\Validation\Rule;
 
-class RegisterRequest extends ApiRequest
+class LoginRequest extends ApiRequest
 {
+
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -28,10 +30,10 @@ class RegisterRequest extends ApiRequest
             'username' => [
                 'required',
                 'max:16',
-                !Rule::exists('member')->where(function ($query) use ($username) {
-                    $query->where('username', $username);
-                }),
-            ],
+//                Rule::exists('member')->where(function ($query) use ($username) {
+//                    $query->where('username', $username);
+//                }),
+                ],
             'password' => 'required',
         ];
 

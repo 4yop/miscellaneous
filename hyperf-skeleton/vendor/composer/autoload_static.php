@@ -542,6 +542,7 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'App\\Exception\\NoLoginException' => __DIR__ . '/../..' . '/app/Exception/NoLoginException.php',
         'App\\Exception\\NotFoundException' => __DIR__ . '/../..' . '/app/Exception/NotFoundException.php',
         'App\\Listener\\DbQueryExecutedListener' => __DIR__ . '/../..' . '/app/Listener/DbQueryExecutedListener.php',
+        'App\\Middleware\\CorsMiddleware' => __DIR__ . '/../..' . '/app/Middleware/CorsMiddleware.php',
         'App\\Model\\Member' => __DIR__ . '/../..' . '/app/Model/Member.php',
         'App\\Model\\Model' => __DIR__ . '/../..' . '/app/Model/Model.php',
         'App\\Request\\ApiRequest' => __DIR__ . '/../..' . '/app/Request/ApiRequest.php',

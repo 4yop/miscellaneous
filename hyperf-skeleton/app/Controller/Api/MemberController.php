@@ -54,10 +54,21 @@ class MemberController
         $username = $request->input('username');
         $password = $request->input('password');
         $member = $this->memberService->login($username,$password);
-        //$this->session->set('member', $member);
+        $this->session->set('member', $member);
         return [
-            //'x-session-id'=>$this->session->getId()
+            'token'=>$this->session->getId()
         ];
     }
 
+    /**
+     * @RequestMapping(path="status", methods="get,post")
+     */
+    public function status(RequestInterface $request)
+    {
+        $token = $request->header('token');
+        echo $token;
+        $this->session->setId($token);
+        $member = $this->session->get('member');
+        return $member;
+    }
 }

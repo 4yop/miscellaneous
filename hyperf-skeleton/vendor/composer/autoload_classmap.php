@@ -18,6 +18,7 @@ return array(
     'App\\Exception\\NoLoginException' => $baseDir . '/app/Exception/NoLoginException.php',
     'App\\Exception\\NotFoundException' => $baseDir . '/app/Exception/NotFoundException.php',
     'App\\Listener\\DbQueryExecutedListener' => $baseDir . '/app/Listener/DbQueryExecutedListener.php',
+    'App\\Middleware\\CorsMiddleware' => $baseDir . '/app/Middleware/CorsMiddleware.php',
     'App\\Model\\Member' => $baseDir . '/app/Model/Member.php',
     'App\\Model\\Model' => $baseDir . '/app/Model/Model.php',
     'App\\Request\\ApiRequest' => $baseDir . '/app/Request/ApiRequest.php',
