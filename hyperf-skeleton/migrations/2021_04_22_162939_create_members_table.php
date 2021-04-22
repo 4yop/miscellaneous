@@ -15,11 +15,10 @@ class CreateMembersTable extends Migration
             $table->bigIncrements('id');
             $table->string('username',16)
                     ->nullable(false)
-                    ->default('')
+                    ->unique()
                     ->comment("用户名");
             $table->string('password')
                     ->nullable(false)
-                    ->default('')
                     ->comment("密码");
             $table->timestamps();
         });

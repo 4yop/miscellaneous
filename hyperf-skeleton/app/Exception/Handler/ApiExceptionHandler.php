@@ -13,7 +13,7 @@ class ApiExceptionHandler extends ExceptionHandler
     public function handle(Throwable $throwable, ResponseInterface $response)
     {
         // 判断被捕获到的异常是希望被捕获的异常
-        if ($throwable instanceof BusinessException) {
+        //if ($throwable instanceof BusinessException) {
             // 格式化输出
             $data = json_encode([
                 'code' => $throwable->getCode(),
@@ -25,10 +25,10 @@ class ApiExceptionHandler extends ExceptionHandler
             return $response->withStatus(500)
                             ->withHeader("Content-type","application/json; charset=utf-8")
                             ->withBody(new SwooleStream($data));
-        }
+        //}
 
         // 交给下一个异常处理器
-        //return $response;
+      //  return $response;
 
         // 或者不做处理直接屏蔽异常
     }

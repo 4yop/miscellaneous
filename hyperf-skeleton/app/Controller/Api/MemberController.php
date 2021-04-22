@@ -10,8 +10,9 @@ use App\Request\RegisterRequest;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use Hyperf\HttpServer\Annotation\AutoController;
-use Hyperf\HttpServer\Annotation\PostMapping;
+use Hyperf\HttpServer\Annotation\RequestMapping;
 use Hyperf\Di\Annotation\Inject;
+use Hyperf\Contract\SessionInterface;
 /**
  * @AutoController()
  */
@@ -35,7 +36,7 @@ class MemberController
     }
 
     /**
-     * @PostMapping(path="register", methods="post")
+     * @RequestMapping(path="register", methods="get,post")
      */
     public function register(RegisterRequest $request)
     {
@@ -46,16 +47,16 @@ class MemberController
     }
 
     /**
-     * @PostMapping(path="register", methods="post")
+     * @RequestMapping(path="login", methods="get,post")
      */
     public function login(LoginRequest $request)
     {
         $username = $request->input('username');
         $password = $request->input('password');
         $member = $this->memberService->login($username,$password);
-        $this->session->set('member', $member);
+        //$this->session->set('member', $member);
         return [
-            'x-session-id'=>$this->session->getId()
+            //'x-session-id'=>$this->session->getId()
         ];
     }
 

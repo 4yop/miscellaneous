@@ -13,18 +13,28 @@ namespace App\Controller;
 use App\Exception\BusinessException;
 use App\Exception\NoLoginException;
 use App\Exception\NotFoundException;
+use App\Model\Member as MemberModel;
+use Hyperf\Di\Annotation\Inject;
 use Hyperf\DbConnection\Db;
 class IndexController extends AbstractController
 {
+    /**
+     * @Inject()
+     * @var MemberModel
+     */
+    private $memberModel;
+
     public function index()
     {
-        throw new NoLoginException();
+        //throw new NoLoginException();
 
         try {
+
 
             $user = $this->request->input('user', 'Hyperf');
             $method = $this->request->getMethod();
             $users = Db::table('users')->get();
+
             return [
                 'method' => $method,
                 'message' => "Hello {$user}.",

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Request;
 
-use Hyperf\Validation\Request\FormRequest;
 
-class RegisterRequest extends FormRequest
+
+class RegisterRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,8 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => [],
-            'password' => [],
+            'username' => ['required'],
+            'password' => ['required'],
         ];
     }
 }

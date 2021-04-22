@@ -6,7 +6,7 @@ namespace App\Request;
 
 use Hyperf\Validation\Request\FormRequest;
 
-class LoginRequest extends FormRequest
+class LoginRequest extends ApiRequest
 {
     /**
      * Determine if the user is authorized to make this request.
