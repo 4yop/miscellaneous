@@ -8,6 +8,7 @@ use Roave\BetterReflection\Reflection\Exception\ClassDoesNotExist;
 use Roave\BetterReflection\Reflection\Exception\ReflectionTypeDoesNotPointToAClassAlikeType;
 use Roave\BetterReflection\Reflector\Exception\IdentifierNotFound;
 use Roave\BetterReflection\Reflector\Reflector;
+
 use function array_key_exists;
 use function ltrim;
 use function strtolower;
@@ -28,14 +29,11 @@ class ReflectionType
         'void'     => null,
     ];
 
-    /** @var string */
-    private $type;
+    private string $type;
 
-    /** @var bool */
-    private $allowsNull;
+    private bool $allowsNull;
 
-    /** @var Reflector */
-    private $reflector;
+    private Reflector $reflector;
 
     private function __construct()
     {
@@ -45,7 +43,7 @@ class ReflectionType
         string $type,
         bool $allowsNull,
         Reflector $classReflector
-    ) : self {
+    ): self {
         $reflectionType = new self();
 
         $reflectionType->type       = ltrim($type, '\\');
@@ -58,7 +56,7 @@ class ReflectionType
     /**
      * Does the parameter allow null?
      */
-    public function allowsNull() : bool
+    public function allowsNull(): bool
     {
         return $this->allowsNull;
     }
@@ -68,7 +66,7 @@ class ReflectionType
      *
      * @see https://php.net/manual/en/reflectiontype.isbuiltin.php
      */
-    public function isBuiltin() : bool
+    public function isBuiltin(): bool
     {
         return array_key_exists(strtolower($this->type), self::BUILT_IN_TYPES);
     }
@@ -78,7 +76,7 @@ class ReflectionType
      * @throws ReflectionTypeDoesNotPointToAClassAlikeType The type is not pointing to a class-alike symbol.
      * @throws ClassDoesNotExist The target type is not a class.
      */
-    public function targetReflectionClass() : ReflectionClass
+    public function targetReflectionClass(): ReflectionClass
     {
         if ($this->isBuiltin()) {
             throw ReflectionTypeDoesNotPointToAClassAlikeType::for($this);
@@ -93,7 +91,7 @@ class ReflectionType
         return $reflectionClass;
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->type;
     }
@@ -101,7 +99,7 @@ class ReflectionType
     /**
      * Convert this string type to a string
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->type;
     }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Roave\BetterReflection\SourceLocator\Type;
 
-use InvalidArgumentException;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\NodeTraverser;
@@ -24,13 +23,11 @@ use Roave\BetterReflection\SourceLocator\Exception\TwoAnonymousClassesOnSameLine
 use Roave\BetterReflection\SourceLocator\FileChecker;
 use Roave\BetterReflection\SourceLocator\Located\LocatedSource;
 use Roave\BetterReflection\Util\FileHelper;
+
 use function array_filter;
 use function array_values;
 use function assert;
 use function file_get_contents;
-use function gettype;
-use function is_object;
-use function sprintf;
 use function strpos;
 
 /**
@@ -38,29 +35,15 @@ use function strpos;
  */
 final class AnonymousClassObjectSourceLocator implements SourceLocator
 {
-    /** @var CoreReflectionClass */
-    private $coreClassReflection;
+    private CoreReflectionClass $coreClassReflection;
 
-    /** @var Parser */
-    private $parser;
+    private Parser $parser;
 
     /**
-     * @param object $anonymousClassObject
-     *
-     * @throws InvalidArgumentException
      * @throws ReflectionException
-     *
-     * @psalm-suppress DocblockTypeContradiction
      */
-    public function __construct($anonymousClassObject, Parser $parser)
+    public function __construct(object $anonymousClassObject, Parser $parser)
     {
-        if (! is_object($anonymousClassObject)) {
-            throw new InvalidArgumentException(sprintf(
-                'Can only create from an instance of an object, "%s" given',
-                gettype($anonymousClassObject)
-            ));
-        }
-
         $this->coreClassReflection = new CoreReflectionClass($anonymousClassObject);
         $this->parser              = $parser;
     }
@@ -70,7 +53,7 @@ final class AnonymousClassObjectSourceLocator implements SourceLocator
      *
      * @throws ParseToAstFailure
      */
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?Reflection
     {
         return $this->getReflectionClass($reflector, $identifier->getType());
     }
@@ -80,12 +63,12 @@ final class AnonymousClassObjectSourceLocator implements SourceLocator
      *
      * @throws ParseToAstFailure
      */
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return array_filter([$this->getReflectionClass($reflector, $identifierType)]);
     }
 
-    private function getReflectionClass(Reflector $reflector, IdentifierType $identifierType) : ?ReflectionClass
+    private function getReflectionClass(Reflector $reflector, IdentifierType $identifierType): ?ReflectionClass
     {
         if (! $identifierType->isClass()) {
             return null;
@@ -101,16 +84,14 @@ final class AnonymousClassObjectSourceLocator implements SourceLocator
 
         $fileName = FileHelper::normalizeWindowsPath($fileName);
 
-        $nodeVisitor = new class($fileName, $this->coreClassReflection->getStartLine()) extends NodeVisitorAbstract
+        $nodeVisitor = new class ($fileName, $this->coreClassReflection->getStartLine()) extends NodeVisitorAbstract
         {
-            /** @var string */
-            private $fileName;
+            private string $fileName;
 
-            /** @var int */
-            private $startLine;
+            private int $startLine;
 
             /** @var Class_[] */
-            private $anonymousClassNodes = [];
+            private array $anonymousClassNodes = [];
 
             public function __construct(string $fileName, int $startLine)
             {
@@ -132,10 +113,10 @@ final class AnonymousClassObjectSourceLocator implements SourceLocator
                 return null;
             }
 
-            public function getAnonymousClassNode() : ?Class_
+            public function getAnonymousClassNode(): ?Class_
             {
                 /** @var Class_[] $anonymousClassNodesOnSameLine */
-                $anonymousClassNodesOnSameLine = array_values(array_filter($this->anonymousClassNodes, function (Class_ $node) : bool {
+                $anonymousClassNodesOnSameLine = array_values(array_filter($this->anonymousClassNodes, function (Class_ $node): bool {
                     return $node->getLine() === $this->startLine;
                 }));
 
@@ -162,7 +143,7 @@ final class AnonymousClassObjectSourceLocator implements SourceLocator
             $reflector,
             $nodeVisitor->getAnonymousClassNode(),
             new LocatedSource($fileContents, $fileName),
-            null
+            null,
         );
         assert($reflectionClass instanceof ReflectionClass || $reflectionClass === null);
 

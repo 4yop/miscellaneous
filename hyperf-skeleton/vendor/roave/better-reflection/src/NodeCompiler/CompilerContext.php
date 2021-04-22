@@ -10,11 +10,9 @@ use RuntimeException;
 
 class CompilerContext
 {
-    /** @var Reflector */
-    private $reflector;
+    private Reflector $reflector;
 
-    /** @var ReflectionClass|null */
-    private $self;
+    private ?ReflectionClass $self;
 
     public function __construct(Reflector $reflector, ?ReflectionClass $self)
     {
@@ -27,12 +25,12 @@ class CompilerContext
      *
      * (e.g. if the context is a function, then no, there will be no self)
      */
-    public function hasSelf() : bool
+    public function hasSelf(): bool
     {
         return $this->self !== null;
     }
 
-    public function getSelf() : ReflectionClass
+    public function getSelf(): ReflectionClass
     {
         if (! $this->hasSelf()) {
             throw new RuntimeException('The current context does not have a class for self');
@@ -41,12 +39,12 @@ class CompilerContext
         return $this->self;
     }
 
-    public function getReflector() : Reflector
+    public function getReflector(): Reflector
     {
         return $this->reflector;
     }
 
-    public function getFileName() : string
+    public function getFileName(): string
     {
         return $this->getSelf()->getFileName();
     }

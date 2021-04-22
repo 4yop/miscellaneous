@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Roave\BetterReflection\Reflection;
 
 use Closure;
-use InvalidArgumentException;
 use OutOfBoundsException;
 use PhpParser\Node\Stmt\ClassMethod as MethodNode;
 use PhpParser\Node\Stmt\Namespace_;
@@ -14,30 +13,26 @@ use ReflectionMethod as CoreReflectionMethod;
 use Roave\BetterReflection\Reflection\Exception\ClassDoesNotExist;
 use Roave\BetterReflection\Reflection\Exception\InvalidAbstractFunctionNodeType;
 use Roave\BetterReflection\Reflection\Exception\NoObjectProvided;
-use Roave\BetterReflection\Reflection\Exception\NotAnObject;
 use Roave\BetterReflection\Reflection\Exception\ObjectNotInstanceOfClass;
 use Roave\BetterReflection\Reflection\StringCast\ReflectionMethodStringCast;
 use Roave\BetterReflection\Reflector\Exception\IdentifierNotFound;
 use Roave\BetterReflection\Reflector\Reflector;
+use Webmozart\Assert\Assert;
+
 use function class_exists;
 use function get_class;
-use function is_object;
 use function sprintf;
 use function strtolower;
 
 class ReflectionMethod extends ReflectionFunctionAbstract
 {
-    /** @var ReflectionClass */
-    private $declaringClass;
+    private ReflectionClass $declaringClass;
 
-    /** @var ReflectionClass */
-    private $implementingClass;
+    private ReflectionClass $implementingClass;
 
-    /** @var MethodNode */
-    private $methodNode;
+    private MethodNode $methodNode;
 
-    /** @var string|null */
-    private $aliasName;
+    private ?string $aliasName;
 
     /**
      * @internal
@@ -53,7 +48,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
         ReflectionClass $declaringClass,
         ReflectionClass $implementingClass,
         ?string $aliasName = null
-    ) : self {
+    ): self {
         $method                    = new self();
         $method->declaringClass    = $declaringClass;
         $method->implementingClass = $implementingClass;
@@ -71,7 +66,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      * @throws IdentifierNotFound
      * @throws OutOfBoundsException
      */
-    public static function createFromName(string $className, string $methodName) : self
+    public static function createFromName(string $className, string $methodName): self
     {
         return ReflectionClass::createFromName($className)->getMethod($methodName);
     }
@@ -79,19 +74,16 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     /**
      * Create a reflection of a method by it's name using an instance
      *
-     * @param object $instance
-     *
-     * @throws InvalidArgumentException
      * @throws ReflectionException
      * @throws IdentifierNotFound
      * @throws OutOfBoundsException
      */
-    public static function createFromInstance($instance, string $methodName) : self
+    public static function createFromInstance(object $instance, string $methodName): self
     {
         return ReflectionClass::createFromInstance($instance)->getMethod($methodName);
     }
 
-    public function getShortName() : string
+    public function getShortName(): string
     {
         if ($this->aliasName !== null) {
             return $this->aliasName;
@@ -100,7 +92,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
         return parent::getShortName();
     }
 
-    public function getAliasName() : ?string
+    public function getAliasName(): ?string
     {
         return $this->aliasName;
     }
@@ -111,9 +103,9 @@ class ReflectionMethod extends ReflectionFunctionAbstract
      *
      * @throws Exception\MethodPrototypeNotFound
      */
-    public function getPrototype() : self
+    public function getPrototype(): self
     {
-        $currentClass = $this->getDeclaringClass();
+        $currentClass = $this->getImplementingClass();
 
         while ($currentClass) {
             foreach ($currentClass->getImmediateInterfaces() as $interface) {
@@ -131,6 +123,10 @@ class ReflectionMethod extends ReflectionFunctionAbstract
             $prototype = $currentClass->getMethod($this->getName())->findPrototype();
 
             if ($prototype !== null) {
+                if ($this->isConstructor() && ! $prototype->isAbstract()) {
+                    break;
+                }
+
                 return $prototype;
             }
         }
@@ -138,11 +134,11 @@ class ReflectionMethod extends ReflectionFunctionAbstract
         throw new Exception\MethodPrototypeNotFound(sprintf(
             'Method %s::%s does not have a prototype',
             $this->getDeclaringClass()->getName(),
-            $this->getName()
+            $this->getName(),
         ));
     }
 
-    private function findPrototype() : ?self
+    private function findPrototype(): ?self
     {
         if ($this->isAbstract()) {
             return $this;
@@ -162,7 +158,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     /**
      * Get the core-reflection-compatible modifier values.
      */
-    public function getModifiers() : int
+    public function getModifiers(): int
     {
         $val  = 0;
         $val += $this->isStatic() ? CoreReflectionMethod::IS_STATIC : 0;
@@ -175,12 +171,12 @@ class ReflectionMethod extends ReflectionFunctionAbstract
         return $val;
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return ReflectionMethodStringCast::toString($this);
     }
 
-    public function inNamespace() : bool
+    public function inNamespace(): bool
     {
         return false;
     }
@@ -188,7 +184,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     /**
      * Is the method abstract.
      */
-    public function isAbstract() : bool
+    public function isAbstract(): bool
     {
         return $this->methodNode->isAbstract() || $this->declaringClass->isInterface();
     }
@@ -196,7 +192,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     /**
      * Is the method final.
      */
-    public function isFinal() : bool
+    public function isFinal(): bool
     {
         return $this->methodNode->isFinal();
     }
@@ -204,7 +200,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     /**
      * Is the method private visibility.
      */
-    public function isPrivate() : bool
+    public function isPrivate(): bool
     {
         return $this->methodNode->isPrivate();
     }
@@ -212,7 +208,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     /**
      * Is the method protected visibility.
      */
-    public function isProtected() : bool
+    public function isProtected(): bool
     {
         return $this->methodNode->isProtected();
     }
@@ -220,7 +216,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     /**
      * Is the method public visibility.
      */
-    public function isPublic() : bool
+    public function isPublic(): bool
     {
         return $this->methodNode->isPublic();
     }
@@ -228,7 +224,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     /**
      * Is the method static.
      */
-    public function isStatic() : bool
+    public function isStatic(): bool
     {
         return $this->methodNode->isStatic();
     }
@@ -236,7 +232,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     /**
      * Is the method a constructor.
      */
-    public function isConstructor() : bool
+    public function isConstructor(): bool
     {
         if (strtolower($this->getName()) === '__construct') {
             return true;
@@ -253,7 +249,7 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     /**
      * Is the method a destructor.
      */
-    public function isDestructor() : bool
+    public function isDestructor(): bool
     {
         return strtolower($this->getName()) === '__destruct';
     }
@@ -261,30 +257,27 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     /**
      * Get the class that declares this method.
      */
-    public function getDeclaringClass() : ReflectionClass
+    public function getDeclaringClass(): ReflectionClass
     {
         return $this->declaringClass;
     }
 
-    public function getImplementingClass() : ReflectionClass
+    public function getImplementingClass(): ReflectionClass
     {
         return $this->implementingClass;
     }
 
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return $this->declaringClass->getLocatedSource()->isInternal();
     }
 
     /**
-     * @param object|null $object
-     *
      * @throws ClassDoesNotExist
      * @throws NoObjectProvided
-     * @throws NotAnObject
      * @throws ObjectNotInstanceOfClass
      */
-    public function getClosure($object = null) : Closure
+    public function getClosure(?object $object = null): Closure
     {
         $declaringClassName = $this->getDeclaringClass()->getName();
 
@@ -304,33 +297,29 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     }
 
     /**
-     * @param object|null $object
-     * @param mixed       ...$args
+     * @param mixed ...$args
      *
      * @return mixed
      *
      * @throws ClassDoesNotExist
      * @throws NoObjectProvided
-     * @throws NotAnObject
      * @throws ObjectNotInstanceOfClass
      */
-    public function invoke($object = null, ...$args)
+    public function invoke(?object $object = null, ...$args)
     {
         return $this->invokeArgs($object, $args);
     }
 
     /**
-     * @param object|null $object
-     * @param mixed[]     $args
+     * @param mixed[] $args
      *
      * @return mixed
      *
      * @throws ClassDoesNotExist
      * @throws NoObjectProvided
-     * @throws NotAnObject
      * @throws ObjectNotInstanceOfClass
      */
-    public function invokeArgs($object = null, array $args = [])
+    public function invokeArgs(?object $object = null, array $args = [])
     {
         $declaringClassName = $this->getDeclaringClass()->getName();
 
@@ -352,28 +341,35 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     {
         $declaringClassName = $this->getDeclaringClass()->getName();
 
-        return Closure::bind(function (string $declaringClassName, string $methodName, array $methodArgs) {
+        $closure = Closure::bind(function (string $declaringClassName, string $methodName, array $methodArgs) {
             return $declaringClassName::{$methodName}(...$methodArgs);
-        }, null, $declaringClassName)->__invoke($declaringClassName, $this->getName(), $args);
+        }, null, $declaringClassName);
+
+        Assert::notFalse($closure);
+
+        return $closure->__invoke($declaringClassName, $this->getName(), $args);
     }
 
     /**
-     * @param object  $object
      * @param mixed[] $args
      *
      * @return mixed
      */
-    private function callObjectMethod($object, array $args)
+    private function callObjectMethod(object $object, array $args)
     {
-        return Closure::bind(function ($object, string $methodName, array $methodArgs) {
+        $closure = Closure::bind(function ($object, string $methodName, array $methodArgs) {
             return $object->{$methodName}(...$methodArgs);
-        }, $object, $this->getDeclaringClass()->getName())->__invoke($object, $this->getName(), $args);
+        }, $object, $this->getDeclaringClass()->getName());
+
+        Assert::notFalse($closure);
+
+        return $closure->__invoke($object, $this->getName(), $args);
     }
 
     /**
      * @throws ClassDoesNotExist
      */
-    private function assertClassExist(string $className) : void
+    private function assertClassExist(string $className): void
     {
         if (! class_exists($className, false)) {
             throw new ClassDoesNotExist(sprintf('Method of class %s cannot be used as the class is not loaded', $className));
@@ -381,22 +377,13 @@ class ReflectionMethod extends ReflectionFunctionAbstract
     }
 
     /**
-     * @param mixed $object
-     *
-     * @return object
-     *
      * @throws NoObjectProvided
-     * @throws NotAnObject
      * @throws ObjectNotInstanceOfClass
      */
-    private function assertObject($object)
+    private function assertObject(?object $object): object
     {
         if ($object === null) {
             throw NoObjectProvided::create();
-        }
-
-        if (! is_object($object)) {
-            throw NotAnObject::fromNonObject($object);
         }
 
         $declaringClassName = $this->getDeclaringClass()->getName();

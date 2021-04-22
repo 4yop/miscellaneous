@@ -20,6 +20,7 @@ use Roave\BetterReflection\Reflector\Reflector;
 use Roave\BetterReflection\SourceLocator\Ast\Strategy\AstConversionStrategy;
 use Roave\BetterReflection\SourceLocator\Located\LocatedSource;
 use Roave\BetterReflection\Util\ConstantNodeChecker;
+
 use function assert;
 use function count;
 
@@ -28,14 +29,12 @@ use function count;
  */
 final class FindReflectionsInTree
 {
-    /** @var AstConversionStrategy */
-    private $astConversionStrategy;
+    private AstConversionStrategy $astConversionStrategy;
 
-    /** @var FunctionReflector */
-    private $functionReflector;
+    private FunctionReflector $functionReflector;
 
     /** @var Closure(): FunctionReflector */
-    private $functionReflectorGetter;
+    private Closure $functionReflectorGetter;
 
     /**
      * @param Closure(): FunctionReflector $functionReflectorGetter
@@ -58,30 +57,23 @@ final class FindReflectionsInTree
         array $ast,
         IdentifierType $identifierType,
         LocatedSource $locatedSource
-    ) : array {
-        $nodeVisitor = new class($reflector, $identifierType, $locatedSource, $this->astConversionStrategy, $this->functionReflectorGetter->__invoke())
-            extends NodeVisitorAbstract
+    ): array {
+        $nodeVisitor = new class ($reflector, $identifierType, $locatedSource, $this->astConversionStrategy, $this->functionReflectorGetter->__invoke()) extends NodeVisitorAbstract
         {
             /** @var Reflection[] */
-            private $reflections = [];
+            private array $reflections = [];
 
-            /** @var Reflector */
-            private $reflector;
+            private Reflector $reflector;
 
-            /** @var IdentifierType */
-            private $identifierType;
+            private IdentifierType $identifierType;
 
-            /** @var LocatedSource */
-            private $locatedSource;
+            private LocatedSource $locatedSource;
 
-            /** @var AstConversionStrategy */
-            private $astConversionStrategy;
+            private AstConversionStrategy $astConversionStrategy;
 
-            /** @var Namespace_|null */
-            private $currentNamespace;
+            private ?Namespace_ $currentNamespace = null;
 
-            /** @var FunctionReflector */
-            private $functionReflector;
+            private FunctionReflector $functionReflector;
 
             public function __construct(
                 Reflector $reflector,
@@ -199,7 +191,7 @@ final class FindReflectionsInTree
             /**
              * @return Reflection[]
              */
-            public function getReflections() : array
+            public function getReflections(): array
             {
                 return $this->reflections;
             }

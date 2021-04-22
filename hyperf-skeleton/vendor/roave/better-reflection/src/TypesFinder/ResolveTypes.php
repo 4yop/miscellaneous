@@ -10,8 +10,7 @@ use phpDocumentor\Reflection\Types\Context;
 
 class ResolveTypes
 {
-    /** @var TypeResolver */
-    private $typeResolver;
+    private TypeResolver $typeResolver;
 
     public function __construct()
     {
@@ -23,7 +22,7 @@ class ResolveTypes
      *
      * @return Type[]
      */
-    public function __invoke(array $stringTypes, Context $context) : array
+    public function __invoke(array $stringTypes, Context $context): array
     {
         $resolvedTypes = [];
 

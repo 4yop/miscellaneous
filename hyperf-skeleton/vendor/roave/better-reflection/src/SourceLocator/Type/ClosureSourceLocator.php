@@ -23,6 +23,7 @@ use Roave\BetterReflection\SourceLocator\Exception\TwoClosuresOnSameLine;
 use Roave\BetterReflection\SourceLocator\FileChecker;
 use Roave\BetterReflection\SourceLocator\Located\LocatedSource;
 use Roave\BetterReflection\Util\FileHelper;
+
 use function array_filter;
 use function array_values;
 use function assert;
@@ -35,11 +36,9 @@ use function strpos;
  */
 final class ClosureSourceLocator implements SourceLocator
 {
-    /** @var CoreFunctionReflection */
-    private $coreFunctionReflection;
+    private CoreFunctionReflection $coreFunctionReflection;
 
-    /** @var Parser */
-    private $parser;
+    private Parser $parser;
 
     public function __construct(Closure $closure, Parser $parser)
     {
@@ -52,7 +51,7 @@ final class ClosureSourceLocator implements SourceLocator
      *
      * @throws ParseToAstFailure
      */
-    public function locateIdentifier(Reflector $reflector, Identifier $identifier) : ?Reflection
+    public function locateIdentifier(Reflector $reflector, Identifier $identifier): ?Reflection
     {
         return $this->getReflectionFunction($reflector, $identifier->getType());
     }
@@ -62,12 +61,12 @@ final class ClosureSourceLocator implements SourceLocator
      *
      * @throws ParseToAstFailure
      */
-    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType) : array
+    public function locateIdentifiersByType(Reflector $reflector, IdentifierType $identifierType): array
     {
         return array_filter([$this->getReflectionFunction($reflector, $identifierType)]);
     }
 
-    private function getReflectionFunction(Reflector $reflector, IdentifierType $identifierType) : ?ReflectionFunction
+    private function getReflectionFunction(Reflector $reflector, IdentifierType $identifierType): ?ReflectionFunction
     {
         if (! $identifierType->isFunction()) {
             return null;
@@ -83,19 +82,16 @@ final class ClosureSourceLocator implements SourceLocator
 
         $fileName = FileHelper::normalizeWindowsPath($fileName);
 
-        $nodeVisitor = new class($fileName, $this->coreFunctionReflection->getStartLine()) extends NodeVisitorAbstract
+        $nodeVisitor = new class ($fileName, $this->coreFunctionReflection->getStartLine()) extends NodeVisitorAbstract
         {
-            /** @var string */
-            private $fileName;
+            private string $fileName;
 
-            /** @var int */
-            private $startLine;
+            private int $startLine;
 
             /** @var (Node|null)[][] */
-            private $closureNodes = [];
+            private array $closureNodes = [];
 
-            /** @var Namespace_|null */
-            private $currentNamespace;
+            private ?Namespace_ $currentNamespace = null;
 
             public function __construct(string $fileName, int $startLine)
             {
@@ -142,10 +138,10 @@ final class ClosureSourceLocator implements SourceLocator
              *
              * @throws TwoClosuresOnSameLine
              */
-            public function getClosureNodes() : ?array
+            public function getClosureNodes(): ?array
             {
                 /** @var (Node|null)[][] $closureNodesDataOnSameLine */
-                $closureNodesDataOnSameLine = array_values(array_filter($this->closureNodes, function (array $nodes) : bool {
+                $closureNodesDataOnSameLine = array_values(array_filter($this->closureNodes, function (array $nodes): bool {
                     return $nodes[0]->getLine() === $this->startLine;
                 }));
 
@@ -176,7 +172,7 @@ final class ClosureSourceLocator implements SourceLocator
             $reflector,
             $closureNodes[0],
             new LocatedSource($fileContents, $fileName),
-            $closureNodes[1]
+            $closureNodes[1],
         );
         assert($reflectionFunction instanceof ReflectionFunction || $reflectionFunction === null);
 

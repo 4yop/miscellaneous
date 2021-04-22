@@ -16,11 +16,9 @@ use Roave\BetterReflection\Util\FileHelper;
  */
 class LocatedSource
 {
-    /** @var string */
-    private $source;
+    private string $source;
 
-    /** @var string|null */
-    private $filename;
+    private ?string $filename;
 
     /**
      * @throws InvalidArgumentException
@@ -38,12 +36,12 @@ class LocatedSource
         $this->filename = $filename;
     }
 
-    public function getSource() : string
+    public function getSource(): string
     {
         return $this->source;
     }
 
-    public function getFileName() : ?string
+    public function getFileName(): ?string
     {
         return $this->filename;
     }
@@ -51,12 +49,12 @@ class LocatedSource
     /**
      * Is the located source in PHP internals?
      */
-    public function isInternal() : bool
+    public function isInternal(): bool
     {
         return false;
     }
 
-    public function getExtensionName() : ?string
+    public function getExtensionName(): ?string
     {
         return null;
     }
@@ -64,7 +62,7 @@ class LocatedSource
     /**
      * Is the located source produced by eval() or \function_create()?
      */
-    public function isEvaled() : bool
+    public function isEvaled(): bool
     {
         return false;
     }

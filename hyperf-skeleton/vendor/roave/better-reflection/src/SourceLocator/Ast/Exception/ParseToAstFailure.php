@@ -7,12 +7,13 @@ namespace Roave\BetterReflection\SourceLocator\Ast\Exception;
 use Roave\BetterReflection\SourceLocator\Located\LocatedSource;
 use RuntimeException;
 use Throwable;
+
 use function sprintf;
 use function substr;
 
 class ParseToAstFailure extends RuntimeException
 {
-    public static function fromLocatedSource(LocatedSource $locatedSource, Throwable $previous) : self
+    public static function fromLocatedSource(LocatedSource $locatedSource, Throwable $previous): self
     {
         $additionalInformation = '';
         if ($locatedSource->getFileName() !== null) {
@@ -25,7 +26,7 @@ class ParseToAstFailure extends RuntimeException
 
         return new self(sprintf(
             'AST failed to parse in located source%s',
-            $additionalInformation
+            $additionalInformation,
         ), 0, $previous);
     }
 }

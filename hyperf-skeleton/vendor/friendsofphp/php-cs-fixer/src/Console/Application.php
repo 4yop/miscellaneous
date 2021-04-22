@@ -34,7 +34,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 final class Application extends BaseApplication
 {
-    const VERSION = '2.18.5';
+    const VERSION = '2.18.6';
     const VERSION_CODENAME = 'Remote Void';
 
     /**
@@ -95,11 +95,11 @@ final class Application extends BaseApplication
      */
     public function getLongVersion()
     {
-        $version = sprintf(
-            '%s <info>%s</info> by <comment>Fabien Potencier</comment> and <comment>Dariusz Ruminski</comment>',
+        $version = implode('', [
             parent::getLongVersion(),
-            self::VERSION_CODENAME
-        );
+            self::VERSION_CODENAME ? sprintf(' <info>%s</info>', self::VERSION_CODENAME) : '', // @phpstan-ignore-line to avoid `Ternary operator condition is always true|false.`
+            ' by <comment>Fabien Potencier</comment> and <comment>Dariusz Ruminski</comment>',
+        ]);
 
         $commit = '@git-commit@';
 

@@ -9,15 +9,14 @@ use Roave\BetterReflection\Reflection\ReflectionType as BetterReflectionType;
 
 class ReflectionNamedType extends CoreReflectionNamedType
 {
-    /** @var BetterReflectionType */
-    private $betterReflectionType;
+    private BetterReflectionType $betterReflectionType;
 
     public function __construct(BetterReflectionType $betterReflectionType)
     {
         $this->betterReflectionType = $betterReflectionType;
     }
 
-    public static function fromReturnTypeOrNull(?BetterReflectionType $betterReflectionType) : ?self
+    public static function fromReturnTypeOrNull(?BetterReflectionType $betterReflectionType): ?self
     {
         if ($betterReflectionType === null) {
             return null;
@@ -26,22 +25,22 @@ class ReflectionNamedType extends CoreReflectionNamedType
         return new self($betterReflectionType);
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->betterReflectionType->getName();
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->betterReflectionType->__toString();
     }
 
-    public function allowsNull() : bool
+    public function allowsNull(): bool
     {
         return $this->betterReflectionType->allowsNull();
     }
 
-    public function isBuiltin() : bool
+    public function isBuiltin(): bool
     {
         $type = (string) $this->betterReflectionType;
 

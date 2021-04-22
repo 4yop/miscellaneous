@@ -10,14 +10,14 @@ use function array_reduce;
 class AggregateSourceStubber implements SourceStubber
 {
     /** @var SourceStubber[] */
-    private $sourceStubbers;
+    private array $sourceStubbers;
 
     public function __construct(SourceStubber $sourceStubber, SourceStubber ...$otherSourceStubbers)
     {
         $this->sourceStubbers = array_merge([$sourceStubber], $otherSourceStubbers);
     }
 
-    public function generateClassStub(string $className) : ?StubData
+    public function generateClassStub(string $className): ?StubData
     {
         foreach ($this->sourceStubbers as $sourceStubber) {
             $stubData = $sourceStubber->generateClassStub($className);
@@ -30,7 +30,7 @@ class AggregateSourceStubber implements SourceStubber
         return null;
     }
 
-    public function generateFunctionStub(string $functionName) : ?StubData
+    public function generateFunctionStub(string $functionName): ?StubData
     {
         foreach ($this->sourceStubbers as $sourceStubber) {
             $stubData = $sourceStubber->generateFunctionStub($functionName);
@@ -43,9 +43,9 @@ class AggregateSourceStubber implements SourceStubber
         return null;
     }
 
-    public function generateConstantStub(string $constantName) : ?StubData
+    public function generateConstantStub(string $constantName): ?StubData
     {
-        return array_reduce($this->sourceStubbers, static function (?StubData $stubData, SourceStubber $sourceStubber) use ($constantName) : ?StubData {
+        return array_reduce($this->sourceStubbers, static function (?StubData $stubData, SourceStubber $sourceStubber) use ($constantName): ?StubData {
             return $stubData ?? $sourceStubber->generateConstantStub($constantName);
         }, null);
     }

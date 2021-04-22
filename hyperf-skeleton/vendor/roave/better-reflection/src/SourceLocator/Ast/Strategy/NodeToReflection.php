@@ -28,17 +28,18 @@ class NodeToReflection implements AstConversionStrategy
         LocatedSource $locatedSource,
         ?Node\Stmt\Namespace_ $namespace,
         ?int $positionInNode = null
-    ) : ?Reflection {
+    ): ?Reflection {
         if ($node instanceof Node\Stmt\ClassLike) {
             return ReflectionClass::createFromNode(
                 $reflector,
                 $node,
                 $locatedSource,
-                $namespace
+                $namespace,
             );
         }
 
-        if ($node instanceof Node\Stmt\ClassMethod
+        if (
+            $node instanceof Node\Stmt\ClassMethod
             || $node instanceof Node\Stmt\Function_
             || $node instanceof Node\Expr\Closure
         ) {
@@ -46,7 +47,7 @@ class NodeToReflection implements AstConversionStrategy
                 $reflector,
                 $node,
                 $locatedSource,
-                $namespace
+                $namespace,
             );
         }
 

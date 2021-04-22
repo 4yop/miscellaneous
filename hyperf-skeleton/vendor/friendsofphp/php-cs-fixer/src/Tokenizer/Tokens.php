@@ -13,7 +13,6 @@
 namespace PhpCsFixer\Tokenizer;
 
 use PhpCsFixer\Preg;
-use PhpCsFixer\Utils;
 
 /**
  * Collection of code tokens.
@@ -48,7 +47,14 @@ class Tokens extends \SplFixedArray
     private static $cache = [];
 
     /**
-     * Cache of block edges. Any change in collection will invalidate it.
+     * Cache of block starts. Any change in collection will invalidate it.
+     *
+     * @var array<int, int>
+     */
+    private $blockStartCache = [];
+
+    /**
+     * Cache of block ends. Any change in collection will invalidate it.
      *
      * @var array<int, int>
      */
@@ -327,6 +333,7 @@ class Tokens extends \SplFixedArray
      */
     public function offsetSet($index, $newval)
     {
+        $this->blockStartCache = [];
         $this->blockEndCache = [];
 
         if (!isset($this[$index]) || !$this[$index]->equals($newval)) {
@@ -938,6 +945,7 @@ class Tokens extends \SplFixedArray
 
         $oldSize = \count($this);
         $this->changed = true;
+        $this->blockStartCache = [];
         $this->blockEndCache = [];
         $this->setSize($oldSize + $itemsCount);
 
@@ -1126,12 +1134,6 @@ class Tokens extends \SplFixedArray
 
     public function toJson()
     {
-        static $options = null;
-
-        if (null === $options) {
-            $options = Utils::calculateBitmask(['JSON_PRETTY_PRINT', 'JSON_NUMERIC_CHECK']);
-        }
-
         $output = new \SplFixedArray(\count($this));
 
         foreach ($this as $index => $token) {
@@ -1142,7 +1144,7 @@ class Tokens extends \SplFixedArray
             $this->rewind();
         }
 
-        return json_encode($output, $options);
+        return json_encode($output, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -1380,7 +1382,7 @@ class Tokens extends \SplFixedArray
      */
     protected function applyTransformers()
     {
-        $transformers = Transformers::create();
+        $transformers = Transformers::createSingleton();
         $transformers->transform($this);
     }
 
@@ -1436,8 +1438,13 @@ class Tokens extends \SplFixedArray
             throw new \InvalidArgumentException(sprintf('Invalid param type: "%s".', $type));
         }
 
-        if (!self::isLegacyMode() && isset($this->blockEndCache[$searchIndex])) {
-            return $this->blockEndCache[$searchIndex];
+        if (!self::isLegacyMode()) {
+            if ($findEnd && isset($this->blockStartCache[$searchIndex])) {
+                return $this->blockStartCache[$searchIndex];
+            }
+            if (!$findEnd && isset($this->blockEndCache[$searchIndex])) {
+                return $this->blockEndCache[$searchIndex];
+            }
         }
 
         $startEdge = $blockEdgeDefinitions[$type]['start'];
@@ -1482,8 +1489,13 @@ class Tokens extends \SplFixedArray
             throw new \UnexpectedValueException(sprintf('Missing block "%s".', $findEnd ? 'end' : 'start'));
         }
 
-        $this->blockEndCache[$startIndex] = $index;
-        $this->blockEndCache[$index] = $startIndex;
+        if ($startIndex < $index) {
+            $this->blockStartCache[$startIndex] = $index;
+            $this->blockEndCache[$index] = $startIndex;
+        } else {
+            $this->blockStartCache[$index] = $startIndex;
+            $this->blockEndCache[$startIndex] = $index;
+        }
 
         return $index;
     }

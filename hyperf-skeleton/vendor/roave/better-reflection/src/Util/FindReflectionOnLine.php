@@ -18,16 +18,15 @@ use Roave\BetterReflection\SourceLocator\Exception\InvalidFileLocation;
 use Roave\BetterReflection\SourceLocator\Type\AggregateSourceLocator;
 use Roave\BetterReflection\SourceLocator\Type\SingleFileSourceLocator;
 use Roave\BetterReflection\SourceLocator\Type\SourceLocator;
+
 use function array_merge;
 use function method_exists;
 
 final class FindReflectionOnLine
 {
-    /** @var SourceLocator */
-    private $sourceLocator;
+    private SourceLocator $sourceLocator;
 
-    /** @var Locator */
-    private $astLocator;
+    private Locator $astLocator;
 
     public function __construct(SourceLocator $sourceLocator, Locator $astLocator)
     {
@@ -81,7 +80,7 @@ final class FindReflectionOnLine
      * @throws ParseToAstFailure
      * @throws InvalidFileLocation
      */
-    private function computeReflections(string $filename) : array
+    private function computeReflections(string $filename): array
     {
         $singleFileSourceLocator = new SingleFileSourceLocator($filename, $this->astLocator);
         $reflector               = new ClassReflector(new AggregateSourceLocator([$singleFileSourceLocator, $this->sourceLocator]));
@@ -89,7 +88,7 @@ final class FindReflectionOnLine
         return array_merge(
             $singleFileSourceLocator->locateIdentifiersByType($reflector, new IdentifierType(IdentifierType::IDENTIFIER_CLASS)),
             $singleFileSourceLocator->locateIdentifiersByType($reflector, new IdentifierType(IdentifierType::IDENTIFIER_FUNCTION)),
-            $singleFileSourceLocator->locateIdentifiersByType($reflector, new IdentifierType(IdentifierType::IDENTIFIER_CONSTANT))
+            $singleFileSourceLocator->locateIdentifiersByType($reflector, new IdentifierType(IdentifierType::IDENTIFIER_CONSTANT)),
         );
     }
 
@@ -100,7 +99,7 @@ final class FindReflectionOnLine
      *
      * @throws InvalidArgumentException
      */
-    private function containsLine($reflection, int $lineNumber) : bool
+    private function containsLine($reflection, int $lineNumber): bool
     {
         if (! method_exists($reflection, 'getStartLine')) {
             throw new InvalidArgumentException('Reflection does not have getStartLine method');

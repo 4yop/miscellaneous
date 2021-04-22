@@ -13,6 +13,7 @@ use Roave\Signature\Encoder\Sha1SumEncoder;
 use Roave\Signature\FileContentChecker;
 use Roave\Signature\FileContentSigner;
 use Roave\Signature\SignerInterface;
+
 use function file_exists;
 use function file_get_contents;
 use function file_put_contents;
@@ -21,17 +22,13 @@ use function str_replace;
 
 final class FileCacheLoader implements LoaderMethodInterface
 {
-    /** @var string */
-    private $cacheDirectory;
+    private string $cacheDirectory;
 
-    /** @var ClassPrinterInterface */
-    private $classPrinter;
+    private ClassPrinterInterface $classPrinter;
 
-    /** @var SignerInterface */
-    private $signer;
+    private SignerInterface $signer;
 
-    /** @var CheckerInterface */
-    private $checker;
+    private CheckerInterface $checker;
 
     public function __construct(
         string $cacheDirectory,
@@ -50,7 +47,7 @@ final class FileCacheLoader implements LoaderMethodInterface
      *
      * @throws SignatureCheckFailed
      */
-    public function __invoke(ReflectionClass $classInfo) : void
+    public function __invoke(ReflectionClass $classInfo): void
     {
         $filename = $this->cacheDirectory . '/' . sha1($classInfo->getName());
 
@@ -58,7 +55,7 @@ final class FileCacheLoader implements LoaderMethodInterface
             $code = "<?php\n" . $this->classPrinter->__invoke($classInfo);
             file_put_contents(
                 $filename,
-                str_replace('<?php', "<?php\n// " . $this->signer->sign($code), $code)
+                str_replace('<?php', "<?php\n// " . $this->signer->sign($code), $code),
             );
         }
 
@@ -70,13 +67,13 @@ final class FileCacheLoader implements LoaderMethodInterface
         require_once $filename;
     }
 
-    public static function defaultFileCacheLoader(string $cacheDirectory) : self
+    public static function defaultFileCacheLoader(string $cacheDirectory): self
     {
         return new self(
             $cacheDirectory,
             new PhpParserPrinter(),
             new FileContentSigner(new Sha1SumEncoder()),
-            new FileContentChecker(new Sha1SumEncoder())
+            new FileContentChecker(new Sha1SumEncoder()),
         );
     }
 }

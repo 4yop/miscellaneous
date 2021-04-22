@@ -6,25 +6,25 @@ namespace Roave\BetterReflection\Reflection\Adapter;
 
 use ReflectionException as CoreReflectionException;
 use ReflectionObject as CoreReflectionObject;
-use Roave\BetterReflection\Reflection\Exception\NotAnObject;
 use Roave\BetterReflection\Reflection\ReflectionClass as BetterReflectionClass;
 use Roave\BetterReflection\Reflection\ReflectionMethod as BetterReflectionMethod;
 use Roave\BetterReflection\Reflection\ReflectionObject as BetterReflectionObject;
 use Roave\BetterReflection\Reflection\ReflectionProperty as BetterReflectionProperty;
 use Roave\BetterReflection\Util\FileHelper;
+
 use function array_combine;
 use function array_map;
 use function array_values;
 use function assert;
 use function func_num_args;
 use function is_array;
+use function is_object;
 use function sprintf;
 use function strtolower;
 
 class ReflectionObject extends CoreReflectionObject
 {
-    /** @var BetterReflectionObject */
-    private $betterReflectionObject;
+    private BetterReflectionObject $betterReflectionObject;
 
     public function __construct(BetterReflectionObject $betterReflectionObject)
     {
@@ -155,13 +155,13 @@ class ReflectionObject extends CoreReflectionObject
         return new ReflectionMethod($this->betterReflectionObject->getMethod($this->getMethodRealName($name)));
     }
 
-    private function getMethodRealName(string $name) : string
+    private function getMethodRealName(string $name): string
     {
-        $realMethodNames = array_map(static function (BetterReflectionMethod $method) : string {
+        $realMethodNames = array_map(static function (BetterReflectionMethod $method): string {
             return $method->getName();
         }, $this->betterReflectionObject->getMethods());
 
-        $methodNames = array_combine(array_map(static function (string $methodName) : string {
+        $methodNames = array_combine(array_map(static function (string $methodName): string {
             return strtolower($methodName);
         }, $realMethodNames), $realMethodNames);
 
@@ -210,7 +210,7 @@ class ReflectionObject extends CoreReflectionObject
      */
     public function getProperties($filter = null)
     {
-        return array_values(array_map(static function (BetterReflectionProperty $property) : ReflectionProperty {
+        return array_values(array_map(static function (BetterReflectionProperty $property): ReflectionProperty {
             return new ReflectionProperty($property);
         }, $this->betterReflectionObject->getProperties()));
     }
@@ -278,23 +278,23 @@ class ReflectionObject extends CoreReflectionObject
         $traits = $this->betterReflectionObject->getTraits();
 
         /** @var array<trait-string> $traitNames */
-        $traitNames = array_map(static function (BetterReflectionClass $trait) : string {
+        $traitNames = array_map(static function (BetterReflectionClass $trait): string {
             return $trait->getName();
         }, $traits);
 
         $traitsByName = array_combine(
             $traitNames,
-            array_map(static function (BetterReflectionClass $trait) : ReflectionClass {
+            array_map(static function (BetterReflectionClass $trait): ReflectionClass {
                 return new ReflectionClass($trait);
-            }, $traits)
+            }, $traits),
         );
 
         assert(
             is_array($traitsByName),
             sprintf(
                 'Could not create an array<trait-string, ReflectionClass> for class "%s"',
-                $this->betterReflectionObject->getName()
-            )
+                $this->betterReflectionObject->getName(),
+            ),
         );
 
         return $traitsByName;
@@ -350,14 +350,18 @@ class ReflectionObject extends CoreReflectionObject
 
     /**
      * {@inheritDoc}
+     *
+     * @see https://bugs.php.net/bug.php?id=79645
+     *
+     * @param mixed $object in PHP 7.x, the type declaration is absent in core reflection
      */
     public function isInstance($object)
     {
-        try {
-            return $this->betterReflectionObject->isInstance($object);
-        } catch (NotAnObject $e) {
+        if (! is_object($object)) {
             return null;
         }
+
+        return $this->betterReflectionObject->isInstance($object);
     }
 
     /**
@@ -405,7 +409,7 @@ class ReflectionObject extends CoreReflectionObject
     {
         $realParentClassNames = $this->betterReflectionObject->getParentClassNames();
 
-        $parentClassNames = array_combine(array_map(static function (string $parentClassName) : string {
+        $parentClassNames = array_combine(array_map(static function (string $parentClassName): string {
             return strtolower($parentClassName);
         }, $realParentClassNames), $realParentClassNames);
 
@@ -497,7 +501,7 @@ class ReflectionObject extends CoreReflectionObject
     {
         $realInterfaceNames = $this->betterReflectionObject->getInterfaceNames();
 
-        $interfaceNames = array_combine(array_map(static function (string $interfaceName) : string {
+        $interfaceNames = array_combine(array_map(static function (string $interfaceName): string {
             return strtolower($interfaceName);
         }, $realInterfaceNames), $realInterfaceNames);
 

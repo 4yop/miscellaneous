@@ -11,12 +11,12 @@ use Roave\BetterReflection\Reflection\Adapter\Exception\NotImplemented;
 use Roave\BetterReflection\Reflection\ReflectionFunction as BetterReflectionFunction;
 use Roave\BetterReflection\Util\FileHelper;
 use Throwable;
+
 use function func_get_args;
 
 class ReflectionFunction extends CoreReflectionFunction
 {
-    /** @var BetterReflectionFunction */
-    private $betterReflectionFunction;
+    private BetterReflectionFunction $betterReflectionFunction;
 
     public function __construct(BetterReflectionFunction $betterReflectionFunction)
     {

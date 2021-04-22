@@ -13,18 +13,16 @@ use PhpParser\Node\Param as ParamNode;
 use PhpParser\Node\Stmt\Namespace_;
 use Roave\BetterReflection\Reflection\ReflectionFunctionAbstract;
 use Roave\BetterReflection\TypesFinder\PhpDocumentor\NamespaceNodeToReflectionTypeContext;
+
 use function explode;
 
 class FindParameterType
 {
-    /** @var ResolveTypes */
-    private $resolveTypes;
+    private ResolveTypes $resolveTypes;
 
-    /** @var DocBlockFactory */
-    private $docBlockFactory;
+    private DocBlockFactory $docBlockFactory;
 
-    /** @var NamespaceNodeToReflectionTypeContext */
-    private $makeContext;
+    private NamespaceNodeToReflectionTypeContext $makeContext;
 
     public function __construct()
     {
@@ -38,7 +36,7 @@ class FindParameterType
      *
      * @return Type[]
      */
-    public function __invoke(ReflectionFunctionAbstract $function, ?Namespace_ $namespace, ParamNode $node) : array
+    public function __invoke(ReflectionFunctionAbstract $function, ?Namespace_ $namespace, ParamNode $node): array
     {
         $docComment = $function->getDocComment();
 
@@ -48,20 +46,25 @@ class FindParameterType
 
         $context = $this->makeContext->__invoke($namespace);
 
-        /** @var Param[] $paramTags */
         $paramTags = $this
             ->docBlockFactory
             ->create($docComment, $context)
             ->getTagsByName('param');
 
         foreach ($paramTags as $paramTag) {
+            if (! $paramTag instanceof Param) {
+                continue;
+            }
+
             if ($node->var instanceof Error) {
                 throw new LogicException('PhpParser left an "Error" node in the parameters AST, this should NOT happen');
             }
 
-            if ($paramTag->getVariableName() === $node->var->name) {
-                return $this->resolveTypes->__invoke(explode('|', (string) $paramTag->getType()), $context);
+            if ($paramTag->getVariableName() !== $node->var->name) {
+                continue;
             }
+
+            return $this->resolveTypes->__invoke(explode('|', (string) $paramTag->getType()), $context);
         }
 
         return [];

@@ -20,8 +20,7 @@ use Roave\BetterReflection\SourceLocator\Located\LocatedSource;
  */
 class StringSourceLocator extends AbstractSourceLocator
 {
-    /** @var string */
-    private $source;
+    private string $source;
 
     /**
      * @throws EmptyPhpSourceCode
@@ -35,7 +34,7 @@ class StringSourceLocator extends AbstractSourceLocator
             // point in us even trying to parse it because we won't find what
             // we are looking for, therefore this throws an exception
             throw new EmptyPhpSourceCode(
-                'Source code string was empty'
+                'Source code string was empty',
             );
         }
 
@@ -48,11 +47,11 @@ class StringSourceLocator extends AbstractSourceLocator
      * @throws InvalidArgumentException
      * @throws InvalidFileLocation
      */
-    protected function createLocatedSource(Identifier $identifier) : ?LocatedSource
+    protected function createLocatedSource(Identifier $identifier): ?LocatedSource
     {
         return new LocatedSource(
             $this->source,
-            null
+            null,
         );
     }
 }

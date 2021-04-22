@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Roave\BetterReflection\SourceLocator\Type\AutoloadSourceLocator;
 
 use LogicException;
+
 use function stat;
 use function stream_wrapper_register;
 use function stream_wrapper_restore;
 use function stream_wrapper_unregister;
+
 use const STREAM_URL_STAT_QUIET;
 
 /**
@@ -30,16 +32,15 @@ final class FileReadTrapStreamWrapper
     ];
 
     /** @var string[]|null */
-    private static $registeredStreamWrapperProtocols;
+    private static ?array $registeredStreamWrapperProtocols;
 
     /**
      * Read this property to determine the last file on which reads were attempted
      *
-     * @var string|null
      * @psalm-readonly
      * @psalm-allow-private-mutation
      */
-    public static $autoloadLocatedFile;
+    public static ?string $autoloadLocatedFile = null;
 
     /**
      * @param callable() : ExecutedMethodReturnType $executeMeWithinStreamWrapperOverride
@@ -68,10 +69,10 @@ final class FileReadTrapStreamWrapper
             foreach ($streamWrapperProtocols as $protocol) {
                 stream_wrapper_restore($protocol);
             }
-        }
 
-        self::$registeredStreamWrapperProtocols = null;
-        self::$autoloadLocatedFile              = null;
+            self::$registeredStreamWrapperProtocols = null;
+            self::$autoloadLocatedFile              = null;
+        }
 
         return $result;
     }
@@ -91,7 +92,7 @@ final class FileReadTrapStreamWrapper
      * @param int    $options
      * @param string $opened_path
      */
-    public function stream_open($path, $mode, $options, &$opened_path) : bool
+    public function stream_open($path, $mode, $options, &$opened_path): bool
     {
         self::$autoloadLocatedFile = $path;
 

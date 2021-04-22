@@ -5,22 +5,23 @@ declare(strict_types=1);
 namespace Roave\BetterReflection\SourceLocator\Ast\Parser;
 
 use PhpParser\ErrorHandler;
-use PhpParser\Node;
 use PhpParser\Parser;
+
 use function array_key_exists;
 use function hash;
+use function serialize;
 use function strlen;
+use function unserialize;
 
 /**
  * @internal
  */
 final class MemoizingParser implements Parser
 {
-    /** @var Node\Stmt[][]|null[] indexed by source hash */
-    private $sourceHashToAst = [];
+    /** @var string[] indexed by source hash */
+    private array $sourceHashToAst = [];
 
-    /** @var Parser */
-    private $wrappedParser;
+    private Parser $wrappedParser;
 
     public function __construct(Parser $wrappedParser)
     {
@@ -30,7 +31,7 @@ final class MemoizingParser implements Parser
     /**
      * {@inheritDoc}
      */
-    public function parse(string $code, ?ErrorHandler $errorHandler = null) : ?array
+    public function parse(string $code, ?ErrorHandler $errorHandler = null): ?array
     {
         // note: this code is mathematically buggy by default, as we are using a hash to identify
         //       cache entries. The string length is added to further reduce likeliness (although
@@ -39,9 +40,12 @@ final class MemoizingParser implements Parser
         $hash = hash('sha256', $code) . ':' . strlen($code);
 
         if (array_key_exists($hash, $this->sourceHashToAst)) {
-            return $this->sourceHashToAst[$hash];
+            return unserialize($this->sourceHashToAst[$hash]);
         }
 
-        return $this->sourceHashToAst[$hash] = $this->wrappedParser->parse($code, $errorHandler);
+        $ast                          = $this->wrappedParser->parse($code, $errorHandler);
+        $this->sourceHashToAst[$hash] = serialize($ast);
+
+        return $ast;
     }
 }

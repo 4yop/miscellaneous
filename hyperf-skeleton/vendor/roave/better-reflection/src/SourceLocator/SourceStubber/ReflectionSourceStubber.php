@@ -38,6 +38,7 @@ use ReflectionNamedType as CoreReflectionNamedType;
 use ReflectionParameter;
 use ReflectionProperty as CoreReflectionProperty;
 use Reflector as CoreReflector;
+
 use function array_diff;
 use function array_key_exists;
 use function assert;
@@ -58,11 +59,9 @@ final class ReflectionSourceStubber implements SourceStubber
 {
     private const BUILDER_OPTIONS = ['shortArraySyntax' => true];
 
-    /** @var BuilderFactory */
-    private $builderFactory;
+    private BuilderFactory $builderFactory;
 
-    /** @var Standard */
-    private $prettyPrinter;
+    private Standard $prettyPrinter;
 
     public function __construct()
     {
@@ -70,12 +69,16 @@ final class ReflectionSourceStubber implements SourceStubber
         $this->prettyPrinter  = new Standard(self::BUILDER_OPTIONS);
     }
 
-    public function generateClassStub(string $className) : ?StubData
+    public function generateClassStub(string $className): ?StubData
     {
         if (! (class_exists($className, false) || interface_exists($className, false) || trait_exists($className, false))) {
             return null;
         }
 
+        /**
+         * @psalm-var class-string|trait-string $className
+         * @phpstan-var string $className
+         */
         $classReflection = new CoreReflectionClass($className);
         $classNode       = $this->createClass($classReflection);
 
@@ -105,7 +108,7 @@ final class ReflectionSourceStubber implements SourceStubber
         return $this->createStubData($this->generateStubInNamespace($classNode->getNode(), $classReflection->getNamespaceName()), $extensionName);
     }
 
-    public function generateFunctionStub(string $functionName) : ?StubData
+    public function generateFunctionStub(string $functionName): ?StubData
     {
         if (! function_exists($functionName)) {
             return null;
@@ -126,7 +129,7 @@ final class ReflectionSourceStubber implements SourceStubber
         return $this->createStubData($this->generateStubInNamespace($functionNode->getNode(), $functionReflection->getNamespaceName()), $extensionName);
     }
 
-    public function generateConstantStub(string $constantName) : ?StubData
+    public function generateConstantStub(string $constantName): ?StubData
     {
         // Not supported because of resource as value
         if (in_array($constantName, ['STDIN', 'STDOUT', 'STDERR'], true)) {
@@ -149,7 +152,7 @@ final class ReflectionSourceStubber implements SourceStubber
     /**
      * @return array{0: scalar|scalar[]|null, 1: string}|null
      */
-    private function findConstantData(string $constantName) : ?array
+    private function findConstantData(string $constantName): ?array
     {
         /** @var array<string, array<string, int|string|float|bool|array|resource|null>> $constants */
         $constants = get_defined_constants(true);
@@ -169,7 +172,7 @@ final class ReflectionSourceStubber implements SourceStubber
     /**
      * @return Class_|Interface_|Trait_
      */
-    private function createClass(CoreReflectionClass $classReflection) : Declaration
+    private function createClass(CoreReflectionClass $classReflection): Declaration
     {
         if ($classReflection->isTrait()) {
             return $this->builderFactory->trait($classReflection->getShortName());
@@ -186,7 +189,7 @@ final class ReflectionSourceStubber implements SourceStubber
      * @param Class_|Interface_|Trait_|Method|Property|Function_                                     $node
      * @param CoreReflectionClass|CoreReflectionMethod|CoreReflectionProperty|CoreReflectionFunction $reflection
      */
-    private function addDocComment(Builder $node, CoreReflector $reflection) : void
+    private function addDocComment(Builder $node, CoreReflector $reflection): void
     {
         if ($reflection->getDocComment() === false) {
             return;
@@ -195,7 +198,7 @@ final class ReflectionSourceStubber implements SourceStubber
         $node->setDocComment(new Doc($reflection->getDocComment()));
     }
 
-    private function addClassModifiers(Class_ $classNode, CoreReflectionClass $classReflection) : void
+    private function addClassModifiers(Class_ $classNode, CoreReflectionClass $classReflection): void
     {
         if (! $classReflection->isInterface() && $classReflection->isAbstract()) {
             // Interface \Iterator is interface and abstract
@@ -212,7 +215,7 @@ final class ReflectionSourceStubber implements SourceStubber
     /**
      * @param Class_|Interface_ $classNode
      */
-    private function addExtendsAndImplements(Declaration $classNode, CoreReflectionClass $classReflection) : void
+    private function addExtendsAndImplements(Declaration $classNode, CoreReflectionClass $classReflection): void
     {
         $parentClass = $classReflection->getParentClass();
         $interfaces  = $classReflection->getInterfaceNames();
@@ -235,7 +238,7 @@ final class ReflectionSourceStubber implements SourceStubber
         }
     }
 
-    private function addTraitUse(Declaration $classNode, CoreReflectionClass $classReflection) : void
+    private function addTraitUse(Declaration $classNode, CoreReflectionClass $classReflection): void
     {
         $alreadyUsedTraitNames = [];
 
@@ -243,7 +246,7 @@ final class ReflectionSourceStubber implements SourceStubber
             [$traitName, $methodName] = explode('::', $methodInfo);
             $traitUseNode             = new TraitUse(
                 [new FullyQualified($traitName)],
-                [new TraitUseAdaptation\Alias(new FullyQualified($traitName), $methodName, null, $methodNameAlias)]
+                [new TraitUseAdaptation\Alias(new FullyQualified($traitName), $methodName, null, $methodNameAlias)],
             );
 
             $classNode->addStmt($traitUseNode);
@@ -256,7 +259,7 @@ final class ReflectionSourceStubber implements SourceStubber
         }
     }
 
-    private function addProperties(Declaration $classNode, CoreReflectionClass $classReflection) : void
+    private function addProperties(Declaration $classNode, CoreReflectionClass $classReflection): void
     {
         $defaultProperties = $classReflection->getDefaultProperties();
 
@@ -278,11 +281,18 @@ final class ReflectionSourceStubber implements SourceStubber
                 }
             }
 
+            $propertyType = $propertyReflection->getType();
+            assert($propertyType instanceof CoreReflectionNamedType || $propertyType === null);
+
+            if ($propertyType !== null) {
+                $propertyNode->setType($this->formatType($propertyType));
+            }
+
             $classNode->addStmt($propertyNode);
         }
     }
 
-    private function isPropertyDeclaredInClass(CoreReflectionProperty $propertyReflection, CoreReflectionClass $classReflection) : bool
+    private function isPropertyDeclaredInClass(CoreReflectionProperty $propertyReflection, CoreReflectionClass $classReflection): bool
     {
         if ($propertyReflection->getDeclaringClass()->getName() !== $classReflection->getName()) {
             return false;
@@ -297,7 +307,7 @@ final class ReflectionSourceStubber implements SourceStubber
         return true;
     }
 
-    private function addPropertyModifiers(Property $propertyNode, CoreReflectionProperty $propertyReflection) : void
+    private function addPropertyModifiers(Property $propertyNode, CoreReflectionProperty $propertyReflection): void
     {
         if ($propertyReflection->isStatic()) {
             $propertyNode->makeStatic();
@@ -318,7 +328,7 @@ final class ReflectionSourceStubber implements SourceStubber
         $propertyNode->makePrivate();
     }
 
-    private function addConstants(Declaration $classNode, CoreReflectionClass $classReflection) : void
+    private function addConstants(Declaration $classNode, CoreReflectionClass $classReflection): void
     {
         foreach ($classReflection->getReflectionConstants() as $constantReflection) {
             if ($constantReflection->getDeclaringClass()->getName() !== $classReflection->getName()) {
@@ -327,7 +337,7 @@ final class ReflectionSourceStubber implements SourceStubber
 
             $classConstantNode = new ClassConst(
                 [new Const_($constantReflection->getName(), BuilderHelpers::normalizeValue($constantReflection->getValue()))],
-                $this->constantVisibilityFlags($constantReflection)
+                $this->constantVisibilityFlags($constantReflection),
             );
 
             if ($constantReflection->getDocComment() !== false) {
@@ -338,7 +348,7 @@ final class ReflectionSourceStubber implements SourceStubber
         }
     }
 
-    private function constantVisibilityFlags(ReflectionClassConstant $constant) : int
+    private function constantVisibilityFlags(ReflectionClassConstant $constant): int
     {
         if ($constant->isPrivate()) {
             return ClassNode::MODIFIER_PRIVATE;
@@ -351,7 +361,7 @@ final class ReflectionSourceStubber implements SourceStubber
         return ClassNode::MODIFIER_PUBLIC;
     }
 
-    private function addMethods(Declaration $classNode, CoreReflectionClass $classReflection) : void
+    private function addMethods(Declaration $classNode, CoreReflectionClass $classReflection): void
     {
         foreach ($classReflection->getMethods() as $methodReflection) {
             if (! $this->isMethodDeclaredInClass($methodReflection, $classReflection)) {
@@ -367,7 +377,7 @@ final class ReflectionSourceStubber implements SourceStubber
             $returnType = $methodReflection->getReturnType();
             assert($returnType instanceof CoreReflectionNamedType || $returnType === null);
 
-            if ($methodReflection->getReturnType() !== null) {
+            if ($returnType !== null) {
                 $methodNode->setReturnType($this->formatType($returnType));
             }
 
@@ -375,7 +385,7 @@ final class ReflectionSourceStubber implements SourceStubber
         }
     }
 
-    private function isMethodDeclaredInClass(CoreReflectionMethod $methodReflection, CoreReflectionClass $classReflection) : bool
+    private function isMethodDeclaredInClass(CoreReflectionMethod $methodReflection, CoreReflectionClass $classReflection): bool
     {
         if ($methodReflection->getDeclaringClass()->getName() !== $classReflection->getName()) {
             return false;
@@ -394,13 +404,13 @@ final class ReflectionSourceStubber implements SourceStubber
         return true;
     }
 
-    private function addMethodFlags(Method $methodNode, CoreReflectionMethod $methodReflection) : void
+    private function addMethodFlags(Method $methodNode, CoreReflectionMethod $methodReflection): void
     {
         if ($methodReflection->isFinal()) {
             $methodNode->makeFinal();
         }
 
-        if ($methodReflection->isAbstract()) {
+        if ($methodReflection->isAbstract() && ! $methodReflection->getDeclaringClass()->isInterface()) {
             $methodNode->makeAbstract();
         }
 
@@ -427,7 +437,7 @@ final class ReflectionSourceStubber implements SourceStubber
         $methodNode->makeReturnByRef();
     }
 
-    private function addParameters(FunctionLike $functionNode, CoreReflectionFunctionAbstract $functionReflectionAbstract) : void
+    private function addParameters(FunctionLike $functionNode, CoreReflectionFunctionAbstract $functionReflectionAbstract): void
     {
         foreach ($functionReflectionAbstract->getParameters() as $parameterReflection) {
             $parameterNode = $this->builderFactory->param($parameterReflection->getName());
@@ -438,11 +448,11 @@ final class ReflectionSourceStubber implements SourceStubber
                 $parameterNode->setDefault($this->parameterDefaultValue($parameterReflection, $functionReflectionAbstract));
             }
 
-            $functionNode->addParam($this->addParameterModifiers($parameterReflection, $parameterNode));
+            $functionNode->addParam($parameterNode);
         }
     }
 
-    private function addParameterModifiers(ReflectionParameter $parameterReflection, Param $parameterNode) : Param
+    private function addParameterModifiers(ReflectionParameter $parameterReflection, Param $parameterNode): void
     {
         if ($parameterReflection->isVariadic()) {
             $parameterNode->makeVariadic();
@@ -455,11 +465,11 @@ final class ReflectionSourceStubber implements SourceStubber
         $parameterType = $parameterReflection->getType();
         assert($parameterType instanceof CoreReflectionNamedType || $parameterType === null);
 
-        if ($parameterReflection->getType() !== null) {
-            $parameterNode->setType($this->formatType($parameterType));
+        if ($parameterType === null) {
+            return;
         }
 
-        return $parameterNode;
+        $parameterNode->setType($this->formatType($parameterType));
     }
 
     /**
@@ -479,7 +489,7 @@ final class ReflectionSourceStubber implements SourceStubber
     /**
      * @return Name|FullyQualified|NullableType
      */
-    private function formatType(CoreReflectionNamedType $type) : NodeAbstract
+    private function formatType(CoreReflectionNamedType $type): NodeAbstract
     {
         $name     = $type->getName();
         $nameNode = $type->isBuiltin() || in_array($name, ['self', 'parent'], true) ? new Name($name) : new FullyQualified($name);
@@ -487,7 +497,7 @@ final class ReflectionSourceStubber implements SourceStubber
         return $type->allowsNull() ? new NullableType($nameNode) : $nameNode;
     }
 
-    private function generateStubInNamespace(Node $node, string $namespaceName) : string
+    private function generateStubInNamespace(Node $node, string $namespaceName): string
     {
         $namespaceBuilder = $this->builderFactory->namespace($namespaceName);
         $namespaceBuilder->addStmt($node);
@@ -495,12 +505,12 @@ final class ReflectionSourceStubber implements SourceStubber
         return $this->generateStub($namespaceBuilder->getNode());
     }
 
-    private function generateStub(Node $node) : string
+    private function generateStub(Node $node): string
     {
         return "<?php\n\n" . $this->prettyPrinter->prettyPrint([$node]) . ($node instanceof Node\Expr\FuncCall ? ';' : '') . "\n";
     }
 
-    private function createStubData(string $stub, ?string $extensionName) : StubData
+    private function createStubData(string $stub, ?string $extensionName): StubData
     {
         return new StubData($stub, $extensionName);
     }

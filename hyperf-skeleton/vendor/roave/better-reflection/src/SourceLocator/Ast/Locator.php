@@ -15,6 +15,7 @@ use Roave\BetterReflection\Reflector\Reflector;
 use Roave\BetterReflection\SourceLocator\Ast\Strategy\NodeToReflection;
 use Roave\BetterReflection\SourceLocator\Located\LocatedSource;
 use Throwable;
+
 use function strtolower;
 
 /**
@@ -22,11 +23,9 @@ use function strtolower;
  */
 class Locator
 {
-    /** @var FindReflectionsInTree */
-    private $findReflectionsInTree;
+    private FindReflectionsInTree $findReflectionsInTree;
 
-    /** @var Parser */
-    private $parser;
+    private Parser $parser;
 
     /**
      * @param Closure(): FunctionReflector $functionReflectorGetter
@@ -46,14 +45,14 @@ class Locator
         Reflector $reflector,
         LocatedSource $locatedSource,
         Identifier $identifier
-    ) : Reflection {
+    ): Reflection {
         return $this->findInArray(
             $this->findReflectionsOfType(
                 $reflector,
                 $locatedSource,
-                $identifier->getType()
+                $identifier->getType(),
             ),
-            $identifier
+            $identifier,
         );
     }
 
@@ -68,13 +67,13 @@ class Locator
         Reflector $reflector,
         LocatedSource $locatedSource,
         IdentifierType $identifierType
-    ) : array {
+    ): array {
         try {
             return $this->findReflectionsInTree->__invoke(
                 $reflector,
                 $this->parser->parse($locatedSource->getSource()),
                 $identifierType,
-                $locatedSource
+                $locatedSource,
             );
         } catch (Throwable $exception) {
             throw Exception\ParseToAstFailure::fromLocatedSource($locatedSource, $exception);
@@ -88,7 +87,7 @@ class Locator
      *
      * @throws IdentifierNotFound
      */
-    private function findInArray(array $reflections, Identifier $identifier) : Reflection
+    private function findInArray(array $reflections, Identifier $identifier): Reflection
     {
         $identifierName = strtolower($identifier->getName());
 

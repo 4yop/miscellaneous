@@ -26,31 +26,23 @@ use Roave\BetterReflection\Util\FindReflectionOnLine;
 
 final class BetterReflection
 {
-    /** @var SourceLocator|null */
-    private $sourceLocator;
+    private ?SourceLocator $sourceLocator;
 
-    /** @var ClassReflector|null */
-    private $classReflector;
+    private ?ClassReflector $classReflector;
 
-    /** @var FunctionReflector|null */
-    private $functionReflector;
+    private ?FunctionReflector $functionReflector;
 
-    /** @var ConstantReflector|null */
-    private $constantReflector;
+    private ?ConstantReflector $constantReflector;
 
-    /** @var Parser|null */
-    private $phpParser;
+    private ?Parser $phpParser;
 
-    /** @var AstLocator|null */
-    private $astLocator;
+    private ?AstLocator $astLocator;
 
-    /** @var FindReflectionOnLine|null */
-    private $findReflectionOnLine;
+    private ?FindReflectionOnLine $findReflectionOnLine;
 
-    /** @var SourceStubber */
-    private $sourceStubber;
+    private ?SourceStubber $sourceStubber;
 
-    public function sourceLocator() : SourceLocator
+    public function sourceLocator(): SourceLocator
     {
         $astLocator    = $this->astLocator();
         $sourceStubber = $this->sourceStubber();
@@ -63,54 +55,54 @@ final class BetterReflection
             ]));
     }
 
-    public function classReflector() : ClassReflector
+    public function classReflector(): ClassReflector
     {
         return $this->classReflector
             ?? $this->classReflector = new ClassReflector($this->sourceLocator());
     }
 
-    public function functionReflector() : FunctionReflector
+    public function functionReflector(): FunctionReflector
     {
         return $this->functionReflector
             ?? $this->functionReflector = new FunctionReflector($this->sourceLocator(), $this->classReflector());
     }
 
-    public function constantReflector() : ConstantReflector
+    public function constantReflector(): ConstantReflector
     {
         return $this->constantReflector
             ?? $this->constantReflector = new ConstantReflector($this->sourceLocator(), $this->classReflector());
     }
 
-    public function phpParser() : Parser
+    public function phpParser(): Parser
     {
         return $this->phpParser
             ?? $this->phpParser = new MemoizingParser(
                 (new ParserFactory())->create(ParserFactory::PREFER_PHP7, new Emulative([
                     'usedAttributes' => ['comments', 'startLine', 'endLine', 'startFilePos', 'endFilePos'],
-                ]))
+                ])),
             );
     }
 
-    public function astLocator() : AstLocator
+    public function astLocator(): AstLocator
     {
         return $this->astLocator
-            ?? $this->astLocator = new AstLocator($this->phpParser(), function () : FunctionReflector {
+            ?? $this->astLocator = new AstLocator($this->phpParser(), function (): FunctionReflector {
                 return $this->functionReflector();
             });
     }
 
-    public function findReflectionsOnLine() : FindReflectionOnLine
+    public function findReflectionsOnLine(): FindReflectionOnLine
     {
         return $this->findReflectionOnLine
             ?? $this->findReflectionOnLine = new FindReflectionOnLine($this->sourceLocator(), $this->astLocator());
     }
 
-    public function sourceStubber() : SourceStubber
+    public function sourceStubber(): SourceStubber
     {
         return $this->sourceStubber
             ?? $this->sourceStubber = new AggregateSourceStubber(
                 new PhpStormStubsSourceStubber($this->phpParser()),
-                new ReflectionSourceStubber()
+                new ReflectionSourceStubber(),
             );
     }
 }

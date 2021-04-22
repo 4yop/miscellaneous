@@ -15,6 +15,7 @@ use Roave\BetterReflection\SourceLocator\Type\Composer\PsrAutoloaderLocator;
 use Roave\BetterReflection\SourceLocator\Type\DirectoriesSourceLocator;
 use Roave\BetterReflection\SourceLocator\Type\SingleFileSourceLocator;
 use Roave\BetterReflection\SourceLocator\Type\SourceLocator;
+
 use function array_filter;
 use function array_map;
 use function array_merge;
@@ -27,7 +28,7 @@ use function realpath;
 
 final class MakeLocatorForComposerJson
 {
-    public function __invoke(string $installationPath, Locator $astLocator) : SourceLocator
+    public function __invoke(string $installationPath, Locator $astLocator): SourceLocator
     {
         $realInstallationPath = (string) realpath($installationPath);
 
@@ -58,21 +59,21 @@ final class MakeLocatorForComposerJson
             [
                 new PsrAutoloaderLocator(
                     Psr4Mapping::fromArrayMappings(
-                        $this->prefixWithInstallationPath($this->packageToPsr4AutoloadNamespaces($composer), $pathPrefix)
+                        $this->prefixWithInstallationPath($this->packageToPsr4AutoloadNamespaces($composer), $pathPrefix),
                     ),
-                    $astLocator
+                    $astLocator,
                 ),
                 new PsrAutoloaderLocator(
                     Psr0Mapping::fromArrayMappings(
-                        $this->prefixWithInstallationPath($this->packageToPsr0AutoloadNamespaces($composer), $pathPrefix)
+                        $this->prefixWithInstallationPath($this->packageToPsr0AutoloadNamespaces($composer), $pathPrefix),
                     ),
-                    $astLocator
+                    $astLocator,
                 ),
                 new DirectoriesSourceLocator($classMapDirectories, $astLocator),
             ],
-            ...array_map(static function (string $file) use ($astLocator) : array {
+            ...array_map(static function (string $file) use ($astLocator): array {
                 return [new SingleFileSourceLocator($file, $astLocator)];
-            }, array_merge($classMapFiles, $filePaths))
+            }, array_merge($classMapFiles, $filePaths)),
         ));
     }
 
@@ -81,9 +82,9 @@ final class MakeLocatorForComposerJson
      *
      * @return array<string, array<int, string>>
      */
-    private function packageToPsr4AutoloadNamespaces(array $package) : array
+    private function packageToPsr4AutoloadNamespaces(array $package): array
     {
-        return array_map(static function ($namespacePaths) : array {
+        return array_map(static function ($namespacePaths): array {
             return (array) $namespacePaths;
         }, $package['autoload']['psr-4'] ?? []);
     }
@@ -93,9 +94,9 @@ final class MakeLocatorForComposerJson
      *
      * @return array<string, array<int, string>>
      */
-    private function packageToPsr0AutoloadNamespaces(array $package) : array
+    private function packageToPsr0AutoloadNamespaces(array $package): array
     {
-        return array_map(static function ($namespacePaths) : array {
+        return array_map(static function ($namespacePaths): array {
             return (array) $namespacePaths;
         }, $package['autoload']['psr-0'] ?? []);
     }
@@ -105,7 +106,7 @@ final class MakeLocatorForComposerJson
      *
      * @return array<int, string>
      */
-    private function packageToClassMapPaths(array $package) : array
+    private function packageToClassMapPaths(array $package): array
     {
         return $package['autoload']['classmap'] ?? [];
     }
@@ -115,7 +116,7 @@ final class MakeLocatorForComposerJson
      *
      * @return array<int, string>
      */
-    private function packageToFilePaths(array $package) : array
+    private function packageToFilePaths(array $package): array
     {
         return $package['autoload']['files'] ?? [];
     }
@@ -125,9 +126,9 @@ final class MakeLocatorForComposerJson
      *
      * @return array<string, array<int, string>>
      */
-    private function prefixWithInstallationPath(array $paths, string $trimmedInstallationPath) : array
+    private function prefixWithInstallationPath(array $paths, string $trimmedInstallationPath): array
     {
-        return array_map(function (array $paths) use ($trimmedInstallationPath) : array {
+        return array_map(function (array $paths) use ($trimmedInstallationPath): array {
             return $this->prefixPaths($paths, $trimmedInstallationPath);
         }, $paths);
     }
@@ -137,7 +138,7 @@ final class MakeLocatorForComposerJson
      *
      * @return array<int, string>
      */
-    private function prefixPaths(array $paths, string $prefix) : array
+    private function prefixPaths(array $paths, string $prefix): array
     {
         return array_map(static function (string $path) use ($prefix) {
             return $prefix . $path;

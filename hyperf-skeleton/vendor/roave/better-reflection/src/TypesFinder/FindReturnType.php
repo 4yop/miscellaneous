@@ -10,18 +10,16 @@ use phpDocumentor\Reflection\Type;
 use PhpParser\Node\Stmt\Namespace_;
 use Roave\BetterReflection\Reflection\ReflectionFunctionAbstract;
 use Roave\BetterReflection\TypesFinder\PhpDocumentor\NamespaceNodeToReflectionTypeContext;
+
 use function explode;
 
 class FindReturnType
 {
-    /** @var ResolveTypes */
-    private $resolveTypes;
+    private ResolveTypes $resolveTypes;
 
-    /** @var DocBlockFactory */
-    private $docBlockFactory;
+    private DocBlockFactory $docBlockFactory;
 
-    /** @var NamespaceNodeToReflectionTypeContext */
-    private $makeContext;
+    private NamespaceNodeToReflectionTypeContext $makeContext;
 
     public function __construct()
     {
@@ -35,7 +33,7 @@ class FindReturnType
      *
      * @return Type[]
      */
-    public function __invoke(ReflectionFunctionAbstract $function, ?Namespace_ $namespace) : array
+    public function __invoke(ReflectionFunctionAbstract $function, ?Namespace_ $namespace): array
     {
         $docComment = $function->getDocComment();
 
@@ -45,13 +43,16 @@ class FindReturnType
 
         $context = $this->makeContext->__invoke($namespace);
 
-        /** @var Return_[] $returnTags */
         $returnTags = $this
             ->docBlockFactory
             ->create($docComment, $context)
             ->getTagsByName('return');
 
         foreach ($returnTags as $returnTag) {
+            if (! $returnTag instanceof Return_) {
+                continue;
+            }
+
             return $this->resolveTypes->__invoke(explode('|', (string) $returnTag->getType()), $context);
         }
 

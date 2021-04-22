@@ -10,20 +10,18 @@ use phpDocumentor\Reflection\Type;
 use PhpParser\Node\Stmt\Namespace_;
 use Roave\BetterReflection\Reflection\ReflectionProperty;
 use Roave\BetterReflection\TypesFinder\PhpDocumentor\NamespaceNodeToReflectionTypeContext;
+
 use function array_map;
 use function array_merge;
 use function explode;
 
 class FindPropertyType
 {
-    /** @var ResolveTypes */
-    private $resolveTypes;
+    private ResolveTypes $resolveTypes;
 
-    /** @var DocBlockFactory */
-    private $docBlockFactory;
+    private DocBlockFactory $docBlockFactory;
 
-    /** @var NamespaceNodeToReflectionTypeContext */
-    private $makeContext;
+    private NamespaceNodeToReflectionTypeContext $makeContext;
 
     public function __construct()
     {
@@ -37,7 +35,7 @@ class FindPropertyType
      *
      * @return Type[]
      */
-    public function __invoke(ReflectionProperty $reflectionProperty, ?Namespace_ $namespace) : array
+    public function __invoke(ReflectionProperty $reflectionProperty, ?Namespace_ $namespace): array
     {
         $docComment = $reflectionProperty->getDocComment();
 
@@ -46,14 +44,20 @@ class FindPropertyType
         }
 
         $context = $this->makeContext->__invoke($namespace);
-        /** @var Var_[] $varTags */
-        $varTags = $this->docBlockFactory->create($docComment, $context)->getTagsByName('var');
+
+        $varTags = $this->docBlockFactory
+            ->create($docComment, $context)
+            ->getTagsByName('var');
 
         return array_merge(
             [],
-            ...array_map(function (Var_ $varTag) use ($context) {
-                return $this->resolveTypes->__invoke(explode('|', (string) $varTag->getType()), $context);
-            }, $varTags)
+            ...array_map(function ($varTag) use ($context) {
+                if ($varTag instanceof Var_) {
+                    return $this->resolveTypes->__invoke(explode('|', (string) $varTag->getType()), $context);
+                }
+
+                return [];
+            }, $varTags),
         );
     }
 }

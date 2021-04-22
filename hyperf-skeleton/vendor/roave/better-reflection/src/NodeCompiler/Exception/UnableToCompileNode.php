@@ -8,6 +8,7 @@ use LogicException;
 use PhpParser\Node;
 use Roave\BetterReflection\NodeCompiler\CompilerContext;
 use Roave\BetterReflection\Reflection\ReflectionClass;
+
 use function assert;
 use function get_class;
 use function reset;
@@ -15,21 +16,20 @@ use function sprintf;
 
 class UnableToCompileNode extends LogicException
 {
-    /** @var string|null */
-    private $constantName;
+    private ?string $constantName = null;
 
-    public function constantName() : ?string
+    public function constantName(): ?string
     {
         return $this->constantName;
     }
 
-    public static function forUnRecognizedExpressionInContext(Node\Expr $expression, CompilerContext $context) : self
+    public static function forUnRecognizedExpressionInContext(Node\Expr $expression, CompilerContext $context): self
     {
         return new self(sprintf(
             'Unable to compile expression in %s: unrecognized node type %s at line %d',
             self::compilerContextToContextDescription($context),
             get_class($expression),
-            $expression->getLine()
+            $expression->getLine(),
         ));
     }
 
@@ -37,7 +37,7 @@ class UnableToCompileNode extends LogicException
         CompilerContext $fetchContext,
         ReflectionClass $targetClass,
         Node\Expr\ClassConstFetch $constantFetch
-    ) : self {
+    ): self {
         assert($constantFetch->name instanceof Node\Identifier);
 
         return new self(sprintf(
@@ -45,21 +45,21 @@ class UnableToCompileNode extends LogicException
             $targetClass->getName(),
             $constantFetch->name->name,
             self::compilerContextToContextDescription($fetchContext),
-            $constantFetch->getLine()
+            $constantFetch->getLine(),
         ));
     }
 
     public static function becauseOfNotFoundConstantReference(
         CompilerContext $fetchContext,
         Node\Expr\ConstFetch $constantFetch
-    ) : self {
+    ): self {
         $constantName = reset($constantFetch->name->parts);
 
         $exception = new self(sprintf(
             'Could not locate constant "%s" while evaluating expression in %s at line %s',
             $constantName,
             self::compilerContextToContextDescription($fetchContext),
-            $constantFetch->getLine()
+            $constantFetch->getLine(),
         ));
 
         $exception->constantName = $constantName;
@@ -67,7 +67,7 @@ class UnableToCompileNode extends LogicException
         return $exception;
     }
 
-    private static function compilerContextToContextDescription(CompilerContext $fetchContext) : string
+    private static function compilerContextToContextDescription(CompilerContext $fetchContext): string
     {
         // @todo improve in https://github.com/Roave/BetterReflection/issues/434
         return $fetchContext->hasSelf()
