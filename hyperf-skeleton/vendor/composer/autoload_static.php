@@ -93,6 +93,7 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         ),
         'H' => 
         array (
+            'Hyperf\\Watcher\\' => 15,
             'Hyperf\\Utils\\' => 13,
             'Hyperf\\Testing\\' => 15,
             'Hyperf\\Server\\' => 14,
@@ -310,6 +311,10 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-mime/src',
         ),
+        'Hyperf\\Watcher\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hyperf/watcher/src',
+        ),
         'Hyperf\\Utils\\' => 
         array (
             0 => __DIR__ . '/..' . '/hyperf/utils/src',
@@ -495,9 +500,15 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
     );
 
     public static $classMap = array (
+        'App\\Aspect\\ApiAspect' => __DIR__ . '/../..' . '/app/Aspect/ApiAspect.php',
+        'App\\Constants\\MessageCode' => __DIR__ . '/../..' . '/app/Constants/MessageCode.php',
         'App\\Controller\\AbstractController' => __DIR__ . '/../..' . '/app/Controller/AbstractController.php',
         'App\\Controller\\IndexController' => __DIR__ . '/../..' . '/app/Controller/IndexController.php',
+        'App\\Exception\\BusinessException' => __DIR__ . '/../..' . '/app/Exception/BusinessException.php',
         'App\\Exception\\Handler\\AppExceptionHandler' => __DIR__ . '/../..' . '/app/Exception/Handler/AppExceptionHandler.php',
+        'App\\Exception\\InvalidException' => __DIR__ . '/../..' . '/app/Exception/InvalidException.php',
+        'App\\Exception\\NoLoginException' => __DIR__ . '/../..' . '/app/Exception/NoLoginException.php',
+        'App\\Exception\\NotFoundException' => __DIR__ . '/../..' . '/app/Exception/NotFoundException.php',
         'App\\Listener\\DbQueryExecutedListener' => __DIR__ . '/../..' . '/app/Listener/DbQueryExecutedListener.php',
         'App\\Model\\Model' => __DIR__ . '/../..' . '/app/Model/Model.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
@@ -1554,6 +1565,18 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'Hyperf\\Utils\\Traits\\StaticInstance' => __DIR__ . '/..' . '/hyperf/utils/src/Traits/StaticInstance.php',
         'Hyperf\\Utils\\WaitGroup' => __DIR__ . '/..' . '/hyperf/utils/src/WaitGroup.php',
         'Hyperf\\Utils\\Waiter' => __DIR__ . '/..' . '/hyperf/utils/src/Waiter.php',
+        'Hyperf\\Watcher\\Ast\\Metadata' => __DIR__ . '/..' . '/hyperf/watcher/src/Ast/Metadata.php',
+        'Hyperf\\Watcher\\Ast\\RewriteClassNameVisitor' => __DIR__ . '/..' . '/hyperf/watcher/src/Ast/RewriteClassNameVisitor.php',
+        'Hyperf\\Watcher\\Command\\WatchCommand' => __DIR__ . '/..' . '/hyperf/watcher/src/Command/WatchCommand.php',
+        'Hyperf\\Watcher\\ConfigProvider' => __DIR__ . '/..' . '/hyperf/watcher/src/ConfigProvider.php',
+        'Hyperf\\Watcher\\Driver\\DriverInterface' => __DIR__ . '/..' . '/hyperf/watcher/src/Driver/DriverInterface.php',
+        'Hyperf\\Watcher\\Driver\\FindDriver' => __DIR__ . '/..' . '/hyperf/watcher/src/Driver/FindDriver.php',
+        'Hyperf\\Watcher\\Driver\\FindNewerDriver' => __DIR__ . '/..' . '/hyperf/watcher/src/Driver/FindNewerDriver.php',
+        'Hyperf\\Watcher\\Driver\\FswatchDriver' => __DIR__ . '/..' . '/hyperf/watcher/src/Driver/FswatchDriver.php',
+        'Hyperf\\Watcher\\Driver\\ScanFileDriver' => __DIR__ . '/..' . '/hyperf/watcher/src/Driver/ScanFileDriver.php',
+        'Hyperf\\Watcher\\Option' => __DIR__ . '/..' . '/hyperf/watcher/src/Option.php',
+        'Hyperf\\Watcher\\Process' => __DIR__ . '/..' . '/hyperf/watcher/src/Process.php',
+        'Hyperf\\Watcher\\Watcher' => __DIR__ . '/..' . '/hyperf/watcher/src/Watcher.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'Laminas\\Mime\\Decode' => __DIR__ . '/..' . '/laminas/laminas-mime/src/Decode.php',
         'Laminas\\Mime\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/laminas/laminas-mime/src/Exception/ExceptionInterface.php',
