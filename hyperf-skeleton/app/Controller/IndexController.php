@@ -10,12 +10,18 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 namespace App\Controller;
+use App\Exception\BusinessException;
+use App\Exception\NoLoginException;
+use App\Exception\NotFoundException;
 use Hyperf\DbConnection\Db;
 class IndexController extends AbstractController
 {
     public function index()
     {
+        throw new NoLoginException();
+
         try {
+
             $user = $this->request->input('user', 'Hyperf');
             $method = $this->request->getMethod();
             $users = Db::table('users')->get();

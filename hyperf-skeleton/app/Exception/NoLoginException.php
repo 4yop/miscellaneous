@@ -9,7 +9,7 @@ use Throwable;
 
 class NoLoginException extends BusinessException
 {
-    public function __construct(string $message = '', int $code = MessageCode::NO_LOGIN, Throwable $previous = null)
+    public function __construct(string $message = null, int $code = MessageCode::NO_LOGIN, Throwable $previous = null)
     {
         if (is_null($message)) {
             $message = MessageCode::getMessage($code);

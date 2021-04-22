@@ -21,11 +21,13 @@
         "hyperf/db-connection": "~2.1.0",
         "hyperf/framework": "~2.1.0",
         "hyperf/guzzle": "~2.1.0",
+        "hyperf/http-message": "^2.1",
         "hyperf/http-server": "~2.1.0",
         "hyperf/logger": "~2.1.0",
         "hyperf/memory": "~2.1.0",
         "hyperf/process": "~2.1.0",
-        "hyperf/redis": "~2.1.0"
+        "hyperf/redis": "~2.1.0",
+        "hyperf/validation": "^2.1"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",

@@ -9,7 +9,7 @@ use Throwable;
 
 class InvalidException extends BusinessException
 {
-    public function __construct(string $message = '', int $code = MessageCode::INVALID, Throwable $previous = null)
+    public function __construct(string $message = null, int $code = MessageCode::INVALID, Throwable $previous = null)
     {
         if (is_null($message)) {
             $message = MessageCode::getMessage($code);
