@@ -1,0 +1,6 @@
+select  FROM_UNIXTIME(OrderTime,'%m') as `month`,sum(ProductPrice-CouponPrice) as sum
+from orders
+ where FROM_UNIXTIME(OrderTime,'%Y') = 2021
+AND UserId = 152
+AND OrderStatus = 8
+GROUP BY `month`
