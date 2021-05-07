@@ -28,9 +28,6 @@ class RegisterRequest extends ApiRequest
             'username' => [
                 'required',
                 'max:16',
-                !Rule::exists('member')->where(function ($query) use ($username) {
-                    $query->where('username', $username);
-                }),
             ],
             'password' => 'required',
         ];

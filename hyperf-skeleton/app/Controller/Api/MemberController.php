@@ -13,6 +13,7 @@ use Hyperf\HttpServer\Annotation\AutoController;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Contract\SessionInterface;
+use Hyperf\Validation\Rule;
 
 /**
  * @AutoController()

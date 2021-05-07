@@ -21,6 +21,11 @@ class MemberService
      */
     public function register(string $username,string $password):MemberModel
     {
+        $member = $this->memberModel->where(['username'=>$username])->first();
+        if ($member)
+        {
+            throw new InvalidException('用户名已存在');
+        }
         $this->memberModel->username = $username;
         $this->memberModel->password = password_hash($password,PASSWORD_BCRYPT);
         $res = $this->memberModel->save();
