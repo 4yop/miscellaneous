@@ -16,6 +16,10 @@ use App\Exception\NotFoundException;
 use App\Model\Member as MemberModel;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\DbConnection\Db;
+use Psr\SimpleCache\CacheInterface;
+use Hyperf\Utils\ApplicationContext;
+
+
 class IndexController extends AbstractController
 {
     /**
@@ -28,8 +32,13 @@ class IndexController extends AbstractController
     {
         //throw new NoLoginException();
 
-        try {
+        $cache = cache();
 
+        try {
+            $cache->set('aaa','bbb');
+
+            $a = $cache->get('aaa');
+            var_dump($a);
 
             $user = $this->request->input('user', 'Hyperf');
             $method = $this->request->getMethod();

@@ -52,4 +52,33 @@ class MemberService
         return $member;
     }
 
+    /**
+     * @param MemberModel $member
+     * @return string
+     * @throws \Psr\SimpleCache\InvalidArgumentException
+     */
+    public function getLoginToken (MemberModel $member):string
+    {
+        $token = md5(uniqid().time().uniqid());
+        unset($member->password);
+        if ( $old_token = cache()->get("user_id{$member->id}:token") )
+        {
+            cache()->delete("token:".$old_token);
+        }
+
+        cache()->set("user_id{$member->id}:token",$token,86400);
+        cache()->set("token:".$token,$member,86400);
+        return $token;
+    }
+
+    public function getByToken (string $token)
+    {
+        $member = cache()->get("token:".$token);
+        if (!$member)
+        {
+            throw new NotFoundException("未登陆");
+        }
+        return $member;
+    }
+
 }

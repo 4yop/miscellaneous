@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '5434e607694b6d13b6ff78432dfaab587c571065',
+    'reference' => 'c6b36b309cf67514769e6e6065c37e3668b2465a',
     'name' => 'hyperf/hyperf-skeleton',
   ),
   'versions' => 
@@ -311,7 +311,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '5434e607694b6d13b6ff78432dfaab587c571065',
+      'reference' => 'c6b36b309cf67514769e6e6065c37e3668b2465a',
     ),
     'hyperf/logger' => 
     array (

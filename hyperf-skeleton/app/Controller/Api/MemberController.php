@@ -13,6 +13,7 @@ use Hyperf\HttpServer\Annotation\AutoController;
 use Hyperf\HttpServer\Annotation\RequestMapping;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Contract\SessionInterface;
+
 /**
  * @AutoController()
  */
@@ -40,9 +41,14 @@ class MemberController
      */
     public function register(RegisterRequest $request)
     {
-        $username = $request->input('username');
-        $password = $request->input('password');
-        $this->memberService->register($username,$password);
+        try {
+            $username = $request->input('username');
+            $password = $request->input('password');
+            $this->memberService->register($username, $password);
+        }catch (\Exception $e)
+        {
+            throw new  \App\Exception\BusinessException(500,$e->getMessage());
+        }
         return [];
     }
 
@@ -54,9 +60,10 @@ class MemberController
         $username = $request->input('username');
         $password = $request->input('password');
         $member = $this->memberService->login($username,$password);
-        $this->session->set('member', $member);
+
+        $token = $this->memberService->getLoginToken($member);
         return [
-            'token'=>$this->session->getId()
+            'token' => $token,
         ];
     }
 
@@ -66,9 +73,6 @@ class MemberController
     public function status(RequestInterface $request)
     {
         $token = $request->header('token');
-        echo $token;
-        $this->session->setId($token);
-        $member = $this->session->get('member');
-        return $member;
+        return  $this->memberService->getByToken($token);
     }
 }

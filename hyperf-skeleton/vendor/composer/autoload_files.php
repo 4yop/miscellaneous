@@ -30,4 +30,5 @@ return array(
     '9ecd5fc4cc77829926e562e2b7c63f3a' => $vendorDir . '/hyperf/translation/src/Functions.php',
     '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     'fdea4480df6c5882835d3b60a113de4d' => $vendorDir . '/hyperf/config/src/Functions.php',
+    '303775aa7e65f97fd4d6a97ce0776258' => $baseDir . '/helper/instance.php',
 );
