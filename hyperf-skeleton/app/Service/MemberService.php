@@ -6,6 +6,8 @@ use App\Exception\InvalidException;
 use App\Exception\NotFoundException;
 use Hyperf\Di\Annotation\Inject;
 use App\Model\Member as MemberModel;
+use Hyperf\WebSocketServer\Context;
+
 class MemberService
 {
     /**
@@ -79,6 +81,16 @@ class MemberService
     public function getByToken (string $token)
     {
         $member = cache()->get("token:".$token);
+        if (!$member)
+        {
+            throw new NotFoundException("未登陆");
+        }
+        return $member;
+    }
+
+    public function getWsUserId ()
+    {
+        $member = Context::get('member');
         if (!$member)
         {
             throw new NotFoundException("未登陆");

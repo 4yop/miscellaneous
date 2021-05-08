@@ -28,9 +28,9 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
         '253c157292f75eb38082b5acb06f3f01' => __DIR__ . '/..' . '/nikic/fast-route/src/functions.php',
         'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
+        'fdea4480df6c5882835d3b60a113de4d' => __DIR__ . '/..' . '/hyperf/config/src/Functions.php',
         '9ecd5fc4cc77829926e562e2b7c63f3a' => __DIR__ . '/..' . '/hyperf/translation/src/Functions.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
-        'fdea4480df6c5882835d3b60a113de4d' => __DIR__ . '/..' . '/hyperf/config/src/Functions.php',
         '303775aa7e65f97fd4d6a97ce0776258' => __DIR__ . '/../..' . '/helper/instance.php',
     );
 
@@ -88,6 +88,7 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'M' => 
         array (
             'Monolog\\' => 8,
+            'Mix\\Redis\\Subscribe\\' => 20,
         ),
         'L' => 
         array (
@@ -103,6 +104,7 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
             'Hyperf\\Utils\\' => 13,
             'Hyperf\\Translation\\' => 19,
             'Hyperf\\Testing\\' => 15,
+            'Hyperf\\SocketIOServer\\' => 22,
             'Hyperf\\Session\\' => 15,
             'Hyperf\\Server\\' => 14,
             'Hyperf\\Redis\\' => 13,
@@ -315,6 +317,10 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
         ),
+        'Mix\\Redis\\Subscribe\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mix/redis-subscribe/src',
+        ),
         'Laminas\\ZendFrameworkBridge\\' => 
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src',
@@ -350,6 +356,10 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'Hyperf\\Testing\\' => 
         array (
             0 => __DIR__ . '/..' . '/hyperf/testing/src',
+        ),
+        'Hyperf\\SocketIOServer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hyperf/socketio-server/src',
         ),
         'Hyperf\\Session\\' => 
         array (
@@ -1621,6 +1631,43 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'Hyperf\\Session\\Session' => __DIR__ . '/..' . '/hyperf/session/src/Session.php',
         'Hyperf\\Session\\SessionManager' => __DIR__ . '/..' . '/hyperf/session/src/SessionManager.php',
         'Hyperf\\Session\\SessionProxy' => __DIR__ . '/..' . '/hyperf/session/src/SessionProxy.php',
+        'Hyperf\\SocketIOServer\\Annotation\\Event' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Annotation/Event.php',
+        'Hyperf\\SocketIOServer\\Annotation\\SocketIONamespace' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Annotation/SocketIONamespace.php',
+        'Hyperf\\SocketIOServer\\Aspect\\SessionAspect' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Aspect/SessionAspect.php',
+        'Hyperf\\SocketIOServer\\BaseNamespace' => __DIR__ . '/..' . '/hyperf/socketio-server/src/BaseNamespace.php',
+        'Hyperf\\SocketIOServer\\Collector\\EventAnnotationCollector' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Collector/EventAnnotationCollector.php',
+        'Hyperf\\SocketIOServer\\Collector\\SocketIORouter' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Collector/SocketIORouter.php',
+        'Hyperf\\SocketIOServer\\Command\\RemoveRedisGarbage' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Command/RemoveRedisGarbage.php',
+        'Hyperf\\SocketIOServer\\ConfigProvider' => __DIR__ . '/..' . '/hyperf/socketio-server/src/ConfigProvider.php',
+        'Hyperf\\SocketIOServer\\Emitter\\Emitter' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Emitter/Emitter.php',
+        'Hyperf\\SocketIOServer\\Emitter\\Flagger' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Emitter/Flagger.php',
+        'Hyperf\\SocketIOServer\\Emitter\\Future' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Emitter/Future.php',
+        'Hyperf\\SocketIOServer\\Exception\\ConnectionClosedException' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Exception/ConnectionClosedException.php',
+        'Hyperf\\SocketIOServer\\Exception\\RouteNotFoundException' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Exception/RouteNotFoundException.php',
+        'Hyperf\\SocketIOServer\\Listener\\AddRouteListener' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Listener/AddRouteListener.php',
+        'Hyperf\\SocketIOServer\\Listener\\ServerIdListener' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Listener/ServerIdListener.php',
+        'Hyperf\\SocketIOServer\\Listener\\StartSubscriberListener' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Listener/StartSubscriberListener.php',
+        'Hyperf\\SocketIOServer\\NamespaceInterface' => __DIR__ . '/..' . '/hyperf/socketio-server/src/NamespaceInterface.php',
+        'Hyperf\\SocketIOServer\\Parser\\Decoder' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Parser/Decoder.php',
+        'Hyperf\\SocketIOServer\\Parser\\Encoder' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Parser/Encoder.php',
+        'Hyperf\\SocketIOServer\\Parser\\Engine' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Parser/Engine.php',
+        'Hyperf\\SocketIOServer\\Parser\\Packet' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Parser/Packet.php',
+        'Hyperf\\SocketIOServer\\Room\\AdapterInterface' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Room/AdapterInterface.php',
+        'Hyperf\\SocketIOServer\\Room\\EphemeralInterface' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Room/EphemeralInterface.php',
+        'Hyperf\\SocketIOServer\\Room\\MemoryAdapter' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Room/MemoryAdapter.php',
+        'Hyperf\\SocketIOServer\\Room\\MemoryRoom' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Room/MemoryRoom.php',
+        'Hyperf\\SocketIOServer\\Room\\NullAdapter' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Room/NullAdapter.php',
+        'Hyperf\\SocketIOServer\\Room\\RedisAdapter' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Room/RedisAdapter.php',
+        'Hyperf\\SocketIOServer\\Room\\RedisNsqAdapter' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Room/RedisNsqAdapter.php',
+        'Hyperf\\SocketIOServer\\Room\\RoomInterface' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Room/RoomInterface.php',
+        'Hyperf\\SocketIOServer\\Room\\SubscriberFactory' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Room/SubscriberFactory.php',
+        'Hyperf\\SocketIOServer\\SidProvider\\DistributedSidProvider' => __DIR__ . '/..' . '/hyperf/socketio-server/src/SidProvider/DistributedSidProvider.php',
+        'Hyperf\\SocketIOServer\\SidProvider\\LocalSidProvider' => __DIR__ . '/..' . '/hyperf/socketio-server/src/SidProvider/LocalSidProvider.php',
+        'Hyperf\\SocketIOServer\\SidProvider\\SessionSidProvider' => __DIR__ . '/..' . '/hyperf/socketio-server/src/SidProvider/SessionSidProvider.php',
+        'Hyperf\\SocketIOServer\\SidProvider\\SidProviderInterface' => __DIR__ . '/..' . '/hyperf/socketio-server/src/SidProvider/SidProviderInterface.php',
+        'Hyperf\\SocketIOServer\\Socket' => __DIR__ . '/..' . '/hyperf/socketio-server/src/Socket.php',
+        'Hyperf\\SocketIOServer\\SocketIO' => __DIR__ . '/..' . '/hyperf/socketio-server/src/SocketIO.php',
+        'Hyperf\\SocketIOServer\\SocketIOConfig' => __DIR__ . '/..' . '/hyperf/socketio-server/src/SocketIOConfig.php',
         'Hyperf\\Testing\\Client' => __DIR__ . '/..' . '/hyperf/testing/src/Client.php',
         'Hyperf\\Testing\\HttpClient' => __DIR__ . '/..' . '/hyperf/testing/src/HttpClient.php',
         'Hyperf\\Testing\\HttpMessage\\Upload\\UploadedFile' => __DIR__ . '/..' . '/hyperf/testing/src/HttpMessage/Upload/UploadedFile.php',
@@ -1813,6 +1860,12 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'Laminas\\ZendFrameworkBridge\\Module' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/Module.php',
         'Laminas\\ZendFrameworkBridge\\Replacements' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/Replacements.php',
         'Laminas\\ZendFrameworkBridge\\RewriteRules' => __DIR__ . '/..' . '/laminas/laminas-zendframework-bridge/src/RewriteRules.php',
+        'Mix\\Redis\\Subscribe\\CommandInvoker' => __DIR__ . '/..' . '/mix/redis-subscribe/src/CommandInvoker.php',
+        'Mix\\Redis\\Subscribe\\Connection' => __DIR__ . '/..' . '/mix/redis-subscribe/src/Connection.php',
+        'Mix\\Redis\\Subscribe\\Exception\\SubscribeException' => __DIR__ . '/..' . '/mix/redis-subscribe/src/Exception/SubscribeException.php',
+        'Mix\\Redis\\Subscribe\\Exception\\UnsubscribeException' => __DIR__ . '/..' . '/mix/redis-subscribe/src/Exception/UnsubscribeException.php',
+        'Mix\\Redis\\Subscribe\\Message' => __DIR__ . '/..' . '/mix/redis-subscribe/src/Message.php',
+        'Mix\\Redis\\Subscribe\\Subscriber' => __DIR__ . '/..' . '/mix/redis-subscribe/src/Subscriber.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',

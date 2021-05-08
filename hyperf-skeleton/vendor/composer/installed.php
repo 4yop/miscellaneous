@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '3d4e0dbd2bc56d07ef8c34c405525591092af08a',
+    'reference' => '95e931e00718bbd55578bf1cbd9e6508ea3f9153',
     'name' => 'hyperf/hyperf-skeleton',
   ),
   'versions' => 
@@ -311,7 +311,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '3d4e0dbd2bc56d07ef8c34c405525591092af08a',
+      'reference' => '95e931e00718bbd55578bf1cbd9e6508ea3f9153',
     ),
     'hyperf/logger' => 
     array (
@@ -384,6 +384,15 @@
       array (
       ),
       'reference' => '5381f4fab1469962e80ca775d5db694f509686f3',
+    ),
+    'hyperf/socketio-server' => 
+    array (
+      'pretty_version' => 'v2.1.13',
+      'version' => '2.1.13.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'eb24b729b0abe9c15a488fa65822b211fa810b30',
     ),
     'hyperf/testing' => 
     array (
@@ -481,6 +490,15 @@
       array (
       ),
       'reference' => '6cccbddfcfc742eb02158d6137ca5687d92cee32',
+    ),
+    'mix/redis-subscribe' => 
+    array (
+      'pretty_version' => 'v2.2.16',
+      'version' => '2.2.16.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '85ac4516791e584f3cebee6e4ae2383067bd1517',
     ),
     'mockery/mockery' => 
     array (

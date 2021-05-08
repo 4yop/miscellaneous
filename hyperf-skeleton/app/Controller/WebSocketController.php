@@ -1,25 +1,30 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Service\MemberService;
-use Hyperf\Contract\OnCloseInterface;
+use Hyperf\SocketIOServer\Annotation\Event;
+use Hyperf\SocketIOServer\Annotation\SocketIONamespace;
+use Hyperf\SocketIOServer\BaseNamespace;
+use Hyperf\SocketIOServer\Socket;
+use Hyperf\Utils\Codec\Json;
+
+
 use Hyperf\Contract\OnMessageInterface;
 use Hyperf\Contract\OnOpenInterface;
+use Hyperf\WebSocketServer\Context;
 use Swoole\Http\Request;
-use Swoole\Server;
 use Swoole\Websocket\Frame;
 use Swoole\WebSocket\Server as WebSocketServer;
 use Hyperf\Di\Annotation\Inject;
+use App\Service\MemberService;
 
-use Hyperf\WebSocketServer\Context;
-
-
-class WebSocketController implements OnMessageInterface, OnOpenInterface, OnCloseInterface
+/**
+ * @SocketIONamespace("/")
+ */
+class WebSocketController extends BaseNamespace implements OnMessageInterface, OnOpenInterface
 {
-    public static $online = [];
-
 
     /**
      * @Inject()
@@ -27,48 +32,72 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
      */
     private $memberService;
 
-    public function onMessage($server, Frame $frame): void
-    {
-
-        $member = Context::get('member');
-
-        $server->push($frame->fd, 'Recv: ' . $frame->data);
-        $server->push($frame->fd, '你是,id:'.$member->id."的用户");
-    }
-
     public function onClose($server, int $fd, int $reactorId): void
     {
         var_dump('closed');
     }
 
+
+
+    public function onMessage($server, Frame $frame): void
+    {
+        $server->push($frame->fd, 'Username: ' . 123);
+    }
+
     public function onOpen($server, Request $request): void
     {
-
-        var_dump($request->header);
-        var_dump($request->get);
-
-        if (!isset($request->get['token']) || empty($request->get['token']))
+        if ( !isset($request->get['token']) || empty($request->get['token']) )
         {
-            $server->push($request->fd, '您未登陆');
+            $server->close();
+            return;
         }
 
-        if (!isset($request->get['token']) || empty($request->get['token']))
-        {
-            $server->push($request->fd, '您未登陆');
-        }
         $token = $request->get['token'];
-        try{
-            $member = $this->memberService->getByToken($token);
-            Context::set('member', $member);
-        }catch (\Exception $e)
-        {
-            $server->push($request->fd,$e->getMessage());
-        }
+        $member = $this->memberService->getByToken($token);
 
-
-
-        $server->push($request->fd, '您好呀,id:'.$member->id."的用户");
+        Context::set('member', $member);
     }
 
 
+
+
+
+
+    /**
+     * @Event("event")
+     * @param string $data
+     */
+    public function onEvent(Socket $socket, $data)
+    {
+        // 应答
+        return 'Event Received: ' . $data;
+    }
+
+    /**
+     * @Event("join-room")
+     * @param string $data
+     */
+    public function onJoinRoom(Socket $socket, $data)
+    {
+        var_dump($socket->getAdapter()->clients($data));
+        // 将当前用户加入房间
+        $socket->join($data);
+        // 向房间内其他用户推送（不含当前用户）
+        $socket->to($data)->emit('event', $socket->getSid() . "has joined {$data}");
+        // 向房间内所有人广播（含当前用户）
+        $this->emit('event', 'There are ' . count($socket->getAdapter()->clients($data)) . " players in {$data}");
+
+
+
+    }
+
+    /**
+     * @Event("say")
+     * @param string $data
+     */
+    public function onSay(Socket $socket, $data)
+    {
+        $data = Json::decode($data);
+        $socket->to($data['room'])->emit('event', $socket->getSid() . " say: {$data['message']}");
+    }
 }
