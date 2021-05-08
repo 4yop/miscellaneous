@@ -97,6 +97,7 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         ),
         'H' => 
         array (
+            'Hyperf\\WebSocketServer\\' => 23,
             'Hyperf\\Watcher\\' => 15,
             'Hyperf\\Validation\\' => 18,
             'Hyperf\\Utils\\' => 13,
@@ -326,6 +327,10 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-mime/src',
         ),
+        'Hyperf\\WebSocketServer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hyperf/websocket-server/src',
+        ),
         'Hyperf\\Watcher\\' => 
         array (
             0 => __DIR__ . '/..' . '/hyperf/watcher/src',
@@ -536,6 +541,7 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'App\\Controller\\AbstractController' => __DIR__ . '/../..' . '/app/Controller/AbstractController.php',
         'App\\Controller\\Api\\MemberController' => __DIR__ . '/../..' . '/app/Controller/Api/MemberController.php',
         'App\\Controller\\IndexController' => __DIR__ . '/../..' . '/app/Controller/IndexController.php',
+        'App\\Controller\\WebSocketController' => __DIR__ . '/../..' . '/app/Controller/WebSocketController.php',
         'App\\Exception\\BusinessException' => __DIR__ . '/../..' . '/app/Exception/BusinessException.php',
         'App\\Exception\\Handler\\ApiExceptionHandler' => __DIR__ . '/../..' . '/app/Exception/Handler/ApiExceptionHandler.php',
         'App\\Exception\\Handler\\AppExceptionHandler' => __DIR__ . '/../..' . '/app/Exception/Handler/AppExceptionHandler.php',
@@ -1731,6 +1737,22 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'Hyperf\\Watcher\\Option' => __DIR__ . '/..' . '/hyperf/watcher/src/Option.php',
         'Hyperf\\Watcher\\Process' => __DIR__ . '/..' . '/hyperf/watcher/src/Process.php',
         'Hyperf\\Watcher\\Watcher' => __DIR__ . '/..' . '/hyperf/watcher/src/Watcher.php',
+        'Hyperf\\WebSocketServer\\Collector\\Fd' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Collector/Fd.php',
+        'Hyperf\\WebSocketServer\\Collector\\FdCollector' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Collector/FdCollector.php',
+        'Hyperf\\WebSocketServer\\ConfigProvider' => __DIR__ . '/..' . '/hyperf/websocket-server/src/ConfigProvider.php',
+        'Hyperf\\WebSocketServer\\Context' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Context.php',
+        'Hyperf\\WebSocketServer\\CoreMiddleware' => __DIR__ . '/..' . '/hyperf/websocket-server/src/CoreMiddleware.php',
+        'Hyperf\\WebSocketServer\\Event\\OnOpenEvent' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Event/OnOpenEvent.php',
+        'Hyperf\\WebSocketServer\\Exception\\Handler\\WebSocketExceptionHandler' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Exception/Handler/WebSocketExceptionHandler.php',
+        'Hyperf\\WebSocketServer\\Exception\\InvalidMethodException' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Exception/InvalidMethodException.php',
+        'Hyperf\\WebSocketServer\\Exception\\WebSocketHandeShakeException' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Exception/WebSocketHandeShakeException.php',
+        'Hyperf\\WebSocketServer\\Exception\\WebSocketMessageException' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Exception/WebSocketMessageException.php',
+        'Hyperf\\WebSocketServer\\Listener\\InitSenderListener' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Listener/InitSenderListener.php',
+        'Hyperf\\WebSocketServer\\Listener\\OnPipeMessageListener' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Listener/OnPipeMessageListener.php',
+        'Hyperf\\WebSocketServer\\Security' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Security.php',
+        'Hyperf\\WebSocketServer\\Sender' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Sender.php',
+        'Hyperf\\WebSocketServer\\SenderPipeMessage' => __DIR__ . '/..' . '/hyperf/websocket-server/src/SenderPipeMessage.php',
+        'Hyperf\\WebSocketServer\\Server' => __DIR__ . '/..' . '/hyperf/websocket-server/src/Server.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
         'Laminas\\Mime\\Decode' => __DIR__ . '/..' . '/laminas/laminas-mime/src/Decode.php',
         'Laminas\\Mime\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/laminas/laminas-mime/src/Exception/ExceptionInterface.php',

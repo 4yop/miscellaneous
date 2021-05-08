@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'c6b36b309cf67514769e6e6065c37e3668b2465a',
+    'reference' => '3d4e0dbd2bc56d07ef8c34c405525591092af08a',
     'name' => 'hyperf/hyperf-skeleton',
   ),
   'versions' => 
@@ -335,7 +335,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'c6b36b309cf67514769e6e6065c37e3668b2465a',
+      'reference' => '3d4e0dbd2bc56d07ef8c34c405525591092af08a',
     ),
     'hyperf/logger' => 
     array (
@@ -453,6 +453,15 @@ private static $installed = array (
       array (
       ),
       'reference' => 'aaf80d24ecc4a88a1e30c4ce7719f5c51eb8588c',
+    ),
+    'hyperf/websocket-server' => 
+    array (
+      'pretty_version' => 'v2.1.14',
+      'version' => '2.1.14.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '18abfc53477748ba0e9315985a0dce349d2994e0',
     ),
     'jetbrains/phpstorm-stubs' => 
     array (
