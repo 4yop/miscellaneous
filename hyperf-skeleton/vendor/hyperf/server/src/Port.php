@@ -143,6 +143,7 @@ class Port
 
     private static function filter(array $config): array
     {
+        $config['type'] = isset($config['type']) ? $config['type'] : 0;
         if ((int) $config['type'] === ServerInterface::SERVER_BASE) {
             $default = [
                 'open_http2_protocol' => false,

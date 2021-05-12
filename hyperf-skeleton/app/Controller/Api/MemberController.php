@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller\Api;
 
+use App\Exception\NoLoginException;
 use App\Service\MemberService;
 use App\Request\LoginRequest;
 use App\Request\RegisterRequest;
@@ -73,7 +74,11 @@ class MemberController
      */
     public function status(RequestInterface $request)
     {
-        $token = $request->header('token');
-        return  $this->memberService->getByToken($token);
+        $token = $request->header('X-Session-Id',null);
+        if ( empty($token) )
+        {
+            throw new NoLoginException();
+        }
+        return [ 'data' => $this->memberService->getByToken($token)];
     }
 }

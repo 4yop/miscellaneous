@@ -78,24 +78,5 @@ class MemberService
         return $token;
     }
 
-    public function getByToken (string $token)
-    {
-        $member = cache()->get("token:".$token);
-        if (!$member)
-        {
-            throw new NotFoundException("未登陆");
-        }
-        return $member;
-    }
-
-    public function getWsUserId ()
-    {
-        $member = Context::get('member');
-        if (!$member)
-        {
-            throw new NotFoundException("未登陆");
-        }
-        return $member;
-    }
 
 }

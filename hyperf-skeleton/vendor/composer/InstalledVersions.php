@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '95e931e00718bbd55578bf1cbd9e6508ea3f9153',
+    'reference' => '69391b05954360ffc5fe731b974ac18deab6fa55',
     'name' => 'hyperf/hyperf-skeleton',
   ),
   'versions' => 
@@ -335,7 +335,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '95e931e00718bbd55578bf1cbd9e6508ea3f9153',
+      'reference' => '69391b05954360ffc5fe731b974ac18deab6fa55',
     ),
     'hyperf/logger' => 
     array (
