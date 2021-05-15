@@ -3,146 +3,60 @@
 
 namespace App\Service;
 
+use App\Model\ConnectMap;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Utils\ApplicationContext;
 use Hyperf\WebSocketServer\Context;
 
 class BinderService
 {
-    protected $redis;
-
-    protected $key = 'hyperf:connectionBinder:map';
-
-    public function __construct()
-    {
-        $container = ApplicationContext::getContainer();
-        $this->redis = $container->get(\Hyperf\Redis\Redis::class);
-    }
-
     /**
-     * 绑定一个标记到当前连接.
-     *
-     * @param string $flag
-     * @param int    $fd
-     *
-     * @return void
+     * @Inject()
+     * @var ConnectMap
      */
-    public function bind (string $flag, int $fd)
-    {
-        Context::set('__flag',$flag);
-        $this->redis->hSet($this->key,$flag,$fd);
-    }
+    private $connectMap;
 
-    /**
-     * 绑定一个标记到当前连接，如果已绑定返回false.
-     *
-     * @param string $flag
-     * @param int    $fd
-     *
-     * @return bool
-     */
-    public function bindNx(string $flag, int $fd): bool
-    {
-        $res = $this->redis->hSetNx($this->key,$flag,$fd);
-        if ($res)
-        {
-            Context::set('__flag',$flag);
-        }
-        return $res;
-    }
-
-    /**
-     * 取消绑定.
-     *
-     * @param string   $flag
-     * @param int|null $keepTime 旧数据保持时间，null 则不保留
-     *
-     * @return void
-     */
-    public function unbind(string $flag, ?int $keepTime = null)
-    {
-        $key = $this->key;
-        $fd = $this->redis->hGet($key, $flag);
-        if ($fd)
-        {
-            Context::set('__flag',null);
-        }
-        $this->redis->multi();
-        $this->redis->hDel($key, $flag);
-        if ($fd && $keepTime > 0)
-        {
-            $this->redis->set($key . ':old:' . $flag, $fd, $keepTime);
-        }
-        $this->redis->exec();
-    }
-
-    /**
-     * 使用标记获取连接编号.
-     *
-     * @param string $flag
-     *
-     * @return int|null
-     */
-    public function getFdByFlag($flag): ?int
-    {
-        return $this->redis->hGet($this->key, $flag) ?: null;
-    }
-
-    /**
-     * 使用标记获取连接编号.
-     *
-     * @param string[] $flags
-     *
-     * @return int[]
-     */
-    public function getFdsByFlags(array $flags): array
-    {
-        return $this->redis->hMget($this->key, $flags);
-    }
-
-
-    /**
-     * 使用连接编号获取标记.
-     *
+    /**绑定 fd 和member_id
      * @param int $fd
-     *
-     * @return string|null
+     * @param int $member_id
+     * @return ConnectMap
      */
-    public function getFlagByFd(int $fd): ?string
+    public function bind (int $fd,int $member_id):ConnectMap
     {
-        return Context::get('__flag',null);
-    }
-
-    /**
-     * 使用连接编号获取标记.
-     *
-     * @param int[] $fds
-     *
-     * @return string[]
-     */
-    public function getFlagsByFds(array $fds): array
-    {
-        $flags = [];
-        foreach ($fds as $fd)
+        echo __FUNCTION__."\n";
+        if ( $this->connectMap->where('fd',$fd)->exists() )
         {
-            $flags[$fd] = Context::get('__flag',null);
+            $map = $this->connectMap->where(['fd'=>$fd])->update(['member_id'=>$member_id]);
+        }else
+        {
+            $map = $this->connectMap->insert(['fd'=>$fd,'member_id'=>$member_id]);
         }
+        return $map;
+    }
 
-        return $flags;
+    /**解绑fd
+     * @param int $fd
+     * @return int
+     */
+    public function unbind (int $fd):int
+    {
+        return $this->connectMap->where('fd',$fd)
+                                ->update(['member_id'=>0]);
     }
 
     /**
-     * 使用标记获取旧的连接编号.
-     *
-     * @param string $flag
-     *
-     * @return int|null
+     * @param int $fd
+     * @return int
      */
-    public function getOldFdByFlag(string $flag): ?int
+    public function getMemberIdByFd (int $fd)
     {
+        return (int)$this->connectMap->where('fd',$fd)
+                                     ->value('member_id');
+    }
 
-        return $this->redis->get($this->key . ':old:' . $flag) ?: null;
-
+    public function getFdsByMemberId (int $member_id)
+    {
+        $this->connectMap->where(['member_id'=>$member_id])->get('fd');
     }
 
 }

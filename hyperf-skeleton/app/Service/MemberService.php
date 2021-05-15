@@ -68,12 +68,12 @@ class MemberService
     {
         $token = md5(uniqid().time().uniqid());
         unset($member->password);
-        if ( $old_token = cache()->get("user_id{$member->id}:token") )
+        if ( $old_token = cache()->get("user_id:{$member->id}:token") )
         {
             cache()->delete("token:".$old_token);
         }
 
-        cache()->set("user_id{$member->id}:token",$token,86400);
+        cache()->set("user_id:{$member->id}:token",$token,86400);
         cache()->set("token:".$token,$member,86400);
         return $token;
     }

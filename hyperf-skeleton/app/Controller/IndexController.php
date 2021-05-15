@@ -14,11 +14,12 @@ use App\Exception\BusinessException;
 use App\Exception\NoLoginException;
 use App\Exception\NotFoundException;
 use App\Model\Member as MemberModel;
+use App\Model\MemberToken;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\DbConnection\Db;
 use Psr\SimpleCache\CacheInterface;
 use Hyperf\Utils\ApplicationContext;
-
+use Carbon\Carbon;
 
 class IndexController extends AbstractController
 {
@@ -28,9 +29,37 @@ class IndexController extends AbstractController
      */
     private $memberModel;
 
+    /**
+     * @Inject()
+     * @var MemberToken
+     */
+    private $memberToken;
+
     public function index()
     {
-        //throw new NoLoginException();
+        $now =  Carbon::now();
+
+
+
+        $member_id = rand(0,999);
+        if ( !$member = $this->memberToken->where(['member_id'=>$member_id])->first() )
+        {
+            $member = $this->memberToken;
+        }
+
+
+        $member->created_at = $now->toDateTimeString();
+        $member->expired_at = $now->add(1,'day')->toDateTimeString();
+        $member->token = date('Y-m-d H:i:s');
+        $member->member_id = $member_id;
+        $member->save();
+
+        //return $member;
+
+
+
+
+
 
         $cache = cache();
 

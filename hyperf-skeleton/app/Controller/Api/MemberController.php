@@ -8,6 +8,7 @@ use App\Exception\NoLoginException;
 use App\Service\MemberService;
 use App\Request\LoginRequest;
 use App\Request\RegisterRequest;
+use App\Service\TokenService;
 use Hyperf\HttpServer\Contract\RequestInterface;
 use Hyperf\HttpServer\Contract\ResponseInterface;
 use Hyperf\HttpServer\Annotation\AutoController;
@@ -26,6 +27,12 @@ class MemberController
      * @var MemberService
      */
     private $memberService;
+
+    /**
+     * @Inject()
+     * @var TokenService
+     */
+    private $tokenService;
 
     /**
      * @Inject()
@@ -63,7 +70,7 @@ class MemberController
         $password = $request->input('password');
         $member = $this->memberService->login($username,$password);
 
-        $token = $this->memberService->getLoginToken($member);
+        $token = $this->tokenService->create($member->id);
         return [
             'token' => $token,
         ];
@@ -79,6 +86,6 @@ class MemberController
         {
             throw new NoLoginException();
         }
-        return [ 'data' => $this->memberService->getByToken($token)];
+        return [ 'data' => $this->tokenService->getMemberInfo($token)];
     }
 }

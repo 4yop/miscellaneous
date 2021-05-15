@@ -5,59 +5,65 @@ namespace App\Service;
 
 
 use App\Exception\NotFoundException;
+use App\Model\Member;
+use App\Model\MemberToken;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\Utils\Context;
-use Hyperf\WebSocketServer\Context as WsContext;
+use Carbon\Carbon;
+
+
 
 class TokenService
 {
     /**
      * @Inject()
-     * @var \App\Service\MemberService
+     * @var MemberToken
      */
-    private $memberService;
+    private $memberToken;
 
-    /**
-     * 用户ID
-     *
-     * @var int
+    /**更新或创建token
+     * @param int $member_id
+     * @return string
      */
-    protected $memberId;
-
-    /**
-     * 用户信息
-     *
-     * @var \App\Model\Member
-     */
-    protected $memberInfo;
-
-    /**
-     * 是否登录
-     *
-     * @var boolean
-     */
-    protected $isLogin = false;
-
-
-
-    public function getByToken (string $token)
+    public function create (int $member_id):string
     {
-        $member = cache()->get("token:".$token);var_dump($member);
-//        if (!$member)
-//        {
-//            throw new NotFoundException("未登陆");
-//        }
-        return $member;
+        $token = md5(uniqid().time().uniqid().$member_id);
+        $now =  Carbon::now();
+        if ( !$member = $this->memberToken->where(['member_id'=>$member_id])->first() )
+        {
+            $member = $this->memberToken;
+        }
+        $member->created_at = $now->toDateTimeString();
+        $member->expired_at = $now->add(1,'day')->toDateTimeString();
+        $member->token      = $token;
+        $member->member_id  = $member_id;
+        $member->save();
+        return $token;
     }
 
-    public function getWsUserId ()
+
+    /**获取用户id 根据token
+     * @param string $token
+     * @return \Hyperf\Utils\HigherOrderTapProxy|\Illuminate\Support\HigherOrderTapProxy|mixed|void
+     */
+    public function getMemberId (string $token):int
     {
-        $member = \Hyperf\WebSocketServer\Context::get('member');
-        if (!$member)
+        return (int)$this->memberToken->where('token',$token)->value('member_id');
+    }
+
+    /**
+     * @param string $token
+     * @return \Hyperf\Utils\HigherOrderTapProxy|\Illuminate\Support\HigherOrderTapProxy|mixed|void|null
+     */
+    public function getMemberInfo (string $token)
+    {
+        $memberToken = $this->memberToken->where('token',$token)->first();
+        if (!$memberToken)
         {
-            throw new NotFoundException("未登陆");
+            return null;
         }
-        return $member;
+        return Member::where('id',$memberToken['member_id'])->first();
+
     }
 
 

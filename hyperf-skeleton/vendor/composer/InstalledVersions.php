@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '69391b05954360ffc5fe731b974ac18deab6fa55',
+    'reference' => 'bf50603d32fa137f52007da187b7068696e43d49',
     'name' => 'hyperf/hyperf-skeleton',
   ),
   'versions' => 
@@ -335,7 +335,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '69391b05954360ffc5fe731b974ac18deab6fa55',
+      'reference' => 'bf50603d32fa137f52007da187b7068696e43d49',
     ),
     'hyperf/logger' => 
     array (
@@ -557,12 +557,12 @@ private static $installed = array (
     ),
     'nesbot/carbon' => 
     array (
-      'pretty_version' => '2.46.0',
-      'version' => '2.46.0.0',
+      'pretty_version' => '2.48.0',
+      'version' => '2.48.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '2fd2c4a77d58a4e95234c8a61c5df1f157a91bf4',
+      'reference' => 'd3c447f21072766cddec3522f9468a5849a76147',
     ),
     'nikic/fast-route' => 
     array (

@@ -6,7 +6,7 @@ namespace App\Model;
 
 /**
  */
-class Member extends Model
+class ConnectMap extends Model
 {
 
     /**
@@ -22,5 +22,5 @@ class Member extends Model
      */
     protected $casts = [];
 
-    protected $hidden = ['password'];
+
 }

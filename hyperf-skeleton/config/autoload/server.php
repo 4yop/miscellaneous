@@ -34,10 +34,22 @@ return [
             'sock_type' => SWOOLE_SOCK_TCP,
             'callbacks' => [
                 Event::ON_HAND_SHAKE => [\App\Service\WebSocketService::class, 'onHandShake'],
-                Event::ON_MESSAGE => [Hyperf\WebSocketServer\Server::class, 'onMessage'],
-                Event::ON_CLOSE => [Hyperf\WebSocketServer\Server::class, 'onClose'],
+                Event::ON_MESSAGE => [\App\Service\WebSocketService::class, 'onMessage'],
+                Event::ON_CLOSE => [\App\Service\WebSocketService::class, 'onClose'],
             ],
         ],
+//        [
+//            'name' => 'socket-io',
+//            'type' => Server::SERVER_WEBSOCKET,
+//            'host' => '0.0.0.0',
+//            'port' => 9503,
+//            'sock_type' => SWOOLE_SOCK_TCP,
+//            'callbacks' => [
+//                Event::ON_HAND_SHAKE => [Hyperf\WebSocketServer\Server::class, 'onHandShake'],
+//                Event::ON_MESSAGE => [Hyperf\WebSocketServer\Server::class, 'onMessage'],
+//                Event::ON_CLOSE => [Hyperf\WebSocketServer\Server::class, 'onClose'],
+//            ],
+//        ],
     ],
     'settings' => [
         Constant::OPTION_ENABLE_COROUTINE => true,
