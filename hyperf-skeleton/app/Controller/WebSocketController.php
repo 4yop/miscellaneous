@@ -24,6 +24,12 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
      */
     private $binder;
 
+    /**
+     * @Inject()
+     * @var \App\Service\WebSocketService
+     */
+    private $wsService;
+
     public function onMessage($server, Frame $frame): void
     {
         echo "消息事件\n";
@@ -43,35 +49,9 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
 
     public function onOpen($server, Request $request): void
     {
-        $fd = $request->fd;
-        if ( !isset($request->get['_sessionId']) || empty($request->get['_sessionId']) )
-        {
-            echo "没 sessionId\n";
-            $server->close($fd);
-            return;
-        }
-        echo "握手\n";
-
-
-        $tokenService = new TokenService();
-        $binderService = new BinderService();
-        $token = $request->get['_sessionId'];
-
-        if (!$member = $tokenService->getMemberInfo($token))
-        {
-            $server->close($fd);
-            echo "member 为空 \n";
-            return;
-        }
-
-        if ( !$binderService->bind($fd,$member->id) )
-        {
-            $server->close($fd);
-            echo "绑定 fd:{$fd} 和 member_id:{$member->id} 失败\n";
-            return;
-        }
-
-        $server->push($request->fd, '');
+        $member_id = $this->binder->getMemberIdByFd($request->fd);
+        $content = "fd:{$request->fd}的member_id为{$member_id}";
+        $this->wsService->pushJson($content);
     }
 }
 

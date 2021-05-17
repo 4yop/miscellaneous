@@ -571,6 +571,7 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
         'App\\Request\\ApiRequest' => __DIR__ . '/../..' . '/app/Request/ApiRequest.php',
         'App\\Request\\LoginRequest' => __DIR__ . '/../..' . '/app/Request/LoginRequest.php',
         'App\\Request\\RegisterRequest' => __DIR__ . '/../..' . '/app/Request/RegisterRequest.php',
+        'App\\Service\\ActionService' => __DIR__ . '/../..' . '/app/Service/ActionService.php',
         'App\\Service\\BinderService' => __DIR__ . '/../..' . '/app/Service/BinderService.php',
         'App\\Service\\MemberService' => __DIR__ . '/../..' . '/app/Service/MemberService.php',
         'App\\Service\\RoomService' => __DIR__ . '/../..' . '/app/Service/RoomService.php',

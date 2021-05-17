@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use http\Exception\InvalidArgumentException;
 use Illuminate\Console\Command;
+use leetcode\common\Base;
 
 class TestLeetcodeQuestion extends Command
 {

@@ -31,6 +31,7 @@ return array(
     'App\\Request\\ApiRequest' => $baseDir . '/app/Request/ApiRequest.php',
     'App\\Request\\LoginRequest' => $baseDir . '/app/Request/LoginRequest.php',
     'App\\Request\\RegisterRequest' => $baseDir . '/app/Request/RegisterRequest.php',
+    'App\\Service\\ActionService' => $baseDir . '/app/Service/ActionService.php',
     'App\\Service\\BinderService' => $baseDir . '/app/Service/BinderService.php',
     'App\\Service\\MemberService' => $baseDir . '/app/Service/MemberService.php',
     'App\\Service\\RoomService' => $baseDir . '/app/Service/RoomService.php',
