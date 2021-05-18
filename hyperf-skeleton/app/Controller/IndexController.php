@@ -39,7 +39,7 @@ class IndexController extends AbstractController
     {
         $now =  Carbon::now();
 
-        
+
 
         $member_id = rand(0,999);
         if ( !$member = $this->memberToken->where(['member_id'=>$member_id])->first() )
