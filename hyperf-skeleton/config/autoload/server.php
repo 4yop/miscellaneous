@@ -34,7 +34,7 @@ return [
             'sock_type' => SWOOLE_SOCK_TCP,
             'callbacks' => [
                 Event::ON_HAND_SHAKE => [\App\Service\WebSocketService::class, 'onHandShake'],
-                Event::ON_MESSAGE => [\App\Service\WebSocketService::class, 'onMessage'],
+                Event::ON_MESSAGE => [\Hyperf\WebSocketServer\Server::class, 'onMessage'],
                 Event::ON_CLOSE => [\App\Service\WebSocketService::class, 'onClose'],
             ],
         ],

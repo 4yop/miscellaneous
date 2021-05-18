@@ -15,22 +15,23 @@ use App\Model\RoomMember;
 class RoomService
 {
     /**Inject();
-     * @var App\Model\Room
+     * @var \App\Model\Room
      */
     private $roomModel;
 
     /**Inject();
-     * @var App\Model\RoomMember
+     * @var \App\Model\RoomMember
      */
     private $roomMemberModel;
 
 
-    public function create(int $member_id,string $title):Room
+    public function create(int $member_id,string $title)
     {
 
         if (RoomMember::where('member_id',$member_id)->exists())
         {
-            throw new BusinessException(500,'已在房间中，无法创建房间');
+            pushError('已在房间中，无法创建房间');
+            return;
         }
 
 
@@ -51,6 +52,9 @@ class RoomService
             Db::commit();
         } catch(\Throwable $ex){
             Db::rollBack();
+            //throw new BusinessException(500,$ex->getMessage());
+            pushError($ex->getMessage()."line:".__LINE__);
+            return;
         }
 
 
@@ -59,6 +63,16 @@ class RoomService
             'creator' => $member_id,
             'status'  => GobangStatus::WAIT_START,
             'room_id' => $room_id,
+            'action'  => 'room.create',
+        ];
+    }
+
+    public function lists ()
+    {
+        $list = $this->roomModel->get();
+        return [
+            'action'    =>  'room.list',
+            'list'      =>  $list,
         ];
     }
 }

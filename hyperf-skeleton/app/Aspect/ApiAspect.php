@@ -27,7 +27,7 @@ class ApiAspect extends AbstractAspect
         // 切面切入后，执行对应的方法会由此来负责
         // $proceedingJoinPoint 为连接点，通过该类的 process() 方法调用原方法并获得结果
         // 在调用前进行某些处理
-        $result = $proceedingJoinPoint->process();var_dump($result);
+        $result = $proceedingJoinPoint->process();
         // 在调用后进行某些处理
         if ( is_array($result) && !isset($result['code']) )
         {

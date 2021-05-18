@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Service\ActionService;
 use App\Service\BinderService;
 use Hyperf\Contract\OnCloseInterface;
 use Hyperf\Contract\OnMessageInterface;
@@ -24,11 +25,7 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
      */
     private $binder;
 
-    /**
-     * @Inject()
-     * @var \App\Service\WebSocketService
-     */
-    private $wsService;
+
 
     public function onMessage($server, Frame $frame): void
     {
@@ -40,6 +37,26 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
         $member_id = $this->binder->getMemberIdByFd($fd);
 
         $server->push($frame->fd, "fd:$fd --------member_id:$member_id");
+
+
+        $data_arr = json_decode($frame->data,true);
+        if ( empty( $frame->data ) || empty($data_arr) )
+        {
+            pushError('data 为空');
+            return;
+        }
+        if ( !isset($data_arr['action']) || empty($data_arr['action']) )
+        {
+            pushError('data的action为空');
+            return;
+        }
+
+        $action = new ActionService();
+
+        $res = $action->doAction($data_arr);
+
+        pushSucc('成功',$res);
+
     }
 
     public function onClose($server, int $fd, int $reactorId): void
@@ -51,7 +68,11 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
     {
         $member_id = $this->binder->getMemberIdByFd($request->fd);
         $content = "fd:{$request->fd}的member_id为{$member_id}";
-        $this->wsService->pushJson($content);
+        pushJson($content);
     }
+
+
+
+
 }
 

@@ -18,5 +18,8 @@ return [
             //Hyperf\HttpServer\Exception\Handler\HttpExceptionHandler::class,
             //App\Exception\Handler\AppExceptionHandler::class,
         ],
+        'ws' => [
+            App\Exception\Handler\WsExceptionHandler::class,
+        ],
     ],
 ];
