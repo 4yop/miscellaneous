@@ -11,11 +11,12 @@ use Hyperf\Utils\Context;
 use Hyperf\Di\Annotation\Inject;
 use Hyperf\DbConnection\Db;
 use App\Model\RoomMember;
+use App\Constants\MemberType;
 
 class RoomService
 {
     /**Inject();
-     * @var \App\Model\Room
+     * @var Room
      */
     private $roomModel;
 
@@ -41,7 +42,7 @@ class RoomService
             // Do something...
             $room_id = Room::insertGetId([
                 'title'   => $title,
-                'creator' => $member_id,
+                'create_user_id' => $member_id,
                 'status'  => GobangStatus::WAIT_START,
             ]);
 
@@ -69,10 +70,59 @@ class RoomService
 
     public function lists ()
     {
-        $list = $this->roomModel->get();
+
+        $list = Room::with(['creator'])
+                    ->get()
+                    ->each(function ($item,$key) {
+                        $item->statusText = GobangStatus::getMessage($item->status);
+                    });
         return [
             'action'    =>  'room.list',
             'list'      =>  $list,
         ];
+    }
+
+
+    public function join (int $member_id,int $room_id):array
+    {
+        if ( RoomMember::where('member_id',$member_id)->exists() )
+        {
+            pushError("您已加入其它房间了");
+            return [];
+        }
+
+
+        $room = Room::where(['id'=>$room_id])->first();
+        if (!$room || $room->person > 1)
+        {
+            pushError("该房间不存在或满员了");
+            return [];
+        }
+
+        $data = [
+            'member_id' => $member_id,
+            'room_id'   => $room_id,
+            'type'      => MemberType::PLAYER,
+        ];
+        try {
+            Db::beginTransaction();
+            $res1 = Room::where(['id'=>$room_id,'person'=>$room->person])->increment('person');
+            if (!$res1)
+            {
+                pushError("加入失败,".__LINE__);
+                Db::rollBack();
+                return false;
+            }
+            RoomMember::insert($data);
+            Db::commit();
+        }catch (\Exception $e)
+        {
+            Db::rollBack();
+            pushError($e->getMessage()."line:".__LINE__);
+            return [];
+        }
+
+
+        return ['roomInfo'=>$room];
     }
 }

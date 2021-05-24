@@ -10,6 +10,7 @@ declare(strict_types=1);
  * @license  https://github.com/hyperf/hyperf/blob/master/LICENSE
  */
 namespace App\Controller;
+use App\Constants\GobangStatus;
 use App\Exception\BusinessException;
 use App\Exception\NoLoginException;
 use App\Exception\NotFoundException;
@@ -20,6 +21,7 @@ use Hyperf\DbConnection\Db;
 use Psr\SimpleCache\CacheInterface;
 use Hyperf\Utils\ApplicationContext;
 use Carbon\Carbon;
+use App\Model\Room;
 
 class IndexController extends AbstractController
 {
@@ -35,25 +37,19 @@ class IndexController extends AbstractController
      */
     private $memberToken;
 
+    /**Inject();
+     * @var Room
+     */
+    private $roomModel;
+
     public function index()
     {
-        $now =  Carbon::now();
-
-
-
-        $member_id = rand(0,999);
-        if ( !$member = $this->memberToken->where(['member_id'=>$member_id])->first() )
-        {
-            $member = $this->memberToken;
-        }
-
-
-        $member->created_at = $now->toDateTimeString();
-        $member->expired_at = $now->add(1,'day')->toDateTimeString();
-        $member->token = date('Y-m-d H:i:s');
-        $member->member_id = $member_id;
-        $member->save();
-
+        $a = Room::with(['creator'])
+                    ->get()
+                    ->each(function ($item,$key) {
+                $item->statusText = GobangStatus::getMessage($item->status);
+            });
+        return $a;
         //return $member;
 
 

@@ -25,7 +25,11 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
      */
     private $binder;
 
-
+    /**
+     * @Inject()
+     * @var ActionService
+     */
+    private $actionService;
 
     public function onMessage($server, Frame $frame): void
     {
@@ -36,7 +40,7 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
 
         $member_id = $this->binder->getMemberIdByFd($fd);
 
-        $server->push($frame->fd, "fd:$fd --------member_id:$member_id");
+        //$server->push($frame->fd, "fd:$fd --------member_id:$member_id");
 
 
         $data_arr = json_decode($frame->data,true);
@@ -51,9 +55,9 @@ class WebSocketController implements OnMessageInterface, OnOpenInterface, OnClos
             return;
         }
 
-        $action = new ActionService();
 
-        $res = $action->doAction($data_arr);
+
+        $res = $this->actionService->doAction($data_arr);
 
         pushSucc('成功',$res);
 

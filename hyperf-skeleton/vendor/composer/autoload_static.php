@@ -548,6 +548,7 @@ class ComposerStaticInit8dad79ee6fb151411123014a223d3ebf
     public static $classMap = array (
         'App\\Aspect\\ApiAspect' => __DIR__ . '/../..' . '/app/Aspect/ApiAspect.php',
         'App\\Constants\\GobangStatus' => __DIR__ . '/../..' . '/app/Constants/GobangStatus.php',
+        'App\\Constants\\MemberType' => __DIR__ . '/../..' . '/app/Constants/MemberType.php',
         'App\\Constants\\MessageCode' => __DIR__ . '/../..' . '/app/Constants/MessageCode.php',
         'App\\Controller\\AbstractController' => __DIR__ . '/../..' . '/app/Controller/AbstractController.php',
         'App\\Controller\\Api\\MemberController' => __DIR__ . '/../..' . '/app/Controller/Api/MemberController.php',

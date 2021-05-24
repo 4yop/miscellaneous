@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Aspect\\ApiAspect' => $baseDir . '/app/Aspect/ApiAspect.php',
     'App\\Constants\\GobangStatus' => $baseDir . '/app/Constants/GobangStatus.php',
+    'App\\Constants\\MemberType' => $baseDir . '/app/Constants/MemberType.php',
     'App\\Constants\\MessageCode' => $baseDir . '/app/Constants/MessageCode.php',
     'App\\Controller\\AbstractController' => $baseDir . '/app/Controller/AbstractController.php',
     'App\\Controller\\Api\\MemberController' => $baseDir . '/app/Controller/Api/MemberController.php',
