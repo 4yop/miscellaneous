@@ -10,7 +10,7 @@
           <div class="weui-cell__bd">
             <h4 class="self-nickname">阿荡</h4>
 
-            <p class="self-wxid">微信号: zhaohd</p>
+            <p class="self-wxid">微信号: {{ username }}</p>
           </div>
           <div class="weui-cell__ft">
             <img src="../../assets/images/chat-info-qr.png">
@@ -75,11 +75,14 @@
   </div>
 </template>
 <script>
+  import {login,register,is_login} from "@/utils/member";
+
   export default {
     mixins: [window.mixin],
     data() {
       return {
-        "pageName": "我"
+        pageName : "我",
+        username : window.localStorage['member']['username'],
       }
     },
     mounted() {

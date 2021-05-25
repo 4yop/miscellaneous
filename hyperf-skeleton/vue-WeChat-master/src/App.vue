@@ -32,6 +32,9 @@
     import WxNav from './components/common/wx-nav'
     import search from './components/common/search'
     import mixin from "./vuex/mixin.js" // 混合被单独放在 mixin.js 中管理
+
+    import {is_login} from "@/utils/member";
+
     window.mixin = mixin // 将 混合/mixin 暴露在窗口对象中，某些组件需要时，直接提取 window.mixin 
     export default {
         name: 'app',
@@ -49,9 +52,20 @@
                 "leaveAnimate": "" //页面离开动效
             }
         },
-        watch: {
+        mounted() {
+            this.$localStorage.set('someObject');
+            console.log(this.$localStorage.get('someObject'));
+        },
+      watch: {
             // 监听 $route 为店内页设置不同的过渡效果
             "$route" (to, from) {
+
+                if (to.path != '/login' && is_login() == false)
+                {
+                    this.$router.push({path:'/login'});
+                }
+
+
                 const toDepth = to.path.split('/').length
                 const fromDepth = from.path.split('/').length
                 if (toDepth === 2) {

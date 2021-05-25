@@ -66,8 +66,8 @@ class MemberController
      */
     public function login(LoginRequest $request)
     {
-        $username = $request->input('username');
-        $password = $request->input('password');
+        $username = (string)$request->input('username');
+        $password = (string)$request->input('password');
         $member = $this->memberService->login($username,$password);
 
         $token = $this->tokenService->create($member->id);

@@ -31,6 +31,10 @@ class MemberService
         $this->memberModel->username = $username;
         $this->memberModel->password = password_hash($password,PASSWORD_BCRYPT);
         $res = $this->memberModel->save();
+        if (!$res)
+        {
+            throw new InvalidException("注册失败");
+        }
         return $this->memberModel;
     }
 
