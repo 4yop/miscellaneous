@@ -51,8 +51,8 @@ class MemberController
     public function register(RegisterRequest $request)
     {
         try {
-            $username = $request->input('username');
-            $password = $request->input('password');
+            $username = (string)$request->input('username');
+            $password = (string)$request->input('password');
             $this->memberService->register($username, $password);
         }catch (\Exception $e)
         {

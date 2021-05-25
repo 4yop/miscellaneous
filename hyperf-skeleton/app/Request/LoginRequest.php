@@ -21,7 +21,6 @@ class LoginRequest extends ApiRequest
      */
     public function rules(): array
     {
-        $username = $this->username;
         return [
             'username' => [
                 'required',
