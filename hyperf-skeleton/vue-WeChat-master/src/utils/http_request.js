@@ -31,12 +31,19 @@ const http_request = function (params) {
             'Accept' : 'application/json',
             'X-Session-Id' : window.localStorage['sessionId'],//登录的token
         },
+        // validateStatus: function (status) {
+        //     return status < 500; // Reject only if the status code is greater than or equal to 500
+        // }
     })
     .then(function (response) {
         params.sCallback && params.sCallback(response.data);
     })
     .catch(function (error) {
-        params.eCallback && params.eCallback(error.data);
+        if (error.response)
+        {
+            params.eCallback && params.eCallback(error.response.data);
+        }
+
     });
 };
 

@@ -37,7 +37,7 @@
   </div>
 </template>
 <script>
-import {login,register} from "@/utils/member";
+import {login,register,is_login} from "@/utils/member";
 
 export default {
     data()  {
@@ -46,6 +46,14 @@ export default {
             password : '',
         };
     },
+    mounted() {
+        if ( is_login() === true )
+        {
+
+            this.$router.push({path:'/'});
+        }
+    },
+
     methods : {
         reg(){
             let that = this;

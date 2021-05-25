@@ -16,8 +16,13 @@ const login = function (username,password) {
             {
                 window.localStorage['sessionId'] = res.token;
                 status();
+                setTimeout(()=>{
+                    window.location.reload();
+                },1000);
             }
-            console.log(res);
+        },
+        eCallback : function (res) {
+            alert(res.message ? res.message : '登录失败');
         },
     };//end params
     http_request(params);
@@ -32,7 +37,10 @@ const register = function (username,password) {
         },
         type : 'POST',
         sCallback : function (res) {
-            console.log(res);
+            alert(res.message ? res.message : '注册成功');
+        },
+        eCallback : function (res) {
+            alert(res.message ? res.message : '注册失败');
         },
     };//end params
     http_request(params);
@@ -52,4 +60,8 @@ const status = function (){
     http_request(params);
 };
 
-export { login,register }
+const is_login = function () {
+    return window.localStorage['member'] ? true : false;
+};
+
+export { login,register,is_login }
