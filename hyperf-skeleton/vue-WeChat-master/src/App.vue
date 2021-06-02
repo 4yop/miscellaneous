@@ -53,8 +53,7 @@
             }
         },
         mounted() {
-            this.$localStorage.set('someObject');
-            console.log(this.$localStorage.get('someObject'));
+
         },
       watch: {
             // 监听 $route 为店内页设置不同的过渡效果

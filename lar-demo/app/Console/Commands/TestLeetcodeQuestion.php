@@ -5,6 +5,9 @@ namespace App\Console\Commands;
 use http\Exception\InvalidArgumentException;
 use Illuminate\Console\Command;
 use leetcode\common\Base;
+use Symfony\Component\Finder\Finder;
+
+
 
 class TestLeetcodeQuestion extends Command
 {
@@ -57,22 +60,41 @@ class TestLeetcodeQuestion extends Command
 
     public function exec()
     {
-        $files = scandir($this->path);
-        foreach ($files as $file)
+        $finder = new Finder();
+        $iterator = $finder->files()
+                            ->name("{$this->number}.*")
+                            ->depth(0)
+                            ->in($this->path);
+
+        if ($iterator->count() < 1)
         {
-            if (!is_file($this->path.$file))
-            {
-                continue;
-            }
-            $number =  (int)explode('.',pathinfo($file,PATHINFO_FILENAME))[0];
-            if ($number == $this->number)
-            {
-//                echo $this->path.$file."\n";
-                echo "\n--------leetCode question {$file}--------\n";
-                include $this->path.$file;
-                return;
-            }
+            echo "\n leetcode 没这个编号的 {$this->number}\n";
         }
-        echo "\n leetcode 没这个编号的 {$this->number}\n";
+
+        foreach ($iterator as $file)
+        {
+            include $file->getRealpath();
+            return;
+        }
+
+
+
+//        $files = scandir($this->path);
+//        foreach ($files as $file)
+//        {
+//            if (!is_file($this->path.$file))
+//            {
+//                continue;
+//            }
+//            $number =  (int)explode('.',pathinfo($file,PATHINFO_FILENAME))[0];
+//            if ($number == $this->number)
+//            {
+////                echo $this->path.$file."\n";
+//                echo "\n--------leetCode question {$file}--------\n";
+//                include $this->path.$file;
+//                return;
+//            }
+//        }
+//        echo "\n leetcode 没这个编号的 {$this->number}\n";
     }
 }

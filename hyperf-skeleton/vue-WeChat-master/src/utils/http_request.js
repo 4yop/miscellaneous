@@ -1,6 +1,6 @@
 const axios = require('axios');
 import url from "@/utils/url";
-
+import localforage from 'localforage';
 /**
  * @param params  url:请求url
  *                setUpUrl : 是否第三方地址
@@ -21,6 +21,10 @@ const http_request = function (params) {
         request_url = params.url;
     }
 
+    let token = localforage.getItem('sessionId', function(err, value) {
+
+        return value;
+    });
 
     axios({
         url: request_url,//请求地址
@@ -29,7 +33,7 @@ const http_request = function (params) {
         headers : {
             'content-type': 'application/json',
             'Accept' : 'application/json',
-            'X-Session-Id' : window.localStorage['sessionId'],//登录的token
+            'X-Session-Id' : token,//登录的token
         },
         // validateStatus: function (status) {
         //     return status < 500; // Reject only if the status code is greater than or equal to 500

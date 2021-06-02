@@ -10,18 +10,18 @@
 
 
 
-<<div class="paste-img-div">
+<div class="paste-img-div">
     <div class="paste-img" onpaste="updateDivContent();" onchange="changePasteImgText()" onkeypress="changePasteImgText()"  onkeydown="changePasteImgText()" onkeyup="changePasteImgText()" id="editor" contenteditable="true" style="border:1px solid #ccc">
         <p>将一张截图粘贴到这,<br>然后点击【上传截图】按钮</p>
     </div>
     <div style="background-color:brown;line-height:40px;">
         <a class="btn_add_short_content" href="javascript:void(0);" onclick='uploadPasteImg()'>上传截图</a>
         <a class="btn_add_short_content" href="javascript:void(0);" onclick='delPasteImg()'>删除截图</a>
-        <a class="btn_add_short_content" href="javascript:void(0);" onclick='$(".paste-img-div").toggle();'>关闭</a>
+        <a class="btn_add_short_content" style="display:none;" href="javascript:void(0);" onclick='$(".paste-img-div").toggle();'>关闭</a>
         <a class="btn_add_short_content" href="javascript:void(0);" onclick='showTip()'>怎么截图?</a>
     </div>
 </div>
-
+</body>
 
 <script>
 
@@ -146,7 +146,7 @@
         position: fixed;
         left:50%;
         top:50%;
-        display:none;
+        /*display:none;*/
         transform:translate(-50%,-50%);
     }
     .paste-img{

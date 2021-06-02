@@ -1,5 +1,4 @@
 <?php
-
     include 'vendor/autoload.php';
 
 
@@ -53,3 +52,11 @@
 
 
     var_dump(is_cli());
+
+$url = "https://www.4yop.com";
+$a = parse_url($url, PHP_URL_HOST);
+var_dump($a);
+
+
+$a = strpos($url,'4yop');
+var_dump($a);

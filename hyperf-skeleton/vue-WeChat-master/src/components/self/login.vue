@@ -38,6 +38,7 @@
 </template>
 <script>
 import {login,register,is_login} from "@/utils/member";
+import localforage from "localforage";
 
 export default {
     data()  {
@@ -47,11 +48,16 @@ export default {
         };
     },
     mounted() {
-        if ( is_login() === true )
-        {
+      let value = localforage.getItem('sessionId', function(err, value) {
+          return value;
+      });
+      console.log(value);
 
-            this.$router.push({path:'/'});
-        }
+      if ( is_login() === true )
+      {
+
+          this.$router.push({path:'/'});
+      }
     },
 
     methods : {

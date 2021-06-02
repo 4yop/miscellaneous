@@ -21,6 +21,7 @@ use Ramsey\Uuid\Uuid;
 
 class QrCodeLoginController extends Controller
 {
+    //登录页面
     public function index(Request $request)
     {
         $user = $request->session()->get("user");
@@ -123,6 +124,10 @@ class QrCodeLoginController extends Controller
         }
 
 
+        /**
+         * 先要判断扫码这个端是否登录了，没登陆要登录后，再扫
+         */
+        //模拟用户信息，真正用要改成自己的用户逻辑
         $user = [
             'user_id'      => random_int(1,999),
             'access_token' => md5(Uuid::uuid1()),

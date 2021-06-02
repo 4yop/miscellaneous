@@ -1,7 +1,7 @@
 
 import { http_request } from "@/utils/http_request";
 import  url from "@/utils/url";
-
+import localforage from 'localforage';
 
 const login = function (username,password) {
     let params = {
@@ -14,11 +14,13 @@ const login = function (username,password) {
         sCallback : function (res) {
             if (res.code == 0)
             {
-                window.localStorage['sessionId'] = res.token;
-                status();
-                setTimeout(()=>{
-                    window.location.reload();
-                },1000);
+                localforage.setItem('sessionId',res.token).then(()=>{
+                    status();
+                    setTimeout(()=>{
+                        window.location.reload();
+                    });
+                });
+
             }
         },
         eCallback : function (res) {
@@ -51,7 +53,7 @@ const status = function (){
         url  : url.member,
         type : 'GET',
         sCallback : function (res) {
-            window.localStorage['member'] = res.data;
+            localforage.setItem('member',res.data)
         },
         eCallback : function (res) {
             alert("未登录");
@@ -59,9 +61,11 @@ const status = function (){
     };//end params
     http_request(params);
 };
-
+;
 const is_login = function () {
-    return window.localStorage['member'] ? true : false;
+    return localforage.getItem('member', function(err, value) {
+        return value ? true : false;
+    });
 };
 
 export { login,register,is_login }
