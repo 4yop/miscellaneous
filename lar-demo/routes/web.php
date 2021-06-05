@@ -17,6 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('order/place',[\App\Http\Controllers\OrderController::class,'place'])->name('order.place');
+
+
+Route::get('/login', [\App\Http\Controllers\PHP\Demo\SsoLogin::class,'index']);
 
 Route::prefix('php/demo/qr_code_login')->group(function () {
     Route::get('/',[QrCodeLoginController::class,'index']);
@@ -27,3 +31,4 @@ Route::prefix('php/demo/qr_code_login')->group(function () {
 
     Route::get('check',[QrCodeLoginController::class,'check'])->name('qr_code_login.check');
 });
+
