@@ -9,7 +9,7 @@ $arr = range(1,100000);
 
 foreach ($arr as $i=>$item)
 {
-    echo $i;
+    echo $i."\n";
     $redis->rawCommand('bf.add','test-bf',"user_{$i}");
 
     $ret = $redis->rawCommand("bf.exists", 'test-bf', "user_{$i}");
