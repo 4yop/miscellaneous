@@ -13,7 +13,7 @@ foreach ($arr as $i=>$item)
     $redis->rawCommand('bf.add','test-bf',"user_{$i}");
 
     $ret = $redis->rawCommand("bf.exists", 'test-bf', "user_{$i}");
-    if ($ret == 0)
+    if ($ret == 1)
     {
         //echo "{$i}\n";
         break;
