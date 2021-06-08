@@ -9,12 +9,13 @@ $arr = range(1,100000);
 
 foreach ($arr as $i=>$item)
 {
+    echo $i;
     $redis->rawCommand('bf.add','test-bf',"user_{$i}");
 
     $ret = $redis->rawCommand("bf.exists", 'test-bf', "user_{$i}");
     if ($ret == 0)
     {
-        echo "{$i}\n";
+        //echo "{$i}\n";
         break;
     }
 }
