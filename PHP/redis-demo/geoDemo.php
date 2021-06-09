@@ -4,8 +4,9 @@
 
     require_once __DIR__.'/../../vendor/fzaninotto/faker/src/autoload.php';
     require_once 'helper.php';
-    $redis = redis();
 
+
+    $redis = redis();
     $faker = Faker\Factory::create('zh_CN');
 
     $end = 100;
@@ -14,6 +15,7 @@
 
     $redis->del('near_user');
 
+    //随机生成用户信息 并插入redis geo
     for($i = 0;$i < $end; $i++)
     {
         $users[$i] = [
@@ -36,9 +38,9 @@
     }
 
 
-    $user_id = 1;
+    $user_id = random_int(1,100);
     $position = $users[$user_id - 1]['position'];
-    //最近的10个用户
+    //最近的50个用户
     $res = $redis->georadius('near_user',$position['longitude'],$position['latitude'],'10000000','km',['WITHDIST','count'=>50,'ASC']);
 
     echo "当前id为:{$user_id},位置：{$position['longitude']},{$position['latitude']}\n";
