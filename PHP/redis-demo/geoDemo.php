@@ -37,7 +37,7 @@
     $user_id = 1;
     $position = $users[$user_id - 1]['position'];
     //最近的10个用户
-    $res = $redis->georadius('near_user',$position['longitude'],$position['latitude'],'1','km',['WITHDIST','count'=>10,'ASC']);
+    $res = $redis->georadius('near_user',$position['longitude'],$position['latitude'],'10000000','km',['WITHDIST','count'=>10,'ASC']);
 
     echo "当前id为:{$user_id},位置：{$position['longitude']},{$position['latitude']}\n";
     var_dump($res);
