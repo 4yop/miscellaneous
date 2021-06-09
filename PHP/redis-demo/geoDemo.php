@@ -42,9 +42,17 @@
     $res = $redis->georadius('near_user',$position['longitude'],$position['latitude'],'10000000','km',['WITHDIST','count'=>10,'ASC']);
 
     echo "当前id为:{$user_id},位置：{$position['longitude']},{$position['latitude']}\n";
-    
-    foreach ($res as $v)
+
+    foreach ($res as $k=>$v)
     {
-        echo "{$v[0]}距离你{$v[1]}km\n";
+        $user_id = (int)str_replace('user_','',$v[0]);
+        $user = $users[$user_id - 1];
+
+        echo ($k+1).".\n";
+        echo "{$user['name']}\n";
+        echo "id:{$user_id}";
+        echo "距离你 {$v[1]} km\n";
+        echo "\n";
+        
     }
 
