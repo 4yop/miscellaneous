@@ -1,6 +1,8 @@
 <?php
     require_once 'helper.php';
-    require_once 'D:\phpstudy_pro\new-lzh\miscellaneous\vendor\fzaninotto\faker\src\autoload.php';
+
+
+    require_once __DIR__.'../../vendor/fzaninotto/faker/src/autoload.php';
     $redis = redis();
 
     $faker = Faker\Factory::create('zh_CN');
