@@ -28,6 +28,7 @@
 
         try
         {
+            var_dump($request);
             $headers = explode("\r\n",$request);
             //获取请求的文件
             $file = html_entity_decode(explode(' ',$headers[0])[1]);
