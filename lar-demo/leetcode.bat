@@ -1,5 +1,4 @@
 @echo off
+"php" "artisan" "leetcode"
 
-
-
-pause("请按任意键退出")
+pause

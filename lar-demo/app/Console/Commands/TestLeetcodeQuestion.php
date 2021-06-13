@@ -16,7 +16,7 @@ class TestLeetcodeQuestion extends Command
      *
      * @var string
      */
-    protected $signature = 'leetcode {no}';
+    protected $signature = 'leetcode';
 
     /**
      * The console command description.
@@ -44,17 +44,22 @@ class TestLeetcodeQuestion extends Command
      */
     public function handle()
     {
-        //echo base_path();
+        while (true) {
+            fwrite(STDOUT, "请输入需要执行的leetcode题目编号,0退出:\n");
+            $no = trim(fgets(STDIN));
+            if ($no == 0)
+            {
+                exit;
+            }
+            if ($no < 1) {
+                echo "参数有误\n";continue;
+            }
 
-        $no = (int)$this->argument('no');
-        if ($no < 1)
-        {
-            exit( "参数有误\n");
+            $this->path = base_path('leetcode/question/');
+            $this->number = $no;
+            $this->exec();
+
         }
-        $this->path = base_path('leetcode/question/');
-        $this->number = $no;
-        $this->exec();
-        return 0;
     }
 
 
