@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+<a href="https://vd2.bdstatic.com/mda-mfe9tuit483pc9c3/sc/cae_h264_clips/1623740421166785920/mda-mfe9tuit483pc9c3.mp4?auth_key=1623901188-0-0-3bbc57261dc5c6949fefbebde21f60e2&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=3000156_2" download="download.xlsx">下载数据</a>
+
+
+<button class="download-btn" type="primary" onclick="downloadFile">下载数据</button>
+<script>
+    function downloadFile() {
+        var url = 'https://vd2.bdstatic.com/mda-mfe9tuit483pc9c3/sc/cae_h264_clips/1623740421166785920/mda-mfe9tuit483pc9c3.mp4?auth_key=1623901188-0-0-3bbc57261dc5c6949fefbebde21f60e2&bcevod_channel=searchbox_feed&pd=1&pt=3&abtest=3000156_2';
+        var form = document.createElement('form')
+        form.setAttribute('action', url)
+        form.setAttribute('method', 'get')
+        form.setAttribute('target', '_blank')
+        form.setAttribute('style', 'display:none')
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form)
+
+    }
+</script>
+
+
+
+</body>
