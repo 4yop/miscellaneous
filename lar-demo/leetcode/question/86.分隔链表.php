@@ -14,7 +14,7 @@ use leetcode\common\ListNode;
  */
 class Solution {
 
-    /**时间复杂度 ：O(n) 
+    /**时间复杂度 ：O(n)
      * 空间复杂度：0(1)
      * @param ListNode $head
      * @param Integer $x

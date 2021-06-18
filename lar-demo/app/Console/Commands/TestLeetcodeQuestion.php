@@ -44,22 +44,22 @@ class TestLeetcodeQuestion extends Command
      */
     public function handle()
     {
-        while (true) {
-            fwrite(STDOUT, "请输入需要执行的leetcode题目编号,0退出:\n");
-            $no = trim(fgets(STDIN));
-            if ($no == 0)
-            {
-                exit;
-            }
-            if ($no < 1) {
-                echo "参数有误\n";continue;
-            }
 
-            $this->path = base_path('leetcode/question/');
-            $this->number = $no;
-            $this->exec();
-
+        fwrite(STDOUT, "请输入需要执行的leetcode题目编号,0退出:\n");
+        $no = trim(fgets(STDIN));
+        if ($no == 0)
+        {
+            exit;
         }
+        if ($no < 1) {
+            echo "参数有误\n";return;
+        }
+
+        $this->path = base_path('leetcode/question/');
+        $this->number = $no;
+        $this->exec();
+
+
     }
 
 
