@@ -1,51 +1,60 @@
 <?php
-//876. 链表的中间结点
-use fast\Tree;
 
-class ListNode {
-  public $val = 0;
-  public $next = null;
-  function __construct($val) { $this->val = $val; }
-}
-
+use leetcode\common\ListNode;
+/**
+ * Definition for a singly-linked list.
+ * class ListNode {
+ *     public $val = 0;
+ *     public $next = null;
+ *     function __construct($val = 0, $next = null) {
+ *         $this->val = $val;
+ *         $this->next = $next;
+ *     }
+ * }
+ */
 class Solution {
-    //双指针
-    function partition($head, $x) {
-        $a = new ListNode(-1);
-        $b = new ListNode(-1);
-        $a1 = $a;
-        $b1 = $b;
-        while($head !== null){
-            $next = $head->next;
-            if($head->val >= $x){
-                $b1->next = $head;
-                $b1 = $b1->next;
-            }else{
-                $a1->next = $head;
-                $a1 = $a1->next;
-            }
-            $head = $next;
-        }
 
-        $a1->next = $b->next;
-        return $a->next;
+    /**时间复杂度 ：O(n) 
+     * 空间复杂度：0(1)
+     * @param ListNode $head
+     * @param Integer $x
+     * @return ListNode
+     */
+    function partition($head, $x) {
+        $big = new ListNode(-1);
+        $b = $big;
+        $small = new ListNode(-1);
+        $s = $small;
+        $node = $head;
+        while ($node !== null)
+        {
+            if ($node->val < $x)
+            {
+                $s->next = $node;
+                $s = $s->next;
+            }else
+            {
+                $b->next = $node;
+                $b = $b->next;
+            }
+            $node = $node->next;
+        }
+        $b->next = null;
+        $s->next = $big->next;
+        return $small->next;
     }
 }
 
-$head = [1,4,3,2,5,2];
-$n = 3;
+
+$s = new Solution();
+
+$x = 2;
+
+$arr = [2,1];
 
 //生成链表
-$node = new ListNode($head[0]);
-$current = $node;
-$i = 1;
-while($i < count($head)){
-    $val = $head[$i++];
-    $current->next = new ListNode($val);
-    $current = $current->next;
-}
+$head = (new \leetcode\common\Base())->buildListNodeByArr($arr);
 
-$solution = new Solution();
+$r = $s->partition($head,$x);
 
-$res = $solution->partition($node,$n);
-print_r($res);
+var_dump($r);
