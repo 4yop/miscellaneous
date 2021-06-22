@@ -57,4 +57,4 @@ $head = (new \leetcode\common\Base())->buildListNodeByArr($head);
 $solution = new Solution();
 
 $res = $solution->deleteDuplicates($head);
-print_r($res);
+var_dump($res);
