@@ -11,7 +11,7 @@ class Base
      * @param array $arr
      * @return TreeNode|null
      */
-    public static function buildTreeNodeByArr(array $arr = [])
+    public function buildTreeNodeByArr(array $arr = [])
     {
         if ($arr[0] === null)
         {
@@ -46,7 +46,7 @@ class Base
      * @param array $head
      * @return \leetcode\common\ListNode|null
      */
-    function buildListNodeByArr(array $head = [])
+    public function buildListNodeByArr(array $head = [])
     {
         if ($head[0] === null) {
             return null;
