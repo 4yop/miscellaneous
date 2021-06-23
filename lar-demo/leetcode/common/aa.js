@@ -76,3 +76,8 @@ Skiplist.prototype.erase = function(num) {
 
 
 
+var s = Skiplist();
+
+s.add(1);
+
+console.log(s.head);

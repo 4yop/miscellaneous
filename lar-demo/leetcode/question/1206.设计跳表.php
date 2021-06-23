@@ -1,10 +1,5 @@
 <?php
 
-
-namespace leetcode\common;
-
-use function Complex\ln;
-
 const maxLevel = 16;
 const power = 2;
 const maxRand = maxLevel ** power - 1;
@@ -23,17 +18,17 @@ class SkipNode
     }
 }
 
-class SkipNodeList
+class Skiplist
 {
     public $head;
     public function __construct()
     {
         $left = array_map(function (){
-                    return new SkipNode(-INF);
-                },range(0,maxLevel-1));
+            return new SkipNode(-INF);
+        },range(0,maxLevel-1));
         $right = array_map(function (){
-                    return new SkipNode(INF);
-                },range(0,maxLevel-1));
+            return new SkipNode(INF);
+        },range(0,maxLevel-1));
         for($i = 0;$i < maxLevel - 1;$i++)
         {
             $left[$i]->right = $right[$i];
@@ -87,8 +82,8 @@ class SkipNodeList
         }
 
         $arr = array_map(function ()use($num){
-                    return new SkipNode($num);
-                },range(0,randLevel()-1));
+            return new SkipNode($num);
+        },range(0,randLevel()-1));
 
 
         $t = new SkipNode(NAN);
@@ -130,14 +125,10 @@ class SkipNodeList
     }
 
 }
-
-$s = new SkipNodeList();
-
-for($i = 1;$i <= 2;$i++)
-{
-    $s->add($i);
-}
-
-
-
-print_r($s->head);
+/**
+ * Your Skiplist object will be instantiated and called as such:
+ * $obj = Skiplist();
+ * $ret_1 = $obj->search($target);
+ * $obj->add($num);
+ * $ret_3 = $obj->erase($num);
+ */
