@@ -5,12 +5,12 @@ namespace leetcode\common;
 
 use function Complex\ln;
 
-const maxLevel = 16;
-const power = 2;
-const maxRand = maxLevel ** power - 1;
+const MAXLEVEL = 16;
+const POWER = 2;
+const MAXRAND = MAXLEVEL ** POWER - 1;
 function randLevel():int
 {
-    return maxLevel - (int)(log(1 + random_int(1,maxRand) * maxRand) / log(power));
+    return MAXLEVEL - (int)(log(1 + random_int(1,MAXRAND) * MAXRAND) / log(POWER));
 }
 class SkipNode
 {
@@ -30,17 +30,17 @@ class SkipNodeList
     {
         $left = array_map(function (){
                     return new SkipNode(-INF);
-                },range(0,maxLevel-1));
+                },range(0,MAXLEVEL-1));
         $right = array_map(function (){
                     return new SkipNode(INF);
-                },range(0,maxLevel-1));
-        for($i = 0;$i < maxLevel - 1;$i++)
+                },range(0,MAXLEVEL-1));
+        for($i = 0;$i < MAXLEVEL - 1;$i++)
         {
             $left[$i]->right = $right[$i];
             $left[$i]->down = $left[$i+1];
             $right[$i]->down = $right[$i+1];
         }
-        $left[maxLevel - 1]->right = $right[maxLevel - 1];
+        $left[MAXLEVEL - 1]->right = $right[MAXLEVEL - 1];
         $this->head = $left[0];
     }
 
@@ -93,7 +93,7 @@ class SkipNodeList
 
         $t = new SkipNode(NAN);
 
-        for ($i = 0,$n = count($arr),$j = maxLevel - $n;$i < $n;++$i,++$j)
+        for ($i = 0,$n = count($arr),$j = MAXLEVEL - $n;$i < $n;++$i,++$j)
         {
             list($a,$p) = [$arr[$i],$prev[$j]];
             $a->right = $p->right;
@@ -129,9 +129,13 @@ class SkipNodeList
         return $ans;
     }
 
+
 }
 
 $s = new SkipNodeList();
+$s->traversal();exit;
+
+
 
 for($i = 1;$i <= 2;$i++)
 {
