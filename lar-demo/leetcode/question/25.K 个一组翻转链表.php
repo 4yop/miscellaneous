@@ -11,7 +11,8 @@
  *     }
  * }
  */
-require_once '../common/base.php';
+use leetcode\common\Base;
+use leetcode\common\ListNode;
 
 class Solution {
 
@@ -21,69 +22,46 @@ class Solution {
      * @return ListNode
      */
     function reverseKGroup($head, $k) {
-
-        $list = $head;
-        $res = new ListNode(-1);//返回结果的
-        $r = $res;
-
-        $temp = null;//保存翻转的
-
+        $arr = [];
+        $list = new ListNode(-1);
+        $list->next = $head;
+        $node = $list;
         $i = 0;
-        while ($list !== null)
+        $index = 0;
+        while ($node->next !== null)
         {
-
             if ($i == $k)
             {
-                while ($r->next !== null)
-                {
-                    $r = $r->next;
-                }
-                $r->next = $temp;
-                $temp = null;
+                $index++;
                 $i = 0;
-
-            }//end if i == k
-
-            $next = $list->next;
-
-            $list->next = $temp;
-            $temp = $list;
-
-
-
-            $list = $next;
+            }
+            $arr[$index][] = $node->next->val;
+            $node = $node->next;
             $i++;
-        }//end while list != null
-
-
-        while ($r->next !== null) {
-            $r = $r->next;
         }
 
-        $rev = null;
+        $temp = new ListNode(-1);
+        $t = $temp;
 
-        while($temp !== null) {
-            $next = $temp->next;
-
-            $temp->next = $rev;
-            $rev = $temp;
-
-            $temp = $next;
+        foreach ($arr as $value)
+        {
+            for ($i = count($value) - 1;$i >= 0;$i--)
+            {
+                $t->next = new ListNode($value[$i]);
+                $t = $t->next;
+            }
         }
-
-        $r->next = $rev;
-
-        return $res->next;
+        return $temp->next;
     }
 
 
 
 }
 
-$head = [1,2];
+$head = [1,2,3,4,5];
 $k = 2;
 
-$head = buildListNodeByArr($head);
+$head = (new Base)->buildListNodeByArr($head);
 
 $solution = new Solution();
 

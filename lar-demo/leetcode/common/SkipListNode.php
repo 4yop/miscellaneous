@@ -133,14 +133,6 @@ class SkipNodeList
 }
 
 $s = new SkipNodeList();
-$s->traversal();exit;
-
-
-
-for($i = 1;$i <= 2;$i++)
-{
-    $s->add($i);
-}
 
 
 
