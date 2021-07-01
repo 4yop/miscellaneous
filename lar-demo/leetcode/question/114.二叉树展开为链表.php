@@ -9,13 +9,8 @@
  *     function __construct($value) { $this->val = $value; }
  * }
  */
- class ListNode {
-      public $val = null;
-      public $left = null;
-      public $right = null;
-      function __construct($value) { $this->val = $value; }
- }
-require_once "../../learn/data/tree.php";
+
+use leetcode\common\{TreeNode,Base};
 class Solution {
 
     /**
@@ -23,40 +18,60 @@ class Solution {
      * @return TreeNode
      */
     function flatten($root) {
-        $res = new TreeNode($root->val);
-        $curr = $res;
-        $queue = [];
-        if ($root->left !== null) {
-            array_push($queue,$root->left);
-        }
-        if ($root->right !== null) {
-            array_push($queue,$root->right);
-        }
-
-        while (!empty($queue)) {
-            $node = array_shift($queue);
-
-            $curr->right = $node;
-            $curr->left = null;
-
-            if ($node->left !== null) {
-                array_push($queue,$node->left);
-            }
-            if ($node->right !== null) {
-                array_push($queue,$node->right);
-            }
-
-        }
-        return $res;
+        $this->helper($root);
+        return $this->helper1($root);
     }
 
+    function helper($root)
+    {
+        if ($root === null)
+        {
+            return null;
+        }
+        if ($root->left !=null && $root->left->left != null)
+        {
+            $this->helper($root->left);
+        }else
+        {
+
+
+            $right = $root->right;
+            $left = $root->left;
+            $root->right = $left;
+            if ($root->right !== null) {
+                $root->right->right = $right;
+            }
+            $root->left = null;
+        }
+    }
+
+    function helper1($root)
+    {
+        if ($root === null || $root->left === null)
+        {
+            return $root;
+        }
+
+        $left = $root->left;
+        $right = $root->right;
+
+        $temp = $root;
+        $temp->right = $left;
+        $temp->left = null;
+        while ($temp->right != null )
+        {
+            $temp = $temp->right;
+        }
+        $temp->right = $right;
+        return $root;
+    }
 
 }
-$arr = [1,2,5,3,4,6];
-$tree = new BinaryTree();
-$root = $tree->create($arr);
+$arr =  [1,null,2];
+$b = new Base();
+$root = $b->buildTreeNodeByArr($arr);
 
-print_r($root);
+
 
 $res = (new Solution())->flatten($root);
 
