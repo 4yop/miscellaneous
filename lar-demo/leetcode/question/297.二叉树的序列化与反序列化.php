@@ -2,12 +2,7 @@
 
 
 
-  class TreeNode {
-      public $val = null;
-      public $left = null;
-      public $right = null;
-     function __construct($value) { $this->val = $value; }
-  }
+use leetcode\common\{TreeNode,Base};
 
 class Codec {
     function __construct() {
@@ -27,29 +22,17 @@ class Codec {
         $res_arr = [];
         while (!empty($queue))
         {
-            $curr = array_shift($queue);
-            $res_arr[] = $curr->val;
-            if ($curr->left !== null)
+            $node = array_shift($queue);
+            if ($node !== null)
             {
-                $queue[] = $curr->left;
-            }else
-            {
-                $res_arr[] = null;
-            }
-            if ($curr->right !== null)
-            {
-                $queue[] = $curr->right;
+                $res_arr[] = $node->val;
+                $queue[] = $node->left;
+                $queue[] = $node->right;
             }else
             {
                 $res_arr[] = null;
             }
         }
-
-        while (end($res_arr) === null)
-        {
-            array_pop($res_arr);
-        }
-
         return json_encode($res_arr);
     }
 
@@ -59,7 +42,8 @@ class Codec {
      */
     function deserialize($data) {
         $arr = json_decode($data,true);
-        if ($arr[0] === null)
+
+        if (!$arr || $arr[0] === null)
         {
             return null;
         }
@@ -69,12 +53,14 @@ class Codec {
         while (!empty($queue) && $i < count($arr))
         {
             $curr = array_shift($queue);
+
             if ($arr[$i] !== null)
             {
                 $curr->left = new TreeNode($arr[$i]);
                 $queue[] = $curr->left;
             }
             $i++;
+
             if ($arr[$i] !== null)
             {
                 $curr->right = new TreeNode($arr[$i]);
@@ -87,18 +73,12 @@ class Codec {
 }
 
 $arr = [1,2,3,null,null,4,5];
-$treeNode = new TreeNode($arr[0]);
-$treeNode->left = new TreeNode($arr[1]);
-$treeNode->right = new TreeNode($arr[2]);
-$treeNode->left->left = $arr[3];
-$treeNode->left->right = $arr[4];
-$treeNode->right->left = new TreeNode($arr[5]);
-$treeNode->right->right = new TreeNode($arr[6]);
 
-//var_dump(json_decode(json_encode($treeNode),true));
+$b = new Base();
+$root = $b->buildTreeNodeByArr($arr);
 
 
 $a = new Codec();
 
-$s = $a->serialize($treeNode);
+$s = $a->serialize($root);
 var_dump($s);
