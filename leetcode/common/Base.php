@@ -46,7 +46,7 @@ class Base
      * @param array $head
      * @return \leetcode\common\ListNode|null
      */
-    public function buildListNodeByArr(array $head = [])
+    public static function buildListNodeByArr(array $head = [])
     {
         if ($head[0] === null) {
             return null;
@@ -61,6 +61,33 @@ class Base
         }
         return $node;
     }
+
+    /**链表转数组
+     * @param ListNode|null $head
+     * @return array
+     */
+    public static function listNodetoArr(ListNode|null $head):array
+    {
+        $arr = [];
+        $node = $head;
+        while ($node !== null)
+        {
+            $arr[] = $node->val;
+            $node = $node->next;
+        }
+        return $arr;
+    }
+
+    /**链表转json
+     * @param ListNode|null $head
+     * @return string|bool
+     */
+    public static function listNodetoJson(ListNode|null $head):string|bool
+    {
+        $arr = self::listNodetoArr($head);
+        return json_encode($arr);
+    }
+
 }
 
 

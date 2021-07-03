@@ -61,6 +61,32 @@ class Base
         }
         return $node;
     }
+
+    /**链表转数组
+     * @param ListNode|null $head
+     * @return array
+     */
+    public static function listNodetoArr($head):array
+    {
+        $arr = [];
+        $node = $head;
+        while ($node !== null)
+        {
+            $arr[] = $node->val;
+            $node = $node->next;
+        }
+        return $arr;
+    }
+
+    /**链表转json
+     * @param ListNode|null $head
+     * @return string|bool
+     */
+    public static function listNodetoJson($head):string
+    {
+        $arr = self::listNodetoArr($head);
+        return json_encode($arr);
+    }
 }
 
 

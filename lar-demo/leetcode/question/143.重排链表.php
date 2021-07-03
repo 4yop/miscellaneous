@@ -1,56 +1,42 @@
 <?php
 //143. 重排链表
-class ListNode {
-    public $val = 0;
-    public $next = null;
-    function __construct($val) { $this->val = $val; }
-}
+use leetcode\common\{Base,ListNode};
 
 class Solution {
 
 
     function reorderList($head) {
-        $fast = $head;
-        $slow = $head;
+        $node = $head;
+        $i = 0;
+        while ($node !== null)
+        {
+            echo "第{$i}\n";
+            echo $node->val."\n";
+            $next = $node->next;
+            $t = $next;
+            while ($t->next != null)
+            {
+                $t = $t->next;
+            }
+            $node->next = $t;
 
-        while($fast != NULL){
-            $fast = $fast->next->next;
-            $slow = $slow->next;
+
+            $node->next->next = $next;
+
+            $node = $next;
+
+            $i++;
         }
-
-
-        $q = $slow;
-        $t = NULL;
-        while($q != NULL){
-            $s = new ListNode($q->val);
-            $s->next = $t;
-            $t = $s;
-            $q = $q->next;
-        }
-
-        $s1 = $s;
-        $a = $head;
-        $a;
+        return $head;
     }
 }
 
-$l1 = [1,2,3,4,5,6];
-
-//生成链表
-$node = new ListNode($l1[0]);
-$current = $node;
-$i = 1;
-while($i < count($l1)){
-    $val = $l1[$i++];
-    $current->next = new ListNode($val);
-    $current = $current->next;
-}
+$arr = [1,2,3,4,5,6];
 
 
-
-
+$head = Base::buildListNodeByArr($arr);
 
 $solution = new Solution();
 
-$res = $solution->reorderList($node);
-print_r($res);
+$res = $solution->reorderList($head);
+//print_r($res);
