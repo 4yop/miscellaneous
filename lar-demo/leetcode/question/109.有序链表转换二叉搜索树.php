@@ -9,37 +9,53 @@
  *     function __construct($value) { $this->val = $value; }
  * }
  */
-require_once "../../learn/data/tree.php";
+use leetcode\common\{ListNode,TreeNode,Base};
+
 class Solution {
 
     /**
-     * @param TreeNode $root
-     * @return Integer[][]
+     * @param ListNode $head
+     * @return TreeNode
      */
-    function sortedArrayToBST($nums)
-    {
-        return $this->helper($nums,0,count($nums)-1);
+    function sortedListToBST($head) {
+        $fast = $head;
+        $slow = $head;
+        $tree = null;
+        while ($fast !== null )
+        {
+
+
+            $node = new TreeNode($slow->val);
+            $node->left = $tree;
+            $tree = $node;
+            $slow = $slow->next;
+            if ($fast->next === null)
+            {
+                break;
+            }else
+            {
+                $fast = $fast->next->next;
+            }
+        }
+        $temp = $tree;
+        while ($slow !== null)
+        {
+            $temp->right = new TreeNode($slow->val);
+            $temp = $temp->right;
+            $slow = $slow->next;
+        }
+        return $tree;
     }
 
-    function helper($nums, $left, $right)
-    {
-        if ($left > $right) {
-            return null;
-        }
-        $mid = $left + floor(($right - $left) / 2);
-        $node = new TreeNode($nums[$mid]);
-        $node->left = $this->helper($nums,$left,$mid-1);
-        $node->right = $this->helper($nums,$mid+1,$right);
-        return $node;
-    }
+
 
 }
 
 $arr = [-10,-3,0,5,9];
 
-$tree = new BinaryTree();
-$root = $tree->create($arr);
 
-$res = (new Solution())->isSymmetric1($root);
+$root = Base::buildListNodeByArr($arr);
+
+$res = (new Solution())->sortedListToBST($root);
 
 var_dump($res);

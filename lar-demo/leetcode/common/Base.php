@@ -46,7 +46,7 @@ class Base
      * @param array $head
      * @return \leetcode\common\ListNode|null
      */
-    function buildListNodeByArr(array $head = [])
+    public static function buildListNodeByArr(array $head = [])
     {
         if ($head[0] === null) {
             return null;
