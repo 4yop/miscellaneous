@@ -11,17 +11,24 @@ class Solution {
      * @param String $word
      * @return Boolean
      */
+    //直接使用php 自带的函数
     function frequencySort($s) {
         $arr = array_count_values(str_split($s));
         arsort($arr);
         $res = '';
-        foreach ($arr as $k => $v){
-            for($i = 0;$i< $v;$i++){
-                $res.=$k;
-            }
+        foreach ($arr as $str=>$len)
+        {
+            $res .= str_repeat($str,$len);
         }
         return $res;
     }
+
+
+
+    function frequencySort1($s) {
+
+    }
+
 }
 
 $s = new Solution();
