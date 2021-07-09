@@ -7,34 +7,34 @@
 
 class Solution {
 
-
-    function setZeroes($matrix) {
-
-        $queue = [];
-
-        for($i = 0;$i < count($matrix);$i++){
-
-            for($j = 0;$j < count($matrix[$i]);$j++){
-                if($matrix[$i][$j] == 0){
-                    $queue[] = [$i,$j];
+    //加标志
+    //时间复杂度 O(mn)
+    //空间复杂度 O(m+n)
+    function setZeroes(&$matrix) {
+        $row = array_fill(0,count($matrix),false);
+        $col = array_fill(0,count($matrix[0]),false);
+        foreach ($matrix as $key=>$value)
+        {
+            foreach ($value as $k=>$v)
+            {
+                if ($v == 0)
+                {
+                    $row[$key] = true;
+                    $col[$k] = true;
                 }
             }
-
+        }
+        foreach ($matrix as $key=>&$value)
+        {
+            foreach ($value as $k=>&$v)
+            {
+                if ($row[$key] || $col[$k])
+                {
+                    $v = 0;
+                }
+            }
         }
 
-        foreach($queue as $v){
-            list($a,$b) = $v;
-
-            for ($i = 0;$i < count($matrix[$a]);$i++){
-                $matrix[$a][$i] = 0;
-            }
-
-            for ($i = 0;$i < count($matrix);$i++){
-                $matrix[$i][$b] = 0;
-            }
-
-        }
-        return $matrix;
     }
 }
 
