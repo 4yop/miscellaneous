@@ -43,7 +43,12 @@
             }
 
             $content = file_get_contents(WEB_ROOT.$file);
-            $response = "HTTP/1.0 200 OK \r\n\r\n".$content;
+            $response = "HTTP/1.0 200 OK\r\n
+                        \r\n\r\n".$content;
+
+
+
+
         }catch (Throwable $e)
         {
             $response = "HTTP/1.0 404 NOT FOUND \r\n\r\n".$e->getMessage();
