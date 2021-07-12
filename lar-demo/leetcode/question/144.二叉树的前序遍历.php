@@ -1,32 +1,19 @@
 <?php
 
-//
-// class TreeNode {
-//      public $val = null;
-//      public $left = null;
-//      public $right = null;
-//      function __construct($value) { $this->val = $value; }
-//  }
-require_once "../../learn/data/tree.php";
+
 class Solution {
 
     //递归
-    public $res = [];
+    public $data = [];
     function preorderTraversal1($root) {
-        if ($root !== null) {
-            $this->helper($root);
+        if ($root === null)
+        {
+            return $this->data;
         }
-        return $this->res;
-    }
-
-    function helper($root) {
-        $this->res[] = $root->val;
-        if ($root->left !== null) {
-            $this->helper($root->left);
-        }
-        if ($root->right !== null) {
-            $this->helper($root->right);
-        }
+        $this->data[] = $root->val;
+        $this->preorderTraversal($root->left);
+        $this->preorderTraversal($root->right);
+        return $this->data;
     }
 
     //迭代

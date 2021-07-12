@@ -33,24 +33,16 @@ class Solution {
 
 
 
-    //递归
-    public $res = [];
+    public $data = [];
     function inorderTraversal1($root) {
-        if ($root === null) {
-            return [];
+        if ($root === null)
+        {
+            return $this->data;
         }
-        $this->helper($root);
-        return $this->res;
-    }
-
-    function helper($root) {
-        if ($root->left !== null) {
-            $this->helper($root->left);
-        }
-        $this->res[] = $root->val;
-        if ($root->right !== null) {
-            $this->helper($root->right);
-        }
+        $this->inorderTraversal($root->left);
+        $this->data[] = $root->val;
+        $this->inorderTraversal($root->right);
+        return $this->data;
     }
 }
 
