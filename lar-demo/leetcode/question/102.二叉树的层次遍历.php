@@ -9,7 +9,7 @@
  *     function __construct($value) { $this->val = $value; }
  * }
  */
-require_once "../../learn/data/tree.php";
+use leetcode\common\{TreeNode,Base};
 class Solution {
 
     /**
@@ -67,29 +67,27 @@ class Solution {
     }
 
 
+    /**
+     * @param TreeNode $root
+     * @return Integer[][]
+     */
     public $res = [];
-    function levelOrder1($root){
-        $this->re($root);
+    function levelOrder1($root,$level=0) {
+        if ($root === null)
+        {
+            return $this->res;
+        }
+        $this->res[$level][] = $root->val;
+        $this->levelOrder1($root->left,$level+1);
+        $this->levelOrder1($root->right,$level+1);
         return $this->res;
-    }
-    //递归 recursion
-    function re($tree = NULL,$index = 0){
-        if($tree === NULL || $tree->val === NULL){
-            return;
-        }
-        if($tree === NULL){
-            return;
-        }
-        $this->res[$index][] = $tree->val;
-        $this->re($tree->left,$index+1);
-        $this->re($tree->right,$index+1);
     }
 }
 
 $arr = [3,9,20,null,null,15,7];
 
-$tree = new BinaryTree();
-$root = $tree->create($arr);
+$tree = new Base();
+$root = $tree->buildTreeNodeByArr($arr);
 
 $res = (new Solution())->levelOrder($root);
 

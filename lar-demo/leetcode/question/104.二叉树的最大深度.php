@@ -60,6 +60,20 @@ class Solution {
         $this->re($tree->left,$depth+1);
         $this->re($tree->right,$depth+1);
     }
+
+//    public $depth = 0;
+//    function maxDepth($root,$depth = 1){
+//        if($root === NULL )
+//        {
+//            return $this->depth;
+//        }
+//        if($this->depth < $depth){
+//            $this->depth = $depth;
+//        }
+//        $this->maxDepth($root->left,$depth+1);
+//        $this->maxDepth($root->right,$depth+1);
+//        return $this->depth;
+//    }
 }
 
 $arr = [3,9,20,null,null,15,7];
