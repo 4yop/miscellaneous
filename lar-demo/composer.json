@@ -12,7 +12,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
-        "malkusch/lock": "^2.2"
+        "malkusch/lock": "^2.2",
+        "php-amqplib/php-amqplib": ">=3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -1,9 +1,9 @@
 <?php
 
 
-namespace leetcode\common;
 
-use function Complex\ln;
+
+
 
 const MAXLEVEL = 16;
 const POWER = 2;
