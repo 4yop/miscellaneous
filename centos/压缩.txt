@@ -1,5 +1,8 @@
 
+
 zip {newname.zip} {filename}
+#解压
+unzip {newname.zip}
 
 打包详细目录下的所有文件
 tar -cxf {newname.tar} xx/*
