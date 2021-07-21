@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\RabbitMQController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PHP\Demo\QrCodeLoginController;
 /*
@@ -32,3 +33,6 @@ Route::prefix('php/demo/qr_code_login')->group(function () {
     Route::get('check',[QrCodeLoginController::class,'check'])->name('qr_code_login.check');
 });
 
+Route::prefix('rabbit_mq')->group(function(){
+    Route::get('/',[RabbitMQController::class,'test1']);
+});

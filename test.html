@@ -2,44 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <title>臭宝的问题</title>
     <script src="echarts.js"></script>
-    <script src="data.js"></script>
-    <script src="data1.js"></script>
+    <link href="https://github.com/necolas/normalize.css">
 </head>
 <body>
-<div style="width:500px;height:500px" id="main"></div>
+<div style="width:100%;height:600px;" id="main"></div>
 </body>
 </html>
 
 <script>
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
 
+    var formData = JSON.parse(decodeURI(getQueryVariable('formData')));
 
-    var ROOT_PATH = 'https://cdn.jsdelivr.net/gh/apache/echarts-website@asf-site/examples';
 
     var chartDom = document.getElementById('main');
     var myChart = echarts.init(chartDom);
     var option;
 
-    var updateFrequency = 2000;
+    var updateFrequency = 100;
     var dimension = 0;
 
-    var countryColors = {
 
-        "买" : 'red',
-        "不买" : 'blue'
-    };
-
+    var res0 = [];
     var res1 = [];
-    var options = ["买","不买"];
+    var options1 = formData.options;
     var ccc = {
 
     };
-    for(let i = 0;i < 1000;i++)
+
+    for(let i = 0;i < formData.count;i++)
     {
-        var key = Math.floor(Math.random() * options.length);
-        var randomItem = options[key];
+        var key = Math.floor(Math.random() * options1.length);
+        var randomItem = options1[key];
 
         if (ccc[key] != undefined)
         {
@@ -47,9 +52,26 @@
         }else{
             ccc[key] = 1;
         }
+        for(let k =0;k < options1.length;k++)
+        {
+            res1.push([ccc[k]?ccc[k]:0,options1[k],i+1]);
+        }
 
-        res1.push([ccc[key],randomItem,i+1]);
     }
+
+    var countryColors = {};
+    function color16() {
+        var r = Math.floor(Math.random() * 256);
+        var g = Math.floor(Math.random() * 256);
+        var b = Math.floor(Math.random() * 256);
+        var color = '#' + r.toString(16) + g.toString(16) + b.toString(16);
+        return color;
+    }
+    for(let k =0;k < options1.length;k++)
+    {
+        countryColors[options1[k]] = color16();
+    }
+
     console.log(res1);
 
 
@@ -72,23 +94,52 @@
                 return item.name === countryName;
             }) || {}).emoji;
         }
-        var startIndex = 10;
+        var startIndex = 0;
         var startYear = years[startIndex];
 
         var option = {
+            title: {
+                text: formData.question,
+                subtext: formData.count+"次随机",
+                left: "center",
+                textStyle: {
+                    fontSize: 30
+                },
+                subtextStyle: {
+                    fontSize: 30,
+                    fontWeight : 'bold',
+                }
+            },
+            legend: {
+                data: options1
+            },
             grid: {
-                top: 10,
-                bottom: 30,
-                left: 150,
-                right: 80
+                top: 100,
+                bottom: 100,
+                left: 100,
+                right: 40
             },
             xAxis: {
+                type : 'value',
                 max: 'dataMax',
                 label: {
                     formatter: function (n) {
                         return Math.round(n);
-                    }
-                }
+                    },
+                },
+                axisLabel : {
+                    fontWeight: "bold",
+                    fontSize : 30,
+                },
+                axisLine:{
+                    lineStyle:{
+                        width:5,//这里是为了突出显示加上的
+                    },
+                },
+                minInterval: 1,
+                splitLine : {
+                    width : 30
+                },
             },
             dataset: {
                 source: data.slice(1).filter(function (d) {
@@ -99,23 +150,36 @@
                 type: 'category',
                 inverse: true,
                 max: 10,
+                axisLine:{
+                    lineStyle:{
+                        width:5,//这里是为了突出显示加上的
+                    },
+                },
+                splitLine : {
+                    width : 30
+                },
                 axisLabel: {
                     show: true,
                     textStyle: {
-                        fontSize: 14
+                        fontSize: 30,
+                        fontWeight : 'bold',
                     },
                     formatter: function (value) {
                         return value;
                     },
                     rich: {
                         flag: {
-                            fontSize: 25,
-                            padding: 5
+                            fontSize: 30,
+                            padding: 5,
+                            fontWeight : 'bold',
                         }
-                    }
+                    },
                 },
+                minInterval: 1,
                 animationDuration: 300,
-                animationDurationUpdate: 300
+                animationDurationUpdate: 300,
+
+
             },
             series: [{
                 realtimeSort: true,
@@ -135,8 +199,14 @@
                     precision: 1,
                     position: 'right',
                     valueAnimation: true,
-                    fontFamily: 'monospace'
-                }
+                    fontFamily: 'monospace',
+                    fontSize : 30,
+                    fontWeight : 'bold',
+                    formatter : function (params) {
+                        return parseInt(params.value[0]);
+                    },
+                },
+
             }],
             // Disable init animation.
             animationDuration: 0,
@@ -173,6 +243,7 @@
             var source = data.slice(1).filter(function (d) {
                 return d[2] === year;
             });
+
             option.series[0].data = source;
             option.graphic.elements[0].style.text = year;
             myChart.setOption(option);

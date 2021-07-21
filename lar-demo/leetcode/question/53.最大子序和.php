@@ -7,21 +7,14 @@ class Solution {
      */
     function maxSubArray($nums) {
 
-        $count = count($nums);
-        $res = PHP_INT_MIN;
-        for ($i = 0;$i < $count;$i++)
+        $pre = 0;
+        $max = $nums[0];
+        foreach ($nums as $n)
         {
-            $sum = $nums[$i];
-            $res = max($res,$sum);
-            for($j = $i+1;$j < $count;$j++)
-            {
-                $sum += $nums[$j];
-                $res = max($res,$sum);
-            }
-
-
+            $pre = max($pre+$n,$n);
+            $max = max($max,$pre);
         }
-        return $res;
+        return $max;
     }
 }
 

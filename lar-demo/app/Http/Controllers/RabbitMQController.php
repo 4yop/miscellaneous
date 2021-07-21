@@ -12,7 +12,20 @@ class RabbitMQController extends Controller
     //
     public function test1()
     {
-        $connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-        $channel = $connection->channel();
+
+            //连接上 rabbit mq
+            $connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+            //开启一个通道
+            $channel = $connection->channel();
+
+            $channel->queue_declare('hello', false, false, false, false);
+            $msg = new AMQPMessage('Hello World!');
+            $channel->basic_publish($msg, '', 'hello');
+
+            echo " [x] Sent 'Hello World!'\n";
+
+            $channel->close();
+            $connection->close();
+
     }
 }
