@@ -43,6 +43,11 @@
 //
 //    header("Location:{$file}");
 
+    $a = [''=>1];
+    var_dump(isset($a['']));
+    echo $a[''];
+    var_dump($a);exit;
+
 
 
     //composer require phpoffice/phpspreadsheet

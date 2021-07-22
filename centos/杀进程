@@ -2,6 +2,7 @@
 
 netstat -npl | grep {port}
 netstat -natp
+netstat -ltpn | grep :22
 
 获取pid 后：
 
