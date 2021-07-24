@@ -1,5 +1,5 @@
 <?php
-$time = 100;
+$time = 5;
 $sec = 1;
 while (true) {
     echo "\n第".$sec++."次执行".date('Y-m-d H:i:s')."\n";
