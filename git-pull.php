@@ -3,7 +3,7 @@ $time = 100;
 $sec = 1;
 
 while (true) {
-    $rand = getChar(10).com_create_guid().getChar(10);
+    $rand = get_rand_str();
     $command = "git pull && git add -A && git commit -m '{$rand}' && git push";
     echo "\n第".$sec++."次执行".date('Y-m-d H:i:s')."\n";
     echo "命令:{$command}\n";
@@ -11,6 +11,14 @@ while (true) {
     exec($command);
     echo "-------------------------------------------------------------------------\n\n";
     sleep($time);
+}
+
+function get_rand_str()
+{
+    $str = get_char(10).com_create_guid().get_char(10);
+    $arr = str_split($str);
+    shuffle($arr);
+    return implode('',$arr);
 }
 
 function com_create_guid($_ = false) {
@@ -30,7 +38,7 @@ function com_create_guid($_ = false) {
     );
     return str_replace('-','',$uid);
 }
-function getChar($num)  // $num为生成汉字的数量
+function get_char($num)  // $num为生成汉字的数量
 {
     $b = '';
     for ($i=0; $i<$num; $i++) {
