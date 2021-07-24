@@ -13,9 +13,9 @@ while (true) {
     sleep($time);
 }
 
-function com_create_guid() {
+function com_create_guid($_ = false) {
 
-    return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+    $uid =  sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
 
         mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
 
@@ -28,7 +28,7 @@ function com_create_guid() {
         mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
 
     );
-
+    return str_replace('-','',$uid);
 }
 function getChar($num)  // $num为生成汉字的数量
 {
