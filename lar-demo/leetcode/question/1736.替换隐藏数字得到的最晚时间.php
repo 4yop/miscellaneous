@@ -6,36 +6,22 @@ class Solution {
      * @return String
      */
     function maximumTime($time) {
-        list($h,$m) = explode(':',$time);
-        if ($h[0] == '?')
+        if ($time[0] == '?')
         {
-            if ($h[1] > 3)
-            {
-                $h[0] = 1;
-            }else
-            {
-                $h[0] = 2;
-            }
+            $time[0] = (int) $time[1] <= 3 ? 2 : 1;
         }
-
-        if($h[1] == '?')
+        if ($time[1] == '?')
         {
-            if ($h[0] <= 1)
-            {
-                $h[1] = 9;
-            }else
-            {
-                $h[1] = 3;
-            }
+            $time[1] = $time[0] == 2 ? 3 : 9;
         }
-        if ($m[0] == '?')
+        if ($time[3] == '?')
         {
-            $m[0] = 5;
+            $time[3] = 5;
         }
-        if($m[1] == '?')
+        if ($time[4] == '?')
         {
-            $m[1] = 9;
+            $time[4] = 9;
         }
-        return "{$h}:{$m}";
+        return $time;
     }
 }
