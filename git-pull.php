@@ -16,7 +16,8 @@ while (true) {
 
 function get_rand_str()
 {
-    $str = get_char(10).com_create_guid().get_char(10);
+    //$str = get_char(10).com_create_guid().get_char(10);
+    $str = com_create_guid();
     $arr = mb_str_split($str);
     shuffle($arr);
     return implode('',$arr);
