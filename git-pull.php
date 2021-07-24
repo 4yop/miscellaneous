@@ -3,7 +3,7 @@ $time = 100;
 $sec = 1;
 
 while (true) {
-    $rand = com_create_guid();
+    $rand = getChar(10).com_create_guid().getChar(10);
     $command = "git pull && git add -A && git commit -m '{$rand}' && git push";
     echo "\n第".$sec++."次执行".date('Y-m-d H:i:s')."\n";
     echo "命令:{$command}\n";
@@ -29,4 +29,15 @@ function com_create_guid() {
 
     );
 
+}
+function getChar($num)  // $num为生成汉字的数量
+{
+    $b = '';
+    for ($i=0; $i<$num; $i++) {
+        // 使用chr()函数拼接双字节汉字，前一个chr()为高位字节，后一个为低位字节
+        $a = chr(mt_rand(0xB0,0xD0)).chr(mt_rand(0xA1, 0xF0));
+        // 转码
+        $b .= iconv('GB2312', 'UTF-8', $a);
+    }
+    return $b;
 }
