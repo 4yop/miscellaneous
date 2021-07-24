@@ -1,7 +1,8 @@
 <?php
 $time = 100;
 $sec = 1;
-
+ini_set("display_errors", "On");
+error_reporting(E_ALL);
 while (true) {
     $rand = get_rand_str();
     $command = "git pull && git add -A && git commit -m '{$rand}' && git push";
@@ -16,7 +17,7 @@ while (true) {
 function get_rand_str()
 {
     $str = get_char(10).com_create_guid().get_char(10);
-    $arr = str_split($str);
+    $arr = mb_str_split($str);
     shuffle($arr);
     return implode('',$arr);
 }
@@ -48,4 +49,8 @@ function get_char($num)  // $num为生成汉字的数量
         $b .= iconv('GB2312', 'UTF-8', $a);
     }
     return $b;
+}
+function mb_str_split($str)
+{
+    return preg_split('/(?<!^)(?!$)/u', $str );
 }
