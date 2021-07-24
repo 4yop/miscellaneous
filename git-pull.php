@@ -5,7 +5,7 @@ ini_set("display_errors", "On");
 error_reporting(E_ALL);
 while (true) {
     $rand = get_rand_str();
-    $command = "git pull && git add -A && git commit -m '{$rand}' && git push";
+    $command = "git pull && git add -A && git commit -m {$rand} && git push";
     echo "\n第".$sec++."次执行".date('Y-m-d H:i:s')."\n";
     echo "命令:{$command}\n";
     echo "\n-------------------------------------------------------------------------\n";
