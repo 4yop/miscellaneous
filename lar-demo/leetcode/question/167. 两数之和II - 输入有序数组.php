@@ -24,8 +24,3 @@ class Solution {
 
 
 
-
-$solution = new Solution();
-
-$res = $solution->twoSum( [2, 7, 11, 15], 9);
-print_r($res);
