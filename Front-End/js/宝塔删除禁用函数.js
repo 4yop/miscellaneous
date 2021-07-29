@@ -1,0 +1,1 @@
+setInterval(function () {$('a.del_functions').eq(0).click();},1000);
