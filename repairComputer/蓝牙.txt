@@ -1,0 +1,1 @@
+原因是谷歌浏览器新增的音量调节界面插件的问题，解决方法：进网址设置 chrome://flags/#hardware-media-key-handling 里面Hardware Media Key Handling 改成disabled，然后点击右下角浏览器重启就OK了。不仅是chrome有效，新版的Microsoft Edge也有效。
