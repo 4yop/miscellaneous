@@ -1,0 +1,19 @@
+
+#docker pull <image> 安装某个镜像
+docker pull centos
+
+#查看已安装的镜像
+#docker images | grep centos 查看是否安装了centos 镜像
+docker images
+
+
+docker run -tid --name baota -p 80:80 -p 8282:8282 -p 443:443 -p 8888:8888 -p 888:888 --privileged=true --shm-size=1g --restart always -v ~/wwwroot:/www/wwwroot pch18/baota
+
+
+
+
+docker ps
+
+docker stop
+
+docker run -tid --name baota -p 80:80 -p 443:443 -p 8282:8282 -p 8888:8888 -p 888:888 --privileged=true --shm-size=1g --restart always -v /d/phpstudy_pro/new-lzh:/www/wwwroot pch18/baota
