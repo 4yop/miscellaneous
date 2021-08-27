@@ -17,3 +17,8 @@ docker ps
 docker stop
 
 docker run -tid --name baota -p 80:80 -p 443:443 -p 8282:8282 -p 8888:8888 -p 888:888 --privileged=true --shm-size=1g --restart always -v /d/phpstudy_pro/new-lzh:/www/wwwroot pch18/baota
+
+#打包
+docker commit --author "lzh" --message "宝塔自用" baota baota/lzh:lzh
+
+docker run -tid --name localhost-baota --net=host --privileged=true --shm-size=1g --restart always -v /d/phpstudy_pro/new-lzh:/www/wwwroot baota/lzh:lzh
