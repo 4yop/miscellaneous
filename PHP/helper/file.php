@@ -37,3 +37,26 @@
     $a = getPathFile("D:\cmder",true);
 
     print_r($a);
+
+
+    function file_size_format($filesize)
+    {
+        $filesize = intval($filesize);
+        if ($filesize >= 1024 *1024 *1024) {
+            //转成GB
+            $filesize = round($filesize*100 / 1024 *1024 *1024 ) / 100 . ' GB';
+        } elseif ($filesize >= 1024 * 1024) {
+            //转成MB
+            $filesize = round($filesize*100 / 1024 * 1024 ) / 100 . ' MB';
+        } elseif ($filesize >= 1024) {
+            //转成KB
+            $filesize = round($filesize*100 / 1024 ) / 100 . ' KB';
+        } else {
+            //不转换直接输出
+            $filesize = $filesize . ' B';
+        }
+        return $filesize;
+    }
+
+
+    $res = file_size_format(filesize("a.jpg"));
