@@ -32,3 +32,8 @@ docker run -tid --name baota -p 80:80 -p 443:443 -p 8282:8282 -p 8888:8888 -p 88
 
 
 docker run -tid --name lzh_baota --net=host --privileged=true --shm-size=1g --restart always -v /d/phpstudy_pro/new-lzh:/www/wwwroot pch18/baota:lnmp
+
+docker ps -aqf "name=test2"
+
+#将文件复制到容器
+docker cp 文件 容器:目录
