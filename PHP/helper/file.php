@@ -39,24 +39,24 @@
     print_r($a);
 
 
-    function file_size_format($filesize)
-    {
-        $filesize = intval($filesize);
-        if ($filesize >= 1024 *1024 *1024) {
-            //转成GB
-            $filesize = round($filesize*100 / 1024 *1024 *1024 ) / 100 . ' GB';
-        } elseif ($filesize >= 1024 * 1024) {
-            //转成MB
-            $filesize = round($filesize*100 / 1024 * 1024 ) / 100 . ' MB';
-        } elseif ($filesize >= 1024) {
-            //转成KB
-            $filesize = round($filesize*100 / 1024 ) / 100 . ' KB';
-        } else {
-            //不转换直接输出
-            $filesize = $filesize . ' B';
-        }
-        return $filesize;
+function file_size_format($filesize)
+{
+    $filesize = intval($filesize);
+    $res = '';
+    if ($filesize >= 1024 *1024 *1024) {
+        //转成GB
+        $res = round($filesize*100 / (1024 *1024 *1024) ) / 100 . ' GB';
+    } elseif ($filesize >= 1024 * 1024) {
+        //转成MB
+        $res = round($filesize*100 / (1024 * 1024) ) / 100 . ' MB';
+    } elseif ($filesize >= 1024) {
+        //转成KB
+        $res = round($filesize*100 / 1024 ) / 100 . ' KB';
+    } else {
+        //不转换直接输出
+        $res = $filesize . ' B';
     }
-
+    return $res;
+}
 
     $res = file_size_format(filesize("a.jpg"));

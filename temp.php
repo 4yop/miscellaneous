@@ -43,6 +43,32 @@
 //
 //    header("Location:{$file}");
 
+
+    var_dump(getimagesize("sososos.png"));
+
+    echo "压缩前:".filesize("sososos.png")."\n";
+
+    com(100);
+    com(50);
+    com(10);
+    com(1);
+    function com ($q = 50) {
+        $file = "sososos.png";
+        $img = new \Imagick($file);
+        $img->setImageFormat("jpg");
+        $img->setImageCompressionQuality($q);
+        //$img->setImageFormat(pathinfo($file,PATHINFO_EXTENSION));
+        $save = "{$file}-{$q}-compress.jpg";
+        touch($save);
+        $res = $img->writeImage($save);
+        echo "{$q}压缩后 :".filesize($save)."\n";
+    }
+
+
+
+
+
+    exit;
     $a = [''=>1];
     var_dump(isset($a['']));
     echo $a[''];
