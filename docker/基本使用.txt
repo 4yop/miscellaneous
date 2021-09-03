@@ -37,3 +37,8 @@ docker ps -aqf "name=test2"
 
 #将文件复制到容器
 docker cp 文件 容器:目录
+
+
+docker commit -a="zuozhe" -m="shuoming" <container> <newname>:<tag>
+
+docker search <keyword>

@@ -42,8 +42,8 @@
 //
 //
 //    header("Location:{$file}");
-
-
+    var_dump('' === 0);
+    var_dump('' === false);
     var_dump(getimagesize("sososos.png"));
 
     echo "压缩前:".filesize("sososos.png")."\n";
