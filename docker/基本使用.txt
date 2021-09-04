@@ -42,3 +42,6 @@ docker cp 文件 容器:目录
 docker commit -a="zuozhe" -m="shuoming" <container> <newname>:<tag>
 
 docker search <keyword>
+
+
+docker run -tid --name my-bt -p 80:80 -p 443:443 -p 8282:8282 -p 8888:8888 -p 888:888 -p 3306:3306 -p 6379:6379 --privileged=true --shm-size=1g -v /d/phpstudy_pro/new-lzh:/www/wwwroot my-bt-1
