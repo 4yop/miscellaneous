@@ -15,6 +15,8 @@ use App\Http\Controllers\PHP\Demo\QrCodeLoginController;
 */
 
 Route::get('/', function () {
+
+    return "HI\n";
     return view('welcome');
 });
 

@@ -1,0 +1,22 @@
+$app = Illuminate\Foundation\Application();
+$app->instance = array(9) {
+                   ["path"]=>
+                   string(39) "/www/wwwroot/miscellaneous/lar-demo/app"
+                   ["path.base"]=>
+                   string(35) "/www/wwwroot/miscellaneous/lar-demo"
+                   ["path.lang"]=>
+                   string(50) "/www/wwwroot/miscellaneous/lar-demo/resources/lang"
+                   ["path.config"]=>
+                   string(42) "/www/wwwroot/miscellaneous/lar-demo/config"
+                   ["path.public"]=>
+                   string(42) "/www/wwwroot/miscellaneous/lar-demo/public"
+                   ["path.storage"]=>
+                   string(43) "/www/wwwroot/miscellaneous/lar-demo/storage"
+                   ["path.database"]=>
+                   string(44) "/www/wwwroot/miscellaneous/lar-demo/database"
+                   ["path.resources"]=>
+                   string(45) "/www/wwwroot/miscellaneous/lar-demo/resources"
+                   ["path.bootstrap"]=>
+                   string(45) "/www/wwwroot/miscellaneous/lar-demo/bootstrap"
+                 }
+Illuminate\Contracts\Http\Kernel

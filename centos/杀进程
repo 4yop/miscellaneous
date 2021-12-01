@@ -1,5 +1,4 @@
 占用端口得端口{port}
-
 netstat -npl | grep {port}
 netstat -natp
 netstat -ltpn | grep :22

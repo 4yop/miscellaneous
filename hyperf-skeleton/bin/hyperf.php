@@ -16,6 +16,9 @@ require BASE_PATH . '/vendor/autoload.php';
 (function () {
     Hyperf\Di\ClassLoader::init();
     /** @var Psr\Container\ContainerInterface $container */
+    /**
+     * @var $container Hyperf\Di\Container
+     */
     $container = require BASE_PATH . '/config/container.php';
 
     $application = $container->get(Hyperf\Contract\ApplicationInterface::class);
