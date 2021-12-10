@@ -5,7 +5,8 @@
         "spatie/array-to-xml": "^2.15",
         "fzaninotto/faker": "^1.9",
         "topthink/think-orm": "^2.0",
-        "endroid/qr-code": "^4.0"
+        "endroid/qr-code": "^4.0",
+        "ramsey/uuid": "^4.2"
     },
     "autoload": {
         "psr-4": {
