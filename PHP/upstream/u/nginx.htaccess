@@ -1,4 +1,0 @@
-location /{
-          index index.php index.html error/index.html;
-          proxy_pass http://test;
-      }

@@ -48,7 +48,7 @@ docker run -tid --name my-bt -p 80:80 -p 443:443 -p 8282:8282 -p 8888:8888 -p 88
 
 docker run -dit --name Myrabbitmq -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin -p 15672:15672 -p 5672:5672 rabbitmq:management
 
-docker run -tid --name baota -p 80:80 -p 443:443 -p 8282:8282 -p 8888:8888 -p 888:888 -p 3306:3306 -p 6379:6379 -p 9501:9501 -p 9502:9502 -p 8080:8080 --privileged=true --shm-size=1g --restart always -v /d/phpstudy_pro/new-lzh:/www/wwwroot pch18/baota
+docker run -tid --name baota -p 80:80 -p 443:443 -p 8282:8282 -p 8888:8888 -p 888:888 -p 3306:3306 -p 6379:6379 -p 9501:9501 -p 9502:9502 -p 9503:9503 -p 9504:9504 -p 8080:8080 --privileged=true --shm-size=1g --restart always -v /d/phpstudy_pro/new-lzh:/www/wwwroot pch18/baota
 
 docker run --name hyperf -v /d/phpstudy_pro/new-lzh:/data -p 9509:9501 -p 9510:9502 -it --privileged -u root --entrypoint /bin/sh hyperf/hyperf:7.4-alpine-v3.11-swoole
 
