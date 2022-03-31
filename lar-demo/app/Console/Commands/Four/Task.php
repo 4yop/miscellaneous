@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\Four;
 
+use App\Service\RabbitMQ;
 use Illuminate\Console\Command;
 
 class Task extends Command
@@ -18,7 +19,7 @@ class Task extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = '必须队列和消息都持久化';
 
     /**
      * Create a new command instance.
@@ -30,6 +31,7 @@ class Task extends Command
         parent::__construct();
     }
 
+    public static string $queue_name = "";
     /**
      * Execute the console command.
      *
@@ -37,6 +39,8 @@ class Task extends Command
      */
     public function handle()
     {
+        $channel = RabbitMQ::getChannel();
+
         return 0;
     }
 }
