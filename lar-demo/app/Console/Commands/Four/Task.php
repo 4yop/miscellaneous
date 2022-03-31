@@ -61,6 +61,15 @@ class Task extends Command
          */
         $channel->queue_declare(self::$queue_name,false,true,false,false,false);
 
+        $channel->set_ack_handler(function (AMQPMessage $message){
+                // code when message is confirmed
+            $this->getOutput()->writeln("set_ack_handler:".$message->getBody());
+        });
+
+        $channel->set_nack_handler(function (AMQPMessage $message){
+                // code when message is nack-ed
+            $this->getOutput()->writeln("set_nack_handler:".$message->getBody())
+        });
 
         //单独确认,发一条确认一次；批量确认，发几条之后确认一次;异步确认,
         $channel->confirm_select();
@@ -79,7 +88,8 @@ class Task extends Command
              */
             $channel->basic_publish($msg,"",self::$queue_name);
             // uses a 5 second timeout
-            $channel->wait_for_pending_acks();
+            //$channel->wait_for_pending_acks();
+
             $this->getOutput()->writeln("已发送消息");
         }
 
