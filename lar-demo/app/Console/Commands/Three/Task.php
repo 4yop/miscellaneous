@@ -41,7 +41,9 @@ class Task extends Command
     public function handle()
     {
         $channel = RabbitMQ::getChannel();
-        //创建队列
+        //创建队列,必须队列和消息都持久化
+        //$channel->confirm_select();
+
         /**
          * Declares queue, creates if needed
          *
