@@ -60,7 +60,7 @@ class Task extends Command
          * @return array|null
          */
         $channel->queue_declare(self::$queue_name,false,true,false,false,false);
-
+        $channel->confirm_select();
         while ($input = fgets(STDIN))
         {
             $msg = new AMQPMessage($input,['delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT]);
@@ -75,6 +75,7 @@ class Task extends Command
              * @param int|null $ticket
              */
             $channel->basic_publish($msg,"",self::$queue_name);
+            $channel-
             $this->getOutput()->writeln("已发送消息");
         }
 
