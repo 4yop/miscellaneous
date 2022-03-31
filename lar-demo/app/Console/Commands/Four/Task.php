@@ -75,7 +75,8 @@ class Task extends Command
              * @param int|null $ticket
              */
             $channel->basic_publish($msg,"",self::$queue_name);
-            $channel-
+            // uses a 5 second timeout
+            $channel->wait_for_pending_acks();
             $this->getOutput()->writeln("已发送消息");
         }
 
