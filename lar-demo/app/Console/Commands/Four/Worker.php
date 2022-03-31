@@ -43,7 +43,7 @@ class Worker extends Command
         $channel = RabbitMQ::getChannel();
         $callback = function (AMQPMessage $msg) use ($channel) {
             $this->getOutput()->writeln("获取消息:{$msg->getBody()}");
-            $channel->basic_ack($msg->getConsumerTag(),false);
+            $channel->basic_ack($msg->getDeliveryTag(),false);
         };
         /**
          * @param string $queue 队列名
