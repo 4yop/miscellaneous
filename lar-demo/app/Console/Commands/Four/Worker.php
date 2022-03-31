@@ -11,7 +11,7 @@ class Worker extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'consumer_confirm';
 
     /**
      * The console command description.
@@ -30,6 +30,7 @@ class Worker extends Command
         parent::__construct();
     }
 
+    public static string $queue_name = "confirm_queue";
     /**
      * Execute the console command.
      *

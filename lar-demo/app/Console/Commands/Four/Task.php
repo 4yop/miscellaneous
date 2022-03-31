@@ -36,7 +36,7 @@ class Task extends Command
         parent::__construct();
     }
 
-    public static string $queue_name = "";
+    public static string $queue_name = "confirm_queue";
     /**
      * Execute the console command.
      *
@@ -75,6 +75,7 @@ class Task extends Command
              * @param int|null $ticket
              */
             $channel->basic_publish($msg,"",self::$queue_name);
+            $this->getOutput()->writeln("已发送消息");
         }
 
 
