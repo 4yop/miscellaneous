@@ -60,6 +60,9 @@ class Task extends Command
          * @return array|null
          */
         $channel->queue_declare(self::$queue_name,false,true,false,false,false);
+
+
+        //单独确认,发一条确认一次；批量确认，发几条之后确认一次;异步确认,
         $channel->confirm_select();
         while ($input = fgets(STDIN))
         {
