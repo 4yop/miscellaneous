@@ -68,7 +68,7 @@ class Task extends Command
 
         $channel->set_nack_handler(function (AMQPMessage $message){
                 // code when message is nack-ed
-            $this->getOutput()->writeln("set_nack_handler:".$message->getBody())
+            $this->getOutput()->writeln("set_nack_handler:".$message->getBody());
         });
 
         //单独确认,发一条确认一次；批量确认，发几条之后确认一次;异步确认,
