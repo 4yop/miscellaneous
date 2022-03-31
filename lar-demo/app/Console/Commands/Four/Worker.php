@@ -4,6 +4,7 @@ namespace App\Console\Commands\Four;
 
 use App\Service\RabbitMQ;
 use Illuminate\Console\Command;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class Worker extends Command
 {
@@ -40,8 +41,9 @@ class Worker extends Command
     public function handle()
     {
         $channel = RabbitMQ::getChannel();
-        $callback = function () {
-
+        $callback = function (AMQPMessage $msg) use ($channel) {
+            $this->getOutput()->writeln("获取消息:{$msg->getBody()}");
+            $channel->basic_ack($msg->getConsumerTag(),false);
         };
         /**
          * @param string $queue 队列名
@@ -54,7 +56,7 @@ class Worker extends Command
          * @param int|null $ticket
          * @param \PhpAmqpLib\Wire\AMQPTable|array $arguments
          */
-        $channel->basic_consume(self::$queue_name,"",false,false,false,false,);
+        $channel->basic_consume(self::$queue_name,"",false,false,false,false,$callback);
         while($channel->is_open())
         {
             $channel->wait();
