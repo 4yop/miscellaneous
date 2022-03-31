@@ -89,7 +89,7 @@ class Task extends Command
              */
             $channel->basic_publish($msg,"",self::$queue_name);
 
-            
+
 
             // uses a 5 second timeout
             $channel->wait_for_pending_acks();
