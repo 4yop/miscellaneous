@@ -13,7 +13,10 @@ while (true) {
     echo "-------------------------------------------------------------------------\n\n";
     sleep($time);
 }
-
+//function mb_str_split($str)
+//{
+//    return preg_split('/(?<!^)(?!$)/u', $str );
+//}
 function get_rand_str()
 {
     //$str = get_char(10).com_create_guid().get_char(10);
@@ -50,8 +53,4 @@ function get_char($num)  // $num为生成汉字的数量
         $b .= iconv('GB2312', 'UTF-8', $a);
     }
     return $b;
-}
-function mb_str_split($str)
-{
-    return preg_split('/(?<!^)(?!$)/u', $str );
 }

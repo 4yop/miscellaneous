@@ -9,7 +9,7 @@ class RabbitMQ
 {
     private static $connection;
 
-    public static function getConnection():AMQPStreamConnection
+    public static function getConnection()
     {
         if (!self::$connection instanceof AMQPStreamConnection)
         {

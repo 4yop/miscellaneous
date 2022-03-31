@@ -59,7 +59,8 @@ class Task extends Command
         while ($input = trim(fgets(STDIN)))
         {
             $message = $input;
-            $msg = new AMQPMessage($message);
+            //设置消息持久化
+            $msg = new AMQPMessage($message,['delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT]);
             /**
              * 发送消息
              *

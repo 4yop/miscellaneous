@@ -13,7 +13,7 @@ class Worker extends Command
      *
      * @var string
      */
-    protected $signature = 'consumer_ack {sleep_time=0}';
+    protected $signature = 'consumer_ack {sleep_time=0} {prefetch_count=1}';
 
     /**
      * The console command description.
@@ -40,13 +40,20 @@ class Worker extends Command
     public function handle()
     {
         $sleep_time = intval($this->argument("sleep_time"));
-
+        $prefetch_count = intval($this->argument("prefetch_count"));
         $channel = RabbitMQ::getChannel();
 
+        //不公平发
+        /**
+         * @param int $prefetch_size 预取值个数
+         * @param int $prefetch_count 数量,比较像负载均衡的加权轮询的权重
+         * @param bool $a_global
+         */
+        $channel->basic_qos(null,$prefetch_count,null);
         $callback = function (AMQPMessage $msg) use ($sleep_time,$channel)
         {
             sleep($sleep_time);
-            $this->getOutput()->write($this->signature."收到消息:".$msg->getBody());
+            $this->getOutput()->writeln($this->signature."收到消息:".$msg->getBody());
             $channel->basic_ack($msg->getDeliveryTag());
         };
 
