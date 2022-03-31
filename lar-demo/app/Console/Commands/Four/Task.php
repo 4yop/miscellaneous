@@ -61,6 +61,7 @@ class Task extends Command
          */
         $channel->queue_declare(self::$queue_name,false,true,false,false,false);
 
+        //要写 wait_for_pending_acks();
         $channel->set_ack_handler(function (AMQPMessage $message){
                 // code when message is confirmed
             $this->getOutput()->writeln("set_ack_handler:".$message->getBody());
@@ -88,7 +89,7 @@ class Task extends Command
              */
             $channel->basic_publish($msg,"",self::$queue_name);
             // uses a 5 second timeout
-            //$channel->wait_for_pending_acks();
+            $channel->wait_for_pending_acks();
 
             $this->getOutput()->writeln("已发送消息");
         }
