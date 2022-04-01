@@ -15,7 +15,7 @@ class Worker01 extends Command
      *
      * @var string
      */
-    protected $signature = 'producer_exchange_direct {routing_key}';
+    protected $signature = 'consumer_exchange_direct {routing_key}';
 
     /**
      * The console command description.
@@ -34,7 +34,7 @@ class Worker01 extends Command
         parent::__construct();
     }
 
-    private static string $exchange_name = "exchange_queue";
+    private static string $exchange_name = "log";
 
     protected static array $routing_keys = [
         'waring' => 'waring',
@@ -71,7 +71,7 @@ class Worker01 extends Command
          * @param AMQPTable|array $arguments
          * @param int|null $ticket
          */
-        $channel->exchange_declare(self::$exchange_name,AMQPExchangeType::FANOUT,false,false,false);
+        $channel->exchange_declare(self::$exchange_name,AMQPExchangeType::DIRECT,false,false,false);
 
         /**
          * 声明一个临时队列
