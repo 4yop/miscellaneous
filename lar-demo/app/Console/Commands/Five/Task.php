@@ -30,6 +30,7 @@ class Task extends Command
         parent::__construct();
     }
 
+    public static string $queue_name = "exchange_queue";
     /**
      * Execute the console command.
      *
