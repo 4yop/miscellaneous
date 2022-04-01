@@ -37,9 +37,9 @@ class Task extends Command
     protected static string $exchange_name = "log";
 
     protected static array $routing_keys = [
-        'waring',
-        'fatal',
-        'debug',
+        'waring' => 'waring',
+        'fatal'  => 'fatal',
+        'debug'  => 'debug',
     ];
 
     /**
@@ -74,6 +74,13 @@ class Task extends Command
         while ($input = fgets(STDIN))
         {
             [$body,$routing_key] = explode(" ",$input);
+            if (!isset(self::$routing_keys[$routing_key]))
+            {
+                $this->getOutput()->writeln("routeing_key:{$routing_key},不存在");
+                continue;
+            }
+
+
             $msg = new AMQPMessage($body);
             $channel->basic_publish($msg,self::$exchange_name,$routing_key);
             $this->getOutput()->writeln("已发送");

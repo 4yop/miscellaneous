@@ -15,7 +15,7 @@ class Worker extends Command
      *
      * @var string
      */
-    protected $signature = 'consumer_exchange';
+    protected $signature = 'producer_exchange_direct {routing_key}';
 
     /**
      * The console command description.
@@ -35,6 +35,13 @@ class Worker extends Command
     }
 
     private static string $exchange_name = "exchange_queue";
+
+    protected static array $routing_keys = [
+        'waring' => 'waring',
+        'fatal'  => 'fatal',
+        'debug'  => 'debug',
+    ];
+
     /**
      * Execute the console command.
      *
@@ -42,6 +49,9 @@ class Worker extends Command
      */
     public function handle()
     {
+        $routing_key = $this->argument("routing_key");
+
+
         $channel = RabbitMQ::getChannel();
 
 
