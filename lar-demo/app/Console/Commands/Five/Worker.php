@@ -18,7 +18,7 @@ class Worker extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = '消费者,交换机模式';
 
     /**
      * Create a new command instance.

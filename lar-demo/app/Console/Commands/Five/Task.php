@@ -18,7 +18,7 @@ class Task extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = '生产者,交换机模式';
 
     /**
      * Create a new command instance.
