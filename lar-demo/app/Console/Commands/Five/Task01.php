@@ -52,7 +52,7 @@ class Task01 extends Command
         $channel = RabbitMQ::getChannel();
         /**声明一个交换机
          * @param string $exchange 名称
-         * @param string $type 类型：direct(对于routeKey的收)、topic(多个规则(*,#).routekey的收)、headers 和fanout(一人发,全收)
+         * @param string $type 类型：direct(对于routeKey的收)、topic(多个规则(*一个,#多个).routekey的收)、headers 和fanout(一人发,全收)
          * @param bool $passive 是否被动
          * @param bool $durable 是否持久
          * @param bool $auto_delete 是否自动删除
