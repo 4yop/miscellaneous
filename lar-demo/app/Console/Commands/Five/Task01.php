@@ -34,7 +34,13 @@ class Task extends Command
         parent::__construct();
     }
 
-    private static string $exchange_name = "log";
+    protected static string $exchange_name = "log";
+
+    protected static array $routing_keys = [
+        'waring',
+        'fatal',
+        'debug',
+    ];
 
     /**
      * Execute the console command.
