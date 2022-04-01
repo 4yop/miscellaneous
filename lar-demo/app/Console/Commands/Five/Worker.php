@@ -11,7 +11,7 @@ class Worker extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'consumer_exchange';
 
     /**
      * The console command description.
