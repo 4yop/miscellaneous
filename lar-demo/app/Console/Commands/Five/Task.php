@@ -2,7 +2,11 @@
 
 namespace App\Console\Commands\Five;
 
+use App\Service\RabbitMQ;
 use Illuminate\Console\Command;
+use PhpAmqpLib\Exchange\AMQPExchangeType;
+use PhpAmqpLib\Message\AMQPMessage;
+use PhpAmqpLib\Wire\AMQPTable;
 
 class Task extends Command
 {
@@ -30,7 +34,7 @@ class Task extends Command
         parent::__construct();
     }
 
-    public static string $queue_name = "exchange_queue";
+    private static string $exchange_name = "exchange_queue";
     /**
      * Execute the console command.
      *
@@ -38,6 +42,32 @@ class Task extends Command
      */
     public function handle()
     {
+        $channel = RabbitMQ::getChannel();
+        /**声明一个交换机
+         * @param string $exchange 名称
+         * @param string $type 类型：direct(对于routeKey的收)、topic、headers 和fanout(一人发,全收)
+         * @param bool $passive 是否被动
+         * @param bool $durable 是否持久
+         * @param bool $auto_delete 是否自动删除
+         * @param bool $internal
+         * @param bool $nowait 异步是否
+         * @param AMQPTable|array $arguments
+         * @param int|null $ticket
+         */
+
+        $channel->exchange_declare( self::$exchange_name , AMQPExchangeType::FANOUT , false , false , false );
+
+
+
+        while ($input = fgets(STDIN))
+        {
+            $msg = new AMQPMessage($input);
+            $channel->basic_publish($msg,self::$exchange_name);
+            $this->getOutput()->writeln("已发送");
+        }
+
         return 0;
     }
+
+
 }
