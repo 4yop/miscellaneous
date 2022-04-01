@@ -34,7 +34,8 @@ class Task extends Command
         parent::__construct();
     }
 
-    private static string $exchange_name = "exchange_direct_queue";
+    private static string $exchange_name = "log";
+
     /**
      * Execute the console command.
      *
@@ -55,14 +56,19 @@ class Task extends Command
          * @param int|null $ticket
          */
 
-        $channel->exchange_declare( self::$exchange_name , AMQPExchangeType::FANOUT , false , false , false );
+        $channel->exchange_declare(
+            self::$exchange_name ,
+            AMQPExchangeType::DIRECT ,
+            false ,
+            false ,
+            false );
 
 
 
         while ($input = fgets(STDIN))
         {
             $msg = new AMQPMessage($input);
-            $channel->basic_publish($msg,self::$exchange_name);
+            $channel->basic_publish($msg,self::$exchange_name,'');
             $this->getOutput()->writeln("已发送");
         }
 
