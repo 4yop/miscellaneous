@@ -67,8 +67,9 @@ class Task extends Command
 
         while ($input = fgets(STDIN))
         {
-            $msg = new AMQPMessage($input);
-            $channel->basic_publish($msg,self::$exchange_name,'');
+            [$body,$routing_key] = explode(" ",$input);
+            $msg = new AMQPMessage($body);
+            $channel->basic_publish($msg,self::$exchange_name,$routing_key);
             $this->getOutput()->writeln("已发送");
         }
 
