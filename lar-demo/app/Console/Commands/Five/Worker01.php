@@ -8,7 +8,7 @@ use PhpAmqpLib\Exchange\AMQPExchangeType;
 use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
 
-class Worker extends Command
+class Worker01 extends Command
 {
     /**
      * The name and signature of the console command.
