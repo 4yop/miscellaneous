@@ -50,7 +50,12 @@ class Worker extends Command
     public function handle()
     {
         $routing_key = $this->argument("routing_key");
-
+        if (!isset(self::$routing_keys[$routing_key]))
+        {
+            $this->getOutput()->writeln("routing_key:{$routing_key}不合法,请输入:");
+            dump(self::$routing_keys);
+            return Command::INVALID;
+        }
 
         $channel = RabbitMQ::getChannel();
 
@@ -74,7 +79,7 @@ class Worker extends Command
          */
         [$queue_name] = $channel->queue_declare("");
         //绑定交换机和队列
-        $channel->queue_bind($queue_name, self::$exchange_name,'');
+        $channel->queue_bind($queue_name, self::$exchange_name,$routing_key);
 
         $this->getOutput()->writeln("[*]等待接受消息");
 
