@@ -74,6 +74,7 @@ class Task01 extends Command
         while ($input = fgets(STDIN))
         {
             [$body,$routing_key] = explode(" ",$input);
+            $routing_key = trim($routing_key);
             if (!isset(self::$routing_keys[$routing_key]))
             {
                 $this->getOutput()->writeln("routeing_key:{$routing_key},不存在");
