@@ -110,7 +110,7 @@ class Worker extends Command
          * @param callable|null $callback 回调
          * @param int|null $ticket
          */
-        $channel->basic_consume();
+        $channel->basic_consume(self::NORMAL_QUEUE,"",false,false,false,false,$callback);
 
         while ($channel->is_open())
         {
