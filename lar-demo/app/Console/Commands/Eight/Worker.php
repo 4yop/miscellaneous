@@ -88,8 +88,9 @@ class Worker extends Command
             //'x-message-ttl'             => 10000,//过期时间 1000毫秒=1秒
         ];
         $channel->queue_declare(self::NORMAL_QUEUE,false,false,false,false,false,$arguments);
-        $channel->queue_declare(self::DEAD_QUEUE,false,false,false,false,false,$arguments);
+        $channel->queue_declare(self::DEAD_QUEUE,false,false,false,false,false,[]);
 
+        //
 
 
         /**
