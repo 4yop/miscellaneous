@@ -65,8 +65,9 @@ class Worker extends Command
          * @param AMQPTable|array $arguments
          * @param int|null $ticket
          */
-        $channel->exchange_declare(self::NORMAL_EXCHANGE,AMQPExchangeType::DIRECT,false,false,false,false,false,[]);
-        $channel->exchange_declare(self::DEAD_QUEUE,AMQPExchangeType::DIRECT,false,false,false,false,false,[])
+        $channel->exchange_declare(self::NORMAL_EXCHANGE,AMQPExchangeType::DIRECT,false,false,false,false,false);
+        $channel->exchange_declare(self::DEAD_EXCHANGE,AMQPExchangeType::DIRECT,false,false,false,false,false);
+
         /**
          * 声明队列
          * @param string $queue 队列名
@@ -80,7 +81,12 @@ class Worker extends Command
          * @return array|null
          *@throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
          */
-        $channel->queue_declare();
+
+        $arguments = [];
+        $channel->queue_declare(self::NORMAL_QUEUE,false,false,false,false,false,[]);
+        $channel->queue_declare(self::DEAD_QUEUE,false,false,false,false,false,[]);
+
+
 
         /**
          * @param string $queue 队列名
