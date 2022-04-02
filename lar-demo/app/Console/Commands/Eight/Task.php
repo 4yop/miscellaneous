@@ -15,7 +15,7 @@ class Task extends Command
      *
      * @var string
      */
-    protected $signature = 'producer_exchange';
+    protected $signature = 'producer_dead';
 
     /**
      * The console command description.

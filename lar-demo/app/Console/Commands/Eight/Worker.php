@@ -15,7 +15,7 @@ class Worker extends Command
      *
      * @var string
      */
-    protected $signature = 'consumer_deal';
+    protected $signature = 'consumer_dead';
 
     /**
      * The console command description.
@@ -110,7 +110,7 @@ class Worker extends Command
          * @param callable|null $callback 回调
          * @param int|null $ticket
          */
-        $channel->basic_consume(self::NORMAL_QUEUE,"",false,false,false,false,$callback);
+        $channel->basic_consume(self::NORMAL_QUEUE,"",false,true,false,false,$callback);
 
         while ($channel->is_open())
         {
