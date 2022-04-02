@@ -50,19 +50,32 @@ class Worker extends Command
         $channel = RabbitMQ::getChannel();
 
         /**
-         * Declares exchange
+         * 声明交换机
          * @param string $exchange 交换机名
          * @param string $type 类型 AMQPExchangeType::xx
          * @param bool $passive 是否被动
          * @param bool $durable 持久化
          * @param bool $auto_delete 自动删除
-         * @param bool $internal 内部
+         * @param bool $internal
          * @param bool $nowait 异步
          * @param AMQPTable|array $arguments
          * @param int|null $ticket
          */
         $channel->exchange_declare();
 
+        /**
+         * 声明队列
+         * @param string $queue
+         * @param bool $passive
+         * @param bool $durable
+         * @param bool $exclusive
+         * @param bool $auto_delete
+         * @param bool $nowait
+         * @param array|AMQPTable $arguments
+         * @param int|null $ticket
+         * @return array|null
+         *@throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
+         */
         $channel->queue_declare();
 
         $channel->basic_consume();
