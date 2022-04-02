@@ -83,8 +83,9 @@ class Worker extends Command
          */
 
         $arguments = [
-            'x-dead-letter-exchange'     => self::DEAD_EXCHANGE,
-            '"x-dead-letter-routing-key' => 'lisi',
+            'x-dead-letter-exchange'     => self::DEAD_EXCHANGE,//死信交换机
+            'x-dead-letter-routing-key' => 'lisi',//死信路由key
+            'x-message-ttl' => 'lisi',//死信路由key
         ];
         $channel->queue_declare(self::NORMAL_QUEUE,false,false,false,false,false,$arguments);
         $channel->queue_declare(self::DEAD_QUEUE,false,false,false,false,false,$arguments);
