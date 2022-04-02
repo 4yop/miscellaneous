@@ -65,12 +65,12 @@ class Worker extends Command
 
         /**
          * 声明队列
-         * @param string $queue
-         * @param bool $passive
-         * @param bool $durable
-         * @param bool $exclusive
-         * @param bool $auto_delete
-         * @param bool $nowait
+         * @param string $queue 队列名
+         * @param bool $passive  是否被动
+         * @param bool $durable 持久化
+         * @param bool $exclusive 排他
+         * @param bool $auto_delete 自动删除
+         * @param bool $nowait 异步
          * @param array|AMQPTable $arguments
          * @param int|null $ticket
          * @return array|null
@@ -78,6 +78,16 @@ class Worker extends Command
          */
         $channel->queue_declare();
 
+        /**
+         * @param string $queue 队列名
+         * @param string $consumer_tag 标签
+         * @param bool $no_local
+         * @param bool $no_ack 自动ack
+         * @param bool $exclusive 排他
+         * @param bool $nowait 异步
+         * @param callable|null $callback 回调
+         * @param int|null $ticket
+         */
         $channel->basic_consume();
 
         while ($channel->is_open())
