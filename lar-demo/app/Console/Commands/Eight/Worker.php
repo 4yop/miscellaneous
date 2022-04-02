@@ -15,14 +15,14 @@ class Worker extends Command
      *
      * @var string
      */
-    protected $signature = 'consumer_exchange';
+    protected $signature = 'consumer_deal';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = '消费者,交换机模式';
+    protected $description = '死信,消费者';
 
     /**
      * Create a new command instance.
@@ -34,7 +34,8 @@ class Worker extends Command
         parent::__construct();
     }
 
-    private static string $exchange_name = "normal_exchange";
+    private static string $normal_exchange = "normal_exchange";
+    private static string $dead_exchange = "dead_exchange";
     /**
      * Execute the console command.
      *
