@@ -90,8 +90,15 @@ class Worker extends Command
         $channel->queue_declare(self::NORMAL_QUEUE,false,false,false,false,false,$arguments);
         $channel->queue_declare(self::DEAD_QUEUE,false,false,false,false,false,[]);
 
-        //
 
+        /**绑定普通和死信的关系
+         * @param string $queue 队列名
+         * @param string $exchange 交换机名
+         * @param string $routing_key 路由key
+         * @param bool $nowait 异步
+         */
+        $channel->queue_bind(self::NORMAL_QUEUE,self::NORMAL_EXCHANGE,"");
+        $channel->queue_bind(self::DEAD_QUEUE,self::DEAD_EXCHANGE,"");
 
         /**
          * @param string $queue 队列名
