@@ -49,13 +49,29 @@ class Worker extends Command
         //消息被拒，ttl过期，到达最大长度，成为死信
         $channel = RabbitMQ::getChannel();
 
-        $channel->basic_consume();
+        /**
+         * Declares exchange
+         * @param string $exchange 交换机名
+         * @param string $type 类型 AMQPExchangeType::xx
+         * @param bool $passive 是否被动
+         * @param bool $durable 持久化
+         * @param bool $auto_delete 自动删除
+         * @param bool $internal 内部
+         * @param bool $nowait 异步
+         * @param AMQPTable|array $arguments
+         * @param int|null $ticket
+         */
+        $channel->exchange_declare();
 
+        $channel->queue_declare();
+
+        $channel->basic_consume();
 
         while ($channel->is_open())
         {
             $channel->wait();
         }
+
         return Command::SUCCESS;
     }
 }
