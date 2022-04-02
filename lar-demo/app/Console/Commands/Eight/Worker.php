@@ -46,6 +46,7 @@ class Worker extends Command
      */
     public function handle()
     {
+        //消息被拒，ttl过期，到达最大长度，成为死信
         
     }
 }
