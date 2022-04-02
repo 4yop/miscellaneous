@@ -82,7 +82,7 @@ class Worker extends Command
          *@throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
          */
 
-        $arguments = [];
+        $arguments = ['x-dead-letter-exchange'=>self::DEAD_EXCHANGE];
         $channel->queue_declare(self::NORMAL_QUEUE,false,false,false,false,false,[]);
         $channel->queue_declare(self::DEAD_QUEUE,false,false,false,false,false,[]);
 
