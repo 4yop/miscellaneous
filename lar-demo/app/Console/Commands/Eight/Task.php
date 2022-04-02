@@ -22,7 +22,7 @@ class Task extends Command
      *
      * @var string
      */
-    protected $description = '生产者,交换机模式';
+    protected $description = '死信,生产者';
 
     /**
      * Create a new command instance.
@@ -34,7 +34,10 @@ class Task extends Command
         parent::__construct();
     }
 
-    private static string $exchange_name = "normal_exchange";
+    public const NORMAL_EXCHANGE = "normal_exchange";
+    public const DEAD_EXCHANGE = "dead_exchange";
+    public const NORMAL_QUEUE = "normal_queue";
+    public const DEAD_QUEUE = "dead_queue";
     /**
      * Execute the console command.
      *
@@ -55,14 +58,14 @@ class Task extends Command
          * @param int|null $ticket
          */
 
-        $channel->exchange_declare( self::$exchange_name , AMQPExchangeType::FANOUT , false , false , false );
+        $channel->exchange_declare( self::NORMAL_EXCHANGE , AMQPExchangeType::DIRECT , false , false , false );
 
 
 
         while ($input = fgets(STDIN))
         {
             $msg = new AMQPMessage($input);
-            $channel->basic_publish($msg,self::$exchange_name);
+            $channel->basic_publish($msg,self::NORMAL_EXCHANGE,"zhangsan");
             $this->getOutput()->writeln("已发送");
         }
 
