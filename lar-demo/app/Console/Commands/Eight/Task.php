@@ -34,7 +34,7 @@ class Task extends Command
         parent::__construct();
     }
 
-    private static string $exchange_name = "exchange_queue";
+    private static string $exchange_name = "normal_exchange";
     /**
      * Execute the console command.
      *
