@@ -64,7 +64,7 @@ class Task extends Command
 
         while ($input = fgets(STDIN))
         {
-            $msg = new AMQPMessage($input);
+            $msg = new AMQPMessage($input,["expiration"=>10000]);
             $channel->basic_publish($msg,self::NORMAL_EXCHANGE,"zhangsan");
             $this->getOutput()->writeln("已发送");
         }
