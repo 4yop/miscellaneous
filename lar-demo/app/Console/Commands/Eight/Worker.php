@@ -97,9 +97,9 @@ class Worker extends Command
          * @param string $routing_key 路由key
          * @param bool $nowait 异步
          */
-        $channel->queue_bind(self::NORMAL_QUEUE,self::NORMAL_EXCHANGE,"");
-        $channel->queue_bind(self::DEAD_QUEUE,self::DEAD_EXCHANGE,"");
-
+        $channel->queue_bind(self::NORMAL_QUEUE,self::NORMAL_EXCHANGE,"zhangsan");
+        $channel->queue_bind(self::DEAD_QUEUE,self::DEAD_EXCHANGE,"lisi");
+        $this->getOutput()->writeln("[*]等待接收消息");
         /**
          * @param string $queue 队列名
          * @param string $consumer_tag 标签
