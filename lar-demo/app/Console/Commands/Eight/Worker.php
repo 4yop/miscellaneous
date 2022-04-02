@@ -34,8 +34,11 @@ class Worker extends Command
         parent::__construct();
     }
 
-    public const  NORMAL_EXCHANGE = "normal_exchange";
-    public const  DEAD_EXCHANGE = "dead_exchange";
+    public const NORMAL_EXCHANGE = "normal_exchange";
+    public const DEAD_EXCHANGE = "dead_exchange";
+    public const NORMAL_QUEUE = "normal_queue";
+    public const DEAD_QUEUE = "dead_queue";
+
     /**
      * Execute the console command.
      *
