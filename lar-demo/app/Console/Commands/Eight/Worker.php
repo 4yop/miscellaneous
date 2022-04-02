@@ -46,9 +46,13 @@ class Worker extends Command
      */
     public function handle()
     {
+
+
         //消息被拒，ttl过期，到达最大长度，成为死信
         $channel = RabbitMQ::getChannel();
-
+        $callback = function (AMQPMessage $message) {
+            $this->getOutput()->writeln("收到：{$message->getBody()}");
+        };
         /**
          * 声明交换机
          * @param string $exchange 交换机名
@@ -61,8 +65,8 @@ class Worker extends Command
          * @param AMQPTable|array $arguments
          * @param int|null $ticket
          */
-        $channel->exchange_declare();
-
+        $channel->exchange_declare(self::NORMAL_EXCHANGE,AMQPExchangeType::DIRECT,false,false,false,false,false,[]);
+        $channel->exchange_declare(self::DEAD_QUEUE,AMQPExchangeType::DIRECT,false,false,false,false,false,[])
         /**
          * 声明队列
          * @param string $queue 队列名
