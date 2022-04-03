@@ -50,11 +50,11 @@ class Producer extends Command
         $config->queueD();
         $config->deadLetterBindingQAD();
 
-//        $config->queueA();
-//        $config->queueaBindingX();
-//
-//        $config->queueB();
-//        $config->queuebBindingX();
+        $config->queueA();
+        $config->queueaBindingX();
+
+        $config->queueB();
+        $config->queuebBindingX();
 
         $config->queueC();
         $config->queuecBindingX();
@@ -65,10 +65,10 @@ class Producer extends Command
         {
             $this->getOutput()->writeln("当前时间为：".date("Y-m-d H:i:s")."发送一条信息给两个ttl队列:$message");
 
-//            $config->convertAndSend("X","XA","消息来自 ttl 为 10S 的队列: ".$message);
-//            $config->convertAndSend("X","XB","消息来自 ttl 为 40S 的队列: ".$message);
+            $config->convertAndSend("X","XA","消息来自 ttl 为 10S 的队列: ".$message,1);
+            $config->convertAndSend("X","XB","消息来自 ttl 为 40S 的队列: ".$message,1);
 
-            $config->convertAndSend("X","XC","消息来自 ttl 为 1S 的队列: ".$message);
+            $config->convertAndSend("X","XC","消息来自 ttl 为 1S 的队列: ".$message,1);
         }
 
         return 0;
