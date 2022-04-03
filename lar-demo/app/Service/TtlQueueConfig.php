@@ -117,7 +117,7 @@ class TtlQueueConfig
             $properties["expiration"] = $ttl*1000;
         }
 
-        $msg = new AMQPMessage($message);
+        $msg = new AMQPMessage($message,$properties);
         $this->channel->basic_publish($msg,$exchange,$routing_key);
     }
 

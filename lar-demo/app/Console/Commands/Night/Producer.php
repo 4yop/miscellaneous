@@ -56,6 +56,9 @@ class Producer extends Command
         $config->queueB();
         $config->queuebBindingX();
 
+        $config->queueC();
+        $config->queuecBindingX();
+
         $a = new AMQPMessage();
 
         while ($message = fgets(STDIN))
@@ -65,7 +68,7 @@ class Producer extends Command
             $config->convertAndSend("X","XA","消息来自 ttl 为 10S 的队列: ".$message);
             $config->convertAndSend("X","XB","消息来自 ttl 为 40S 的队列: ".$message);
 
-            $config->convertAndSend("X","XC","消息来自 ttl 为 11S 的队列: ".$message);
+            $config->convertAndSend("X","XC","消息来自 ttl 为 11S 的队列: ".$message,11);
         }
 
         return 0;
