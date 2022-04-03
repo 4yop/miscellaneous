@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Night;
 
 use App\Service\RabbitMQ;
+use App\Service\TtlQueueConfig;
 use Illuminate\Console\Command;
 
 class Worker extends Command
@@ -38,7 +39,14 @@ class Worker extends Command
      */
     public function handle()
     {
-        $channel = RabbitMQ::getChannel();
+        $config = new TtlQueueConfig();
+        $config->xExchange();
+        $config->yExchange();
+
+        $config->queueD();
+        $config->deadLetterBindingQAD();
+
+        
 
 
         return 0;
