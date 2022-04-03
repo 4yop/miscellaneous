@@ -109,8 +109,11 @@ class TtlQueueConfig
         $this->channel->queue_bind(self::DEAD_LETTER_QUEUE,self::Y_DEAD_LETTER_EXCHANGE,'YD');
     }
 
-    public function convertAndSend(string $exchange = '',string $routing_key = '',string $message = '')
+    public function convertAndSend(string $exchange = '',string $routing_key = '',string $message = '',int $ttl = -1)
     {
+        $properties = [
+            "expiration" => $ttl*1000
+        ];
         $msg = new AMQPMessage($message);
         $this->channel->basic_publish($msg,$exchange,$routing_key);
     }

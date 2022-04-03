@@ -57,7 +57,7 @@ class Producer extends Command
         $config->queuebBindingX();
 
         $a = new AMQPMessage();
-        dump($a->properties);exit;
+
         while ($message = fgets(STDIN))
         {
             $this->getOutput()->writeln("当前时间为：".date("Y-m-d H:i:s")."发送一条信息给两个ttl队列:$message");
