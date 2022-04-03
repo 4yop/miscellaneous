@@ -17,6 +17,14 @@ class TtlQueueConfig
 
     private $channel;
 
+    /**
+     * @return \PhpAmqpLib\Channel\AMQPChannel
+     */
+    public function getChannel(): \PhpAmqpLib\Channel\AMQPChannel
+    {
+        return $this->channel;
+    }
+
     public function __construct()
     {
         $this->channel = RabbitMQ::getChannel();

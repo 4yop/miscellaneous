@@ -46,8 +46,13 @@ class Worker extends Command
         $config->queueD();
         $config->deadLetterBindingQAD();
 
-        
+        $config->queueA();
+        $config->queueaBindingX();
 
+        $config->queueB();
+        $config->queuebBindingX();
+
+        $this->getOutput()->writeln();
 
         return 0;
     }
