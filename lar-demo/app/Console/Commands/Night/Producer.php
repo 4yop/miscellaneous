@@ -6,6 +6,7 @@ use App\Service\RabbitMQ;
 use App\Service\TtlQueueConfig;
 use Illuminate\Console\Command;
 use PhpAmqpLib\Exchange\AMQPExchangeType;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class Producer extends Command
 {
@@ -55,6 +56,8 @@ class Producer extends Command
         $config->queueB();
         $config->queuebBindingX();
 
+        $a = new AMQPMessage();
+        dump($a->properties);exit;
         while ($message = fgets(STDIN))
         {
             $this->getOutput()->writeln("当前时间为：".date("Y-m-d H:i:s")."发送一条信息给两个ttl队列:$message");
