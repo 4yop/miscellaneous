@@ -5,14 +5,14 @@ namespace App\Console\Commands\Night;
 use App\Service\RabbitMQ;
 use Illuminate\Console\Command;
 
-class Worker extends Command
+class Producer extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'consumer_delay';
+    protected $signature = 'producer_delay';
 
     /**
      * The console command description.
@@ -40,6 +40,7 @@ class Worker extends Command
     {
         $channel = RabbitMQ::getChannel();
 
+        $channel->exchange_declare("X");
 
         return 0;
     }
