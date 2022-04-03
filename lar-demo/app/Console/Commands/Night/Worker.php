@@ -52,7 +52,12 @@ class Worker extends Command
         $config->queueB();
         $config->queuebBindingX();
 
-        $this->getOutput()->writeln();
+        while ($message = fgets(STDIN))
+        {
+            $this->getOutput()->writeln("当前时间为：".date("Y-m-d H:i:s")."发送一条信息给两个ttl队列:$message");
+        }
+
+
 
         return 0;
     }
