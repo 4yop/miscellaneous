@@ -86,7 +86,7 @@ class TtlQueueConfig
         //声明当前队列绑定的死信交换机
         $table->set("x-dead-letter-exchange",self::Y_DEAD_LETTER_EXCHANGE);
         //声明当前队列的死信路由 key
-        $table->set("x-dead-letter-routing-key","YD");
+        $table->set("x-dead-letter-routing-key","XC");
 
 
         $this->channel->queue_declare(self::QUEUE_C,false,false,false,false,false,$table);
