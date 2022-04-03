@@ -86,4 +86,10 @@ class TtlQueueConfig
     {
         $this->channel->queue_bind(self::DEAD_LETTER_QUEUE,self::Y_DEAD_LETTER_EXCHANGE,'YD');
     }
+
+    public function convertAndSend(string $exchange,string $routing_key,string $message)
+    {
+
+    }
+
 }
