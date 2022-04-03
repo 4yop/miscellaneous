@@ -84,6 +84,6 @@ class TtlQueueConfig
     //声明死信队列 QD 绑定关系
     public function deadLetterBindingQAD()
     {
-        $this->channel->queue_bind(self::DEAD_LETTER_QUEUE,self::Y_DEAD_LETTER_EXCHANGE,'YD);
+        $this->channel->queue_bind(self::DEAD_LETTER_QUEUE,self::Y_DEAD_LETTER_EXCHANGE,'YD');
     }
 }
