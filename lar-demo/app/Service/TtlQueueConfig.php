@@ -115,11 +115,7 @@ class TtlQueueConfig
         if ($ttl > 0)
         {
             $msg->set("expiration",$ttl*1000);
-            dump($msg->get("expiration"));
         }
-
-
-
         $this->channel->basic_publish($msg,$exchange,$routing_key);
     }
 
