@@ -111,13 +111,15 @@ class TtlQueueConfig
 
     public function convertAndSend(string $exchange = '',string $routing_key = '',string $message = '',int $ttl = -1)
     {
-        $properties = [];
+        $msg = new AMQPMessage($message);
         if ($ttl > 0)
         {
-            $properties["expiration"] = $ttl*1000;
+            $msg->set("expiration",$ttl*1000);
+            dump($msg->get("expiration"));
         }
 
-        $msg = new AMQPMessage($message,$properties);
+
+
         $this->channel->basic_publish($msg,$exchange,$routing_key);
     }
 
