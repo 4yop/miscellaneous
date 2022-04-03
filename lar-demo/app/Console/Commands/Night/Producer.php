@@ -59,8 +59,8 @@ class Producer extends Command
         {
             $this->getOutput()->writeln("当前时间为：".date("Y-m-d H:i:s")."发送一条信息给两个ttl队列:$message");
 
-            $config->convertAndSend("X","XA","");
-            $config->convertAndSend("X","XB","")
+            $config->convertAndSend("X","XA","消息来自 ttl 为 10S 的队列: ".$message);
+            $config->convertAndSend("X","XB","消息来自 ttl 为 10S 的队列: ".$message);
         }
 
         return 0;

@@ -40,8 +40,8 @@ class Worker extends Command
     public function handle()
     {
 
-
-
+        $config = new TtlQueueConfig();
+        $config->queueD();
 
         return 0;
     }
