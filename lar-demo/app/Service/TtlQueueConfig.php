@@ -40,12 +40,15 @@ class TtlQueueConfig
         //声明当前队列的死信路由 key
         $table->set("x-dead-letter-routing-key","YD");
         //声明队列的 TTL
-        
+        $table->set("x-message-ttl",10000);
+
+        $this->channel->queue_declare(self::QUEUE_A,false,false,false,false,false,$table);
+
     }
 
-    public function queueB()
+    public function queueaBindingX()
     {
-
+        $this->channel->queue_bind(self::QUEUE_A,self::X_EXCHANGE,'XA');
     }
 
     public function queueB()
