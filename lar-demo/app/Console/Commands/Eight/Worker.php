@@ -50,9 +50,22 @@ class Worker extends Command
 
         //消息被拒，ttl过期，到达最大长度，成为死信
         $channel = RabbitMQ::getChannel();
-        $callback = function (AMQPMessage $message) {
-            $this->getOutput()->writeln("收到：{$message->getBody()}");
+        $callback = function (AMQPMessage $message) use ($channel) {
+            if ($message->getBody() == "123")
+            {
+                $this->getOutput()->writeln("拒绝：{$message->getBody()}");
+                /**
+                 * 拒绝消息
+                 * @param int $delivery_tag
+                 * @param bool $requeue 是否放回队列
+                 */
+                $channel->basic_reject($message->getDeliveryTag(),false);
+            }else
+            {
+                $this->getOutput()->writeln("收到：{$message->getBody()}");
+            }
         };
+
         /**
          * 声明交换机
          * @param string $exchange 交换机名
@@ -82,23 +95,30 @@ class Worker extends Command
          *@throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
          */
 
-        $arguments = [
-            'x-dead-letter-exchange'    => self::DEAD_EXCHANGE,//死信交换机
-            'x-dead-letter-routing-key' => 'lisi',//死信路由key
-            //'x-message-ttl'             => 10000,//过期时间 1000毫秒=1秒
-        ];
-        $channel->queue_declare(self::NORMAL_QUEUE,false,false,false,false,false,$arguments);
-        $channel->queue_declare(self::DEAD_QUEUE,false,false,false,false,false,[]);
+        $channel->queue_declare(self::DEAD_QUEUE,false,false,false,false,false);
+        $channel->queue_bind(self::DEAD_QUEUE,self::DEAD_EXCHANGE,"lisi");
+        $table = new AMQPTable();
 
-
-        /**绑定普通和死信的关系
+        //死信交换机
+        $table->set("x-dead-letter-exchange",self::DEAD_EXCHANGE);
+        //死信路由key
+        $table->set("x-dead-letter-routing-key",'lisi');
+        //最大长度
+        //$table->set("x-max-length",6);
+//        $arguments = [
+//            'x-dead-letter-exchange'    => self::DEAD_EXCHANGE,//死信交换机
+//            'x-dead-letter-routing-key' => 'lisi',//死信路由key
+//            //'x-message-ttl'             => 10000,//过期时间 1000毫秒=1秒
+//        ];
+        $channel->queue_declare(self::NORMAL_QUEUE,false,false,false,false,false,$table);
+        /**
          * @param string $queue 队列名
          * @param string $exchange 交换机名
          * @param string $routing_key 路由key
          * @param bool $nowait 异步
          */
         $channel->queue_bind(self::NORMAL_QUEUE,self::NORMAL_EXCHANGE,"zhangsan");
-        $channel->queue_bind(self::DEAD_QUEUE,self::DEAD_EXCHANGE,"lisi");
+
         $this->getOutput()->writeln("[*]等待接收消息");
         /**
          * @param string $queue 队列名
