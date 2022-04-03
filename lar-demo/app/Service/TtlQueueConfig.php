@@ -15,6 +15,7 @@ class TtlQueueConfig
     const QUEUE_B = "QB";
     const Y_DEAD_LETTER_EXCHANGE = "Y";
     const DEAD_LETTER_QUEUE = "QD";
+    const QUEUE_C = "QC";
 
     private $channel;
 
@@ -77,6 +78,26 @@ class TtlQueueConfig
     {
         $this->channel->queue_bind(self::QUEUE_B,self::X_EXCHANGE,'XB');
     }
+
+    //声明队列 C 死信交换机
+    public function queueC()
+    {
+        $table = new AMQPTable();
+        //声明当前队列绑定的死信交换机
+        $table->set("x-dead-letter-exchange",self::Y_DEAD_LETTER_EXCHANGE);
+        //声明当前队列的死信路由 key
+        $table->set("x-dead-letter-routing-key","YD");
+
+
+        $this->channel->queue_declare(self::QUEUE_C,false,false,false,false,false,$table);
+    }
+    //声明队列 B 绑定 X 交换机
+    public function queuecBindingX()
+    {
+        $this->channel->queue_bind(self::QUEUE_C,self::X_EXCHANGE,'XC');
+    }
+
+
     //声明死信队列 QD
     public function queueD()
     {
