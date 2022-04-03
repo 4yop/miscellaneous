@@ -4,6 +4,7 @@ namespace App\Console\Commands\Night;
 
 use App\Service\RabbitMQ;
 use Illuminate\Console\Command;
+use PhpAmqpLib\Exchange\AMQPExchangeType;
 
 class Producer extends Command
 {
@@ -40,7 +41,11 @@ class Producer extends Command
     {
         $channel = RabbitMQ::getChannel();
 
-        $channel->exchange_declare("X");
+        $channel->exchange_declare("X",AMQPExchangeType::DIRECT,false,false,false,false,false);
+
+        $channel->queue_declare();
+
+        $channel->exchange_declare("Y",AMQPExchangeType::DIRECT,false,false,false,false,false);
 
         return 0;
     }
