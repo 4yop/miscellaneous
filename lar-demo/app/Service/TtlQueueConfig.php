@@ -20,6 +20,14 @@ class TtlQueueConfig
     public function __construct()
     {
         $this->channel = RabbitMQ::getChannel();
+        $this->xExchange();
+        $this->yExchange();
+        $this->queueA();
+        $this->queueaBindingX();
+        $this->queueB();
+        $this->queuebBindingX();
+        $this->queueD();
+        $this->deadLetterBindingQAD();
     }
     // 声明 xExchange
     public function xExchange()
