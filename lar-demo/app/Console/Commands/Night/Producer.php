@@ -43,9 +43,14 @@ class Producer extends Command
 
         $channel->exchange_declare("X",AMQPExchangeType::DIRECT,false,false,false,false,false);
 
-        $channel->queue_declare();
+        $channel->queue_declare("QA",false,false,false,false,false);
+        $channel->queue_declare("QB",false,false,false,false,false);
 
         $channel->exchange_declare("Y",AMQPExchangeType::DIRECT,false,false,false,false,false);
+
+        $channel->queue_declare("QD",false,false,false,false,false);
+
+        $channel->queue_bind("Y","QD","YD");
 
         return 0;
     }
