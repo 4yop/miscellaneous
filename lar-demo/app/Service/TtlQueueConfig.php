@@ -21,17 +21,17 @@ class TtlQueueConfig
     {
         $this->channel = RabbitMQ::getChannel();
     }
-
+    // 声明 xExchange
     public function xExchange()
     {
         $this->channel->exchange_declare(self::X_EXCHANGE,AMQPExchangeType::DIRECT,false,false,false,false,false);
     }
-
+    // 声明 yExchange
     public function yExchange()
     {
         $this->channel->exchange_declare(self::Y_DEAD_LETTER_EXCHANGE,AMQPExchangeType::DIRECT,false,false,false,false,false);
     }
-
+    //声明队列 A ttl 为 10s 并绑定到对应的死信交换机
     public function queueA()
     {
         $table = new AMQPTable();
@@ -45,26 +45,37 @@ class TtlQueueConfig
         $this->channel->queue_declare(self::QUEUE_A,false,false,false,false,false,$table);
 
     }
-
+    // 声明队列 A 绑定 X 交换机
     public function queueaBindingX()
     {
         $this->channel->queue_bind(self::QUEUE_A,self::X_EXCHANGE,'XA');
     }
-
+    //声明队列 B ttl 为 40s 并绑定到对应的死信交换机
     public function queueB()
     {
+        $table = new AMQPTable();
+        //声明当前队列绑定的死信交换机
+        $table->set("x-dead-letter-exchange",self::Y_DEAD_LETTER_EXCHANGE);
+        //声明当前队列的死信路由 key
+        $table->set("x-dead-letter-routing-key","YD");
+        //声明队列的 TTL
+        $table->set("x-message-ttl",40000);
 
+        $this->channel->queue_declare(self::QUEUE_B,false,false,false,false,false,$table);
     }
-    public function queueB()
+    //声明队列 B 绑定 X 交换机
+    public function queuebBindingX()
     {
-
+        $this->channel->queue_bind(self::QUEUE_B,self::X_EXCHANGE,'XB');
     }
-    public function queueB()
+    //声明死信队列 QD
+    public function queueD()
     {
-
+        $this->channel->queue_declare(self::DEAD_LETTER_QUEUE,false,false,false,false,false);
     }
-    public function queueB()
+    //声明死信队列 QD 绑定关系
+    public function deadLetterBindingQAD()
     {
-
+        $this->channel->queue_bind(self::DEAD_LETTER_QUEUE,self::Y_DEAD_LETTER_EXCHANGE,'YD);
     }
 }
