@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use PhpAmqpLib\Exchange\AMQPExchangeType;
+use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
 
 class TtlQueueConfig
@@ -87,9 +88,10 @@ class TtlQueueConfig
         $this->channel->queue_bind(self::DEAD_LETTER_QUEUE,self::Y_DEAD_LETTER_EXCHANGE,'YD');
     }
 
-    public function convertAndSend(string $exchange,string $routing_key,string $message)
+    public function convertAndSend(string $exchange = '',string $routing_key = '',string $message = '')
     {
-
+        $msg = new AMQPMessage($message);
+        $this->channel->basic_publish($msg,$exchange,$routing_key);
     }
 
 }

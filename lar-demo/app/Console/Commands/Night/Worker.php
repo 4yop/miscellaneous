@@ -39,23 +39,7 @@ class Worker extends Command
      */
     public function handle()
     {
-        $config = new TtlQueueConfig();
-        $config->xExchange();
-        $config->yExchange();
 
-        $config->queueD();
-        $config->deadLetterBindingQAD();
-
-        $config->queueA();
-        $config->queueaBindingX();
-
-        $config->queueB();
-        $config->queuebBindingX();
-
-        while ($message = fgets(STDIN))
-        {
-            $this->getOutput()->writeln("当前时间为：".date("Y-m-d H:i:s")."发送一条信息给两个ttl队列:$message");
-        }
 
 
 
