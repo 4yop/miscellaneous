@@ -3,6 +3,8 @@
 namespace App\Console\Commands\Ten;
 
 use Illuminate\Console\Command;
+use PhpAmqpLib\Message\AMQPMessage;
+use PhpAmqpLib\Wire\AMQPTable;
 
 class Task extends Command
 {
@@ -40,6 +42,18 @@ class Task extends Command
         $queue = new DelayQueue();
 
         $channel = $queue->getChannel();
+
+        while ($input = fgets(STDIN))
+        {
+            [$body,$time] = explode(" ",$input);
+            $properties = [
+                "x-delay" => intval($time)*1000,
+            ];
+            $msg = new AMQPMessage($body,$properties);
+            $channel->basic_publish($msg,'','');
+        }
+
+
 
         return 0;
     }

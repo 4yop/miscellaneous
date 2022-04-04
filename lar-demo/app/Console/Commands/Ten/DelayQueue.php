@@ -62,4 +62,9 @@ class DelayQueue
             self::DELAYED_ROUTING_KEY);
     }
 
+    public function  sendMsg()
+    {
+        
+    }
+
 }
