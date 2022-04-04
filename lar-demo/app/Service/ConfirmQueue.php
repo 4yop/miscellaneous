@@ -4,6 +4,8 @@
 namespace App\Service;
 
 
+use PhpAmqpLib\Wire\AMQPTable;
+
 class ConfirmQueue
 {
     private $channel;
@@ -20,4 +22,26 @@ class ConfirmQueue
     {
         $this->channel = RabbitMQ::getChannel();
     }
+
+    //声明 确认的交换机
+  public function confirmExchange()
+    {
+        /**
+         * 声明交换机
+         *
+         * @param string $exchange
+         * @param string $type
+         * @param bool $passive
+         * @param bool $durable
+         * @param bool $auto_delete
+         * @param bool $internal
+         * @param bool $nowait
+         * @param AMQPTable|array $arguments
+         * @param int|null $ticket
+         * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
+         * @return mixed|null
+         */
+        $this->channel->exchange_declare(self::CONFIRM_EXCHANGE);
+    }
+
 }
