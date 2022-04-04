@@ -70,8 +70,8 @@ class DelayQueue
 
 
         $msg = new AMQPMessage($body);
+        $msg->set("application_headers",new AMQPTable(['x-delay'=>intval($time)*1000]));
 
-        $msg->set("x-delay",intval($time)*1000);
         dump($msg->get_properties());
         $this->channel->basic_publish(
             $msg,
