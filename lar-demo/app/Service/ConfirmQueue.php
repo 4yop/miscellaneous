@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use PhpAmqpLib\Exchange\AMQPExchangeType;
 use PhpAmqpLib\Wire\AMQPTable;
 
 class ConfirmQueue
@@ -14,9 +15,9 @@ class ConfirmQueue
     const BACKUP_EXCHANGE = "backup.exchange";
     const ROUTING_KEY = "key1";//CONFIRM_EXCHANGE的
 
-    const CONFIRM_QUEUE = "";
-    const WARNING_QUEUE = "";
-    const BACKUP_QUEUE = "";
+    const CONFIRM_QUEUE = "confirm.queue";
+    const WARNING_QUEUE = "warning.queue";
+    const BACKUP_QUEUE = "backup.queue";
 
     public function __construct()
     {
@@ -24,7 +25,7 @@ class ConfirmQueue
     }
 
     //声明 确认的交换机
-  public function confirmExchange()
+    public function confirmExchange()
     {
         /**
          * 声明交换机
@@ -41,7 +42,54 @@ class ConfirmQueue
          * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
          * @return mixed|null
          */
-        $this->channel->exchange_declare(self::CONFIRM_EXCHANGE);
+        $this->channel->exchange_declare(
+            self::CONFIRM_EXCHANGE,
+            AMQPExchangeType::DIRECT,
+            false,
+            true,
+            false,
+            false,
+            false
+        );
     }
+
+    //声明确认的队列
+    public function confirmQueue()
+    {
+        /**
+         * 声明队列
+         * @param string $queue
+         * @param bool $passive
+         * @param bool $durable
+         * @param bool $exclusive
+         * @param bool $auto_delete
+         * @param bool $nowait
+         * @param array|AMQPTable $arguments
+         * @param int|null $ticket
+         * @return array|null
+         *@throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
+         */
+        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true);
+    }
+
+    //绑定确定队列和确定交换机
+    public function confirmQueueBinding()
+    {
+        /**
+         * 绑定队列和交换机
+         *
+         * @param string $queue
+         * @param string $exchange
+         * @param string $routing_key
+         * @param bool $nowait
+         * @param \PhpAmqpLib\Wire\AMQPTable|array $arguments
+         * @param int|null $ticket
+         * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
+         * @return mixed|null
+         */
+        $this->channel->queue_bind(self::CONFIRM_QUEUE,self::CONFIRM_EXCHANGE,self::ROUTING_KEY);
+    }
+
+    
 
 }
