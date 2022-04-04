@@ -11,7 +11,7 @@ class Task extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'producer_delay_plugins';
 
     /**
      * The console command description.
@@ -37,6 +37,10 @@ class Task extends Command
      */
     public function handle()
     {
+        $queue = new DelayQueue();
+
+        
+
         return 0;
     }
 }

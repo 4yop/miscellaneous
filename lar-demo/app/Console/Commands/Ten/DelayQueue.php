@@ -8,7 +8,7 @@ use App\Service\RabbitMQ;
 use PhpAmqpLib\Exchange\AMQPExchangeType;
 use PhpAmqpLib\Wire\AMQPTable;
 
-class DelayQueueConfig
+class DelayQueue
 {
     const DELAYED_QUEUE_NAME = "delayed.queue";
 
@@ -21,6 +21,18 @@ class DelayQueueConfig
     public function __construct()
     {
         $this->channel = RabbitMQ::getChannel();
+
+        $this->delayedExchange();
+        $this->delayedQueue();
+        $this->bindingDelayedQueue();
+    }
+
+    /**
+     * @return \PhpAmqpLib\Channel\AMQPChannel
+     */
+    public function getChannel(): \PhpAmqpLib\Channel\AMQPChannel
+    {
+        return $this->channel;
     }
 
     //自定义交换机 我们在这里定义的是一个延迟交换机
