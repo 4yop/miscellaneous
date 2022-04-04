@@ -160,6 +160,7 @@ class ConfirmQueue
         $properties = [
             'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
         ];
+        $this->confirm_select();
         $msg = new AMQPMessage($msg_body,$properties);
         $this->channel->basic_publish(
             $msg,
@@ -171,6 +172,10 @@ class ConfirmQueue
 
     public function confirmConsumer()
     {
+        $callback = function (AMQPMessage $message) {
+            echo $message->getBody();
+            $this->channel->basic_ack($message->getDeliveryTag(),false);
+        };
         /**
          * 消费
          * @param string $queue
