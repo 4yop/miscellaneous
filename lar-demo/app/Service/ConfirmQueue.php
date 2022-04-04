@@ -90,6 +90,42 @@ class ConfirmQueue
         $this->channel->queue_bind(self::CONFIRM_QUEUE,self::CONFIRM_EXCHANGE,self::ROUTING_KEY);
     }
 
-    
-
+    //声明 备份的交换机
+    public function backExchange()
+    {
+        /**
+         * 声明交换机
+         *
+         * @param string $exchange
+         * @param string $type
+         * @param bool $passive
+         * @param bool $durable
+         * @param bool $auto_delete
+         * @param bool $internal
+         * @param bool $nowait
+         * @param AMQPTable|array $arguments
+         * @param int|null $ticket
+         * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
+         * @return mixed|null
+         */
+        $this->channel->exchange_declare(
+            self::BACKUP_EXCHANGE,
+            AMQPExchangeType::FANOUT,
+            false,
+            true,
+            false,
+            false,
+            false
+        );
+    }
+    //声明备份的队列
+    public function backupQueue()
+    {
+        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true);
+    }
+    //声明警告的队列
+    public function warningQueue()
+    {
+        $this->channel->queue_declare(self::WARNING_QUEUE,false,true);
+    }
 }
