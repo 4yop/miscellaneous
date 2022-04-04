@@ -68,10 +68,9 @@ class ConfirmQueue
     public function confirmQueue()
     {
         $table = new AMQPTable();
-        //死信交换机
-        $table->set("x-dead-letter-exchange",self::BACKUP_EXCHANGE);
-        //死信路由key
-        $table->set("x-dead-letter-routing-key",'');
+        //备份交换机
+        $table->set("alternate-exchange",self::BACKUP_EXCHANGE);
+
         /**
          * 声明队列
          * @param string $queue
