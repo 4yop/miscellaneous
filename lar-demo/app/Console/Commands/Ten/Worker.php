@@ -41,6 +41,7 @@ class Worker extends Command
         $queue = new DelayQueue();
 
         $queue->receiveDelayedQueue(function (AMQPMessage $message) {
+            dump($message->get_properties());
             $this->getOutput()->writeln(
                 sprintf("时间为:%s 收到:%s",date("Y-m-d H:i:s"),$message->body)
             );

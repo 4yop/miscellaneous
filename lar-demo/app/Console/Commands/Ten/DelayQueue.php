@@ -70,6 +70,7 @@ class DelayQueue
         $properties = [
             "x-delay" => intval($time)*1000,
         ];
+        dump($properties);
         $msg = new AMQPMessage($body,$properties);
         $this->channel->basic_publish(
             $msg,
