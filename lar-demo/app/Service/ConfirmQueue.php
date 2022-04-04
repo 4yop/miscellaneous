@@ -5,6 +5,7 @@ namespace App\Service;
 
 
 use PhpAmqpLib\Exchange\AMQPExchangeType;
+use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
 
 class ConfirmQueue
@@ -56,6 +57,11 @@ class ConfirmQueue
     //声明确认的队列
     public function confirmQueue()
     {
+        $table = new AMQPTable();
+        //死信交换机
+        $table->set("x-dead-letter-exchange",self::BACKUP_EXCHANGE);
+        //死信路由key
+        $table->set("x-dead-letter-routing-key",'');
         /**
          * 声明队列
          * @param string $queue
@@ -69,7 +75,7 @@ class ConfirmQueue
          * @return array|null
          *@throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
          */
-        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true);
+        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true,false,false,false,$table);
     }
 
     //绑定确定队列和确定交换机
@@ -90,6 +96,69 @@ class ConfirmQueue
         $this->channel->queue_bind(self::CONFIRM_QUEUE,self::CONFIRM_EXCHANGE,self::ROUTING_KEY);
     }
 
-    
+    //声明 备份的交换机
+    public function backExchange()
+    {
+        /**
+         * 声明交换机
+         *
+         * @param string $exchange
+         * @param string $type
+         * @param bool $passive
+         * @param bool $durable
+         * @param bool $auto_delete
+         * @param bool $internal
+         * @param bool $nowait
+         * @param AMQPTable|array $arguments
+         * @param int|null $ticket
+         * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
+         * @return mixed|null
+         */
+        $this->channel->exchange_declare(
+            self::BACKUP_EXCHANGE,
+            AMQPExchangeType::FANOUT,
+            false,
+            true,
+            false,
+            false,
+            false
+        );
+    }
+    //声明备份的队列
+    public function backupQueue()
+    {
+        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true);
+    }
+
+    public function backQueueBinding()
+    {
+        $this->channel->queue_bind(self::CONFIRM_QUEUE, self::BACKUP_EXCHANGE );
+    }
+
+    //声明警告的队列
+    public function warningQueue()
+    {
+        $this->channel->queue_declare(self::WARNING_QUEUE,false,true);
+    }
+
+    public function warningQueueBinding()
+    {
+        $this->channel->queue_bind(self::WARNING_QUEUE, self::BACKUP_EXCHANGE );
+    }
+
+
+    public function sendMsg(string $msg_body = '')
+    {
+        $properties = [
+            'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
+        ];
+        $msg = new AMQPMessage($msg_body,$properties);
+        $this->channel->basic_publish(
+            $msg,
+            self::CONFIRM_EXCHANGE,
+            self::ROUTING_KEY,
+            true,
+        );
+    }
 
 }
