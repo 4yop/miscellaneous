@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\End;
 
+use App\Service\ConfirmQueue;
 use Illuminate\Console\Command;
 
 class Work extends Command
@@ -11,7 +12,7 @@ class Work extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'end_consumer_confirm';
 
     /**
      * The console command description.
@@ -37,6 +38,10 @@ class Work extends Command
      */
     public function handle()
     {
+        $queue = new ConfirmQueue();
+
+        $queue->1;
+
         return 0;
     }
 }
