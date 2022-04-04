@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands\End;
 
+use App\Service\ConfirmQueue;
 use Illuminate\Console\Command;
 
 class Task extends Command
@@ -37,6 +38,10 @@ class Task extends Command
      */
     public function handle()
     {
+        $queue = new ConfirmQueue();
+
+        $queue->sendMsg("123");
+
         return 0;
     }
 }
