@@ -40,7 +40,7 @@ class Work extends Command
     {
         $queue = new ConfirmQueue();
 
-        //$queue->1;
+        $queue->confirmConsumer();
 
         return 0;
     }
