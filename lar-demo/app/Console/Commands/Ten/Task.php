@@ -39,7 +39,7 @@ class Task extends Command
     {
         $queue = new DelayQueue();
 
-        
+        $channel = $queue->getChannel();
 
         return 0;
     }
