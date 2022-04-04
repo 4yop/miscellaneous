@@ -6,6 +6,7 @@ namespace App\Console\Commands\Ten;
 
 use App\Service\RabbitMQ;
 use PhpAmqpLib\Exchange\AMQPExchangeType;
+use PhpAmqpLib\Message\AMQPMessage;
 use PhpAmqpLib\Wire\AMQPTable;
 
 class DelayQueue
@@ -62,9 +63,16 @@ class DelayQueue
             self::DELAYED_ROUTING_KEY);
     }
 
-    public function  sendMsg()
+    public function sendMsg($body = '',$time = 0)
     {
-        
+        $properties = [
+            "x-delay" => intval($time)*1000,
+        ];
+        $msg = new AMQPMessage($body,$properties);
+        $this->channel->basic_publish(
+            $msg,
+            self::DELAYED_EXCHANGE_NAME,
+            self::DELAYED_ROUTING_KEY);
     }
 
 }

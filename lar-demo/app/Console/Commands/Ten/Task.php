@@ -46,11 +46,7 @@ class Task extends Command
         while ($input = fgets(STDIN))
         {
             [$body,$time] = explode(" ",$input);
-            $properties = [
-                "x-delay" => intval($time)*1000,
-            ];
-            $msg = new AMQPMessage($body,$properties);
-            $channel->basic_publish($msg,'','');
+            $queue->sendMsg($body,intval($time));
         }
 
 
