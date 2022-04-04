@@ -28,7 +28,12 @@ class DelayQueueConfig
     {
         $table = new AMQPTable();
         $table->set("x-delayed-type",AMQPExchangeType::DIRECT);
-        $this->channel->exchange_declare(self::DELAYED_EXCHANGE_NAME);
+        $this->channel->exchange_declare(self::DELAYED_EXCHANGE_NAME,"x-delayed-message",false,true,false,$table);
+    }
+
+    public function bindingDelayedQueue()
+    {
+        $this->channel->queue_bind();
     }
 
 }
