@@ -23,14 +23,16 @@ class ConfirmQueue
     public function __construct()
     {
         $this->channel = RabbitMQ::getChannel();
-        $this->confirmExchange();
+
         $this->backExchange();
-        $this->confirmQueue();
-        $this->confirmExchange();
         $this->backupQueue();
         $this->backQueueBinding();
         $this->warningQueue();
         $this->warningQueueBinding();
+
+        $this->confirmQueue();
+        $this->confirmExchange();
+
     }
 
     //声明 确认的交换机
