@@ -47,7 +47,7 @@ class DelayQueue
             false,
             true,
             false,
-            true,
+            false,
             false,
             $table);
     }
@@ -86,9 +86,12 @@ class DelayQueue
             true,
             false,
             false,
-            false,
             $callback
         );
+        while ($this->channel->is_open())
+        {
+            $this->channel->wait();
+        }
     }
 
 }
