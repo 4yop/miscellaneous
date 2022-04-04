@@ -67,11 +67,12 @@ class DelayQueue
 
     public function sendMsg($body = '',$time = 0)
     {
-        $properties = [
-            "x-delay" => intval($time)*1000,
-        ];
-        dump($properties);
-        $msg = new AMQPMessage($body,$properties);
+
+
+        $msg = new AMQPMessage($body);
+
+        $msg->set("x-delay",intval($time)*1000);
+        dump($msg->get_properties());
         $this->channel->basic_publish(
             $msg,
             self::DELAYED_EXCHANGE_NAME,
