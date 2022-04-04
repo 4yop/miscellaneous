@@ -4,6 +4,7 @@
 namespace App\Service;
 
 
+use PhpAmqpLib\Exchange\AMQPExchangeType;
 use PhpAmqpLib\Wire\AMQPTable;
 
 class ConfirmQueue
@@ -24,7 +25,7 @@ class ConfirmQueue
     }
 
     //声明 确认的交换机
-  public function confirmExchange()
+    public function confirmExchange()
     {
         /**
          * 声明交换机
@@ -41,7 +42,21 @@ class ConfirmQueue
          * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
          * @return mixed|null
          */
-        $this->channel->exchange_declare(self::CONFIRM_EXCHANGE);
+        $this->channel->exchange_declare(
+            self::CONFIRM_EXCHANGE,
+            AMQPExchangeType::DIRECT,
+            false,
+            true,
+            false,
+            false,
+            false
+        );
+    }
+
+    //声明确认的队列
+    public function confirmQueue()
+    {
+        $this->channel->queue_declare(self::CONFIRM_QUEUE);
     }
 
 }
