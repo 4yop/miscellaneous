@@ -47,6 +47,8 @@ class DelayQueue
             false,
             true,
             false,
+            true,
+            false,
             $table);
     }
 
