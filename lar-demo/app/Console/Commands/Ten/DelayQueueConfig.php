@@ -10,6 +10,6 @@ class DelayQueueConfig
 
     const DELAYED_EXCHANGE_NAME = "delayed.exchange";
 
-    const DELAYED_ROUTING_KEY = "delayed.routing_key";
+    const DELAYED_ROUTING_KEY = "delayed.routingkey";
 
 }
