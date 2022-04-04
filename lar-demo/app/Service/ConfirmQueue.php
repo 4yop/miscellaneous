@@ -157,10 +157,11 @@ class ConfirmQueue
 
     public function sendMsg(string $msg_body = '')
     {
+        $this->channel->confirm_select();
+
         $properties = [
             'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
         ];
-        $this->confirm_select();
         $msg = new AMQPMessage($msg_body,$properties);
         $this->channel->basic_publish(
             $msg,
@@ -168,6 +169,8 @@ class ConfirmQueue
             self::ROUTING_KEY,
             true,
         );
+        // uses a 5 second timeout
+        $this->channel->wait_for_pending_acks();
     }
 
     public function confirmConsumer()
