@@ -42,7 +42,7 @@ class Task extends Command
         $queue = new DelayQueue();
 
         $channel = $queue->getChannel();
-
+        //publisherConfirmType
         while ($input = fgets(STDIN))
         {
             [$body,$time] = explode(" ",$input);
