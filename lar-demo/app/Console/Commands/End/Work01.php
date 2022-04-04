@@ -5,14 +5,14 @@ namespace App\Console\Commands\End;
 use App\Service\ConfirmQueue;
 use Illuminate\Console\Command;
 
-class Work extends Command
+class Work01 extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'end_consumer_confirm';
+    protected $signature = 'end_consumer_backup';
 
     /**
      * The console command description.
@@ -40,9 +40,9 @@ class Work extends Command
     {
         $queue = new ConfirmQueue();
 
-        $this->getOutput()->writeln("这个是comfirmConsumer消费");
+        $this->getOutput()->writeln("这个是backupConsumer消费");
 
-        $queue->confirmConsumer();
+        $queue->backupQueue();
 
         return 0;
     }

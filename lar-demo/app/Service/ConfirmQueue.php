@@ -219,76 +219,16 @@ class ConfirmQueue
     {
         $this->commonConsumer(self::CONFIRM_QUEUE);
 
-        $callback = function (AMQPMessage $message) {
-            echo "确认队列:".$message->getBody();
-            $this->channel->basic_ack($message->getDeliveryTag(),false);
-        };
-        /**
-         * 消费
-         * @param string $queue
-         * @param string $consumer_tag
-         * @param bool $no_local
-         * @param bool $no_ack
-         * @param bool $exclusive
-         * @param bool $nowait
-         * @param callable|null $callback
-         * @param int|null $ticket
-         * @param \PhpAmqpLib\Wire\AMQPTable|array $arguments
-         *
-         * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
-         * @throws \InvalidArgumentException
-         * @return string
-         */
-        $this->channel->basic_consume(,"",false,false,false,false,$callback);
     }
 
     public function backupConsumer()
     {
-        $callback = function (AMQPMessage $message) {
-            echo "backup队列:".$message->getBody();
-            $this->channel->basic_ack($message->getDeliveryTag(),false);
-        };
-        /**
-         * 消费
-         * @param string $queue
-         * @param string $consumer_tag
-         * @param bool $no_local
-         * @param bool $no_ack
-         * @param bool $exclusive
-         * @param bool $nowait
-         * @param callable|null $callback
-         * @param int|null $ticket
-         * @param \PhpAmqpLib\Wire\AMQPTable|array $arguments
-         *
-         * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
-         * @throws \InvalidArgumentException
-         * @return string
-         */
-        $this->channel->basic_consume(self::BACKUP_QUEUE,"",false,false,false,false,$callback);
+        $this->commonConsumer(self::BACKUP_QUEUE);
+
     }
 
     public function warningConsumer()
     {
-        $callback = function (AMQPMessage $message) {
-            echo "warning队列:".$message->getBody();
-            $this->channel->basic_ack($message->getDeliveryTag(),false);
-        };
-        /**
-         * 消费
-         * @param string $queue
-         * @param string $consumer_tag
-         * @param bool $no_local
-         * @param bool $no_ack
-         * @param bool $exclusive
-         * @param bool $nowait
-         * @param callable|null $callback
-         * @param int|null $ticket
-         * @param \PhpAmqpLib\Wire\AMQPTable|array $arguments
-         *
-         * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
-         * @throws \InvalidArgumentException
-         * @return string
-         */
-        $this->channel->basic_consume(self::WARNING_QUEUE,"",false,false,false,false,$callback);
+        $this->commonConsumer(self::WARNING_QUEUE);
     }
 }
