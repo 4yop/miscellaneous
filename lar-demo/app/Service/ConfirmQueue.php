@@ -23,14 +23,16 @@ class ConfirmQueue
     public function __construct()
     {
         $this->channel = RabbitMQ::getChannel();
-        $this->confirmExchange();
+
         $this->backExchange();
-        $this->confirmQueue();
-        $this->confirmExchange();
         $this->backupQueue();
         $this->backQueueBinding();
         $this->warningQueue();
         $this->warningQueueBinding();
+
+        $this->confirmQueue();
+        $this->confirmExchange();
+
     }
 
     //声明 确认的交换机
@@ -66,10 +68,9 @@ class ConfirmQueue
     public function confirmQueue()
     {
         $table = new AMQPTable();
-        //死信交换机
-        $table->set("x-dead-letter-exchange",self::BACKUP_EXCHANGE);
-        //死信路由key
-        $table->set("x-dead-letter-routing-key",'');
+        //备份交换机
+        $table->set("alternate-exchange",self::BACKUP_EXCHANGE);
+
         /**
          * 声明队列
          * @param string $queue
@@ -135,7 +136,7 @@ class ConfirmQueue
     //声明备份的队列
     public function backupQueue()
     {
-        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true);
+        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true,false,false,false);
     }
 
     public function backQueueBinding()
@@ -146,7 +147,7 @@ class ConfirmQueue
     //声明警告的队列
     public function warningQueue()
     {
-        $this->channel->queue_declare(self::WARNING_QUEUE,false,true);
+        $this->channel->queue_declare(self::WARNING_QUEUE,false,true,false,false,false);
     }
 
     public function warningQueueBinding()
