@@ -46,7 +46,11 @@ class Task extends Command
         while ($input = fgets(STDIN))
         {
             [$body,$time] = explode(" ",$input);
-            $queue->sendMsg($body,intval($time));
+            $time = intval($time);
+            $queue->sendMsg($body,$time);
+            $this->getOutput()->writeln(
+                sprintf("%s 已发消息:%s 预计%s收到",date("Y-m-d H:i:s"),$body,date("Y-m-d H:i:s",time()+$time))
+            );
         }
 
 
