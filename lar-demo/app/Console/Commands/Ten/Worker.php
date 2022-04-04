@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Ten;
 
 use Illuminate\Console\Command;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class Worker extends Command
 {
@@ -11,7 +12,7 @@ class Worker extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'consumer_delay_plugins';
 
     /**
      * The console command description.
@@ -37,6 +38,14 @@ class Worker extends Command
      */
     public function handle()
     {
+        $queue = new DelayQueue();
+
+        $queue->receiveDelayedQueue(function (AMQPMessage $message) {
+            $this->getOutput()->writeln(
+                sprintf("时间为:%s 收到:%s",date("Y-m-d H:i:s"),$message->body)
+            );
+        });
+
         return 0;
     }
 }

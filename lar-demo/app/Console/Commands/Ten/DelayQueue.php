@@ -75,4 +75,18 @@ class DelayQueue
             self::DELAYED_ROUTING_KEY);
     }
 
+    public function receiveDelayedQueue($callback = null)
+    {
+        $this->channel->basic_consume(
+            self::DELAYED_QUEUE_NAME,
+            "",
+            false,
+            true,
+            false,
+            false,
+            false,
+            $callback
+        );
+    }
+
 }
