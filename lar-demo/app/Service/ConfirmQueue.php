@@ -169,4 +169,25 @@ class ConfirmQueue
         );
     }
 
+    public function confirmConsumer()
+    {
+        /**
+         * 消费
+         * @param string $queue
+         * @param string $consumer_tag
+         * @param bool $no_local
+         * @param bool $no_ack
+         * @param bool $exclusive
+         * @param bool $nowait
+         * @param callable|null $callback
+         * @param int|null $ticket
+         * @param \PhpAmqpLib\Wire\AMQPTable|array $arguments
+         *
+         * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
+         * @throws \InvalidArgumentException
+         * @return string
+         */
+        $this->channel->basic_consume(self::CONFIRM_QUEUE,"",false,false,false,false,$callback);
+    }
+
 }
