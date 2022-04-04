@@ -21,4 +21,6 @@ class DelayQueueConfig
         $this->channel = RabbitMQ::getChannel();
     }
 
+    
+
 }
