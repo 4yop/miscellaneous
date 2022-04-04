@@ -28,12 +28,26 @@ class DelayQueueConfig
     {
         $table = new AMQPTable();
         $table->set("x-delayed-type",AMQPExchangeType::DIRECT);
-        $this->channel->exchange_declare(self::DELAYED_EXCHANGE_NAME,"x-delayed-message",false,true,false,$table);
+        $this->channel->exchange_declare(
+            self::DELAYED_EXCHANGE_NAME,
+            "x-delayed-message",
+            false,
+            true,
+            false,
+            $table);
+    }
+
+    public function delayedQueue()
+    {
+        $this->channel->queue_declare(self::DELAYED_QUEUE_NAME);
     }
 
     public function bindingDelayedQueue()
     {
-        $this->channel->queue_bind();
+        $this->channel->queue_bind(
+            self::DELAYED_QUEUE_NAME,
+            self::DELAYED_EXCHANGE_NAME,
+            self::DELAYED_ROUTING_KEY);
     }
 
 }
