@@ -123,6 +123,12 @@ class ConfirmQueue
     {
         $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true);
     }
+
+    public function backQueueBinding()
+    {
+        
+    }
+    
     //声明警告的队列
     public function warningQueue()
     {
