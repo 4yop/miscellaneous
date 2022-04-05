@@ -20,9 +20,9 @@ class ConfirmQueue
     const WARNING_QUEUE = "warning.queue";
     const BACKUP_QUEUE = "backup.queue";
 
-    private $is_confirm_select = false;//是否开启
+    private $is_confirm_select = true;//是否开启
 
-    public function __construct($is_confirm_select = false)
+    public function __construct($is_confirm_select = true)
     {
         $this->channel = RabbitMQ::getChannel();
 
@@ -49,18 +49,18 @@ class ConfirmQueue
 
     public function setMessageCallback($success_callback = null,$fail_callback = null)
     {
-        if ($success_callback === null)
+        if (!is_callable($success_callback))
         {
             $success_callback = function (AMQPMessage $message) {
                 // code when message is confirmed
-                echo "接收了:{$message->getBody()}\n";
+                echo "[*]".date("Y-m-d H:i:s")." 接收了:{$message->getBody()}\n";
             };
         }
-        if ($fail_callback === null)
+        if (!is_callable($fail_callback))
         {
             $fail_callback = function (AMQPMessage $message) {
                 // code when message is nack-ed
-                echo "没接收:{$message->getBody()}\n";;
+                echo "[*]".date("Y-m-d H:i:s")." 没接收:{$message->getBody()}\n";;
             };
         }
 
@@ -194,7 +194,9 @@ class ConfirmQueue
     public function sendMsg(string $msg_body = '')
     {
         $properties = [
-            'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
+            'delivery_mode'    => AMQPMessage::DELIVERY_MODE_PERSISTENT,
+            "content_encoding" => "utf-8",
+            "content_type"     => "application/json",
         ];
         $msg = new AMQPMessage($msg_body,$properties);
         $this->channel->basic_publish(
@@ -216,7 +218,10 @@ class ConfirmQueue
         $callback = function (AMQPMessage $message) use ($callback) {
 
             //echo $message->getBody()."\n";
-            $callback($message);
+            if (is_callable($callback))
+            {
+                $callback($message);
+            }
             if ($this->is_confirm_select)
             {
                 $this->channel->basic_ack($message->getDeliveryTag(),false);
@@ -249,18 +254,18 @@ class ConfirmQueue
 
     public function confirmConsumer($callback = null)
     {
-        $this->commonConsumer(self::CONFIRM_QUEUE,$callback = null);
+        $this->commonConsumer(self::CONFIRM_QUEUE,$callback);
 
     }
 
     public function backupConsumer($callback = null)
     {
-        $this->commonConsumer(self::BACKUP_QUEUE,$callback = null);
+        $this->commonConsumer(self::BACKUP_QUEUE,$callback);
 
     }
 
     public function warningConsumer($callback = null)
     {
-        $this->commonConsumer(self::WARNING_QUEUE,$callback = null);
+        $this->commonConsumer(self::WARNING_QUEUE,$callback);
     }
 }
