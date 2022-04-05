@@ -71,7 +71,7 @@ class ConfirmQueue
         $table = new AMQPTable();
         //备份交换机
         $table->set("alternate-exchange",self::BACKUP_EXCHANGE);
-
+        $this->channel->getMethodQueue();
         /**
          * 声明队列
          * @param string $queue
