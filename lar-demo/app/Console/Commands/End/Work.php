@@ -42,6 +42,8 @@ class Work extends Command
 
         $this->getOutput()->writeln("这个是comfirmConsumer消费");
 
+
+
         $queue->confirmConsumer();
 
         return 0;
