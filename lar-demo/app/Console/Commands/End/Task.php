@@ -40,9 +40,7 @@ class Task extends Command
     {
         $queue = new ConfirmQueue();
 
-        $queue->confirmExchange();
-        $queue->confirmQueue();
-        $queue->confirmQueueBinding();
+
 
         $queue->sendMsg("123");
 
