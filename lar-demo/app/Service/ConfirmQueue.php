@@ -179,7 +179,7 @@ class ConfirmQueue
             $msg,
             self::CONFIRM_EXCHANGE,
             self::ROUTING_KEY,
-            true,
+            false,
         );
         // uses a 5 second timeout
         $this->channel->wait_for_pending_acks();
