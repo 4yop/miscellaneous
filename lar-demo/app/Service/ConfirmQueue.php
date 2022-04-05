@@ -34,7 +34,7 @@ class ConfirmQueue
 
         $this->confirmQueue();
         $this->confirmExchange();
-
+        $this->confirmQueueBinding();
     }
 
     //声明 确认的交换机
@@ -72,7 +72,7 @@ class ConfirmQueue
         $table = new AMQPTable();
         //备份交换机
         $table->set("alternate-exchange",self::BACKUP_EXCHANGE);
-        
+
         /**
          * 声明队列
          * @param string $queue

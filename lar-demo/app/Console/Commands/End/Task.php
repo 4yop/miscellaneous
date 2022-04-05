@@ -40,9 +40,13 @@ class Task extends Command
     {
         $queue = new ConfirmQueue();
 
+        while ($input = fgets(STDIN))
+        {
+            $json = json_encode(['input'=>$input]);
+            $queue->sendMsg($json);
+        }
 
 
-        $queue->sendMsg("123");
 
         return 0;
     }
