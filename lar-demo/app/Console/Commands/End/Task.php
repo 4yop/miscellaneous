@@ -39,6 +39,9 @@ class Task extends Command
     public function handle()
     {
         $queue = new ConfirmQueue(true);
+
+        $queue->setMessageCallback();
+
         while ($input = fgets(STDIN))
         {
             $json = json_encode(['input'=>$input]);

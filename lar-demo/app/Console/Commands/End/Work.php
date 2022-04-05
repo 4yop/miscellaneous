@@ -4,6 +4,7 @@ namespace App\Console\Commands\End;
 
 use App\Service\ConfirmQueue;
 use Illuminate\Console\Command;
+use PhpAmqpLib\Message\AMQPMessage;
 
 class Work extends Command
 {
@@ -44,7 +45,9 @@ class Work extends Command
 
 
 
-        $queue->confirmConsumer();
+        $queue->confirmConsumer(function (AMQPMessage $message) {
+            $this->getOutput()->writeln("收到消息:{$message->getBody()}");
+        });
 
         return 0;
     }
