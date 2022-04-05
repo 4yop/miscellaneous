@@ -184,10 +184,6 @@ class ConfirmQueue
 
     public function sendMsg(string $msg_body = '')
     {
-        if ($this->is_confirm_select) {
-
-
-        }
         $properties = [
             'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
         ];
