@@ -48,6 +48,10 @@ class Producer extends Command
     {
         //获取信道
         $channel = $this->connection->channel();
+
+        $table = new AMQPTable();
+        $table->set("x-max-priority",5);
+
         //创建队列
         /**
          * Declares queue, creates if needed
@@ -61,10 +65,11 @@ class Producer extends Command
          * @param array|AMQPTable $arguments 设定消息队列的额外参数，如存活时间等
          * @param int|null $ticket 传0或null即可
          */
-        $channel->queue_declare(self::$queue_name,false,false,false,false);
+        $channel->queue_declare(self::$queue_name,false,false,false,false,false,$table);
         for($i = 0;$i < 10;$i++) {
             $message = "{$i} hello world";
-            $msg = new AMQPMessage($message);
+            $pro = ['priority'=>$i];
+            $msg = new AMQPMessage($message,$pro);
             /**
              * 发送消息
              *
