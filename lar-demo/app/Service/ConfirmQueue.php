@@ -28,6 +28,7 @@ class ConfirmQueue
 
         $this->backupQueue();
         $this->backQueueBinding();
+
         $this->warningQueue();
         $this->warningQueueBinding();
 
@@ -71,7 +72,7 @@ class ConfirmQueue
         $table = new AMQPTable();
         //备份交换机
         $table->set("alternate-exchange",self::BACKUP_EXCHANGE);
-
+        
         /**
          * 声明队列
          * @param string $queue
@@ -137,12 +138,12 @@ class ConfirmQueue
     //声明备份的队列
     public function backupQueue()
     {
-        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true,false,false,false);
+        $this->channel->queue_declare(self::BACKUP_QUEUE,false,true,false,false,false);
     }
 
     public function backQueueBinding()
     {
-        $this->channel->queue_bind(self::CONFIRM_QUEUE, self::BACKUP_EXCHANGE );
+        $this->channel->queue_bind(self::BACKUP_QUEUE, self::BACKUP_EXCHANGE );
     }
 
     //声明警告的队列
