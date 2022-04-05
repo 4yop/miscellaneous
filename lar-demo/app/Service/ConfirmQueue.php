@@ -20,7 +20,7 @@ class ConfirmQueue
     const WARNING_QUEUE = "warning.queue";
     const BACKUP_QUEUE = "backup.queue";
 
-    public function __construct()
+    public function __construct($is_confirm_select = false)
     {
         $this->channel = RabbitMQ::getChannel();
 
@@ -34,6 +34,12 @@ class ConfirmQueue
 
         $this->confirmQueue();
         $this->confirmExchange();
+        $this->confirmQueueBinding();
+
+        if ($is_confirm_select)
+        {
+            $this->channel->confirm_select();
+        }
 
     }
 
@@ -55,6 +61,9 @@ class ConfirmQueue
          * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
          * @return mixed|null
          */
+        $table = new AMQPTable();
+        //备份交换机
+        $table->set("alternate-exchange",self::BACKUP_EXCHANGE);
         $this->channel->exchange_declare(
             self::CONFIRM_EXCHANGE,
             AMQPExchangeType::DIRECT,
@@ -62,17 +71,14 @@ class ConfirmQueue
             true,
             false,
             false,
-            false
+            false,
+            $table
         );
     }
 
     //声明确认的队列
     public function confirmQueue()
     {
-        $table = new AMQPTable();
-        //备份交换机
-        $table->set("alternate-exchange",self::BACKUP_EXCHANGE);
-        
         /**
          * 声明队列
          * @param string $queue
@@ -86,7 +92,7 @@ class ConfirmQueue
          * @return array|null
          *@throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
          */
-        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true,false,false,false,$table);
+        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true,false,false,false);
     }
 
     //绑定确定队列和确定交换机
@@ -160,7 +166,7 @@ class ConfirmQueue
 
     public function sendMsg(string $msg_body = '')
     {
-        $this->channel->confirm_select();
+
 
         //要写 wait_for_pending_acks();
         $this->channel->set_ack_handler(function (AMQPMessage $message){
@@ -190,6 +196,7 @@ class ConfirmQueue
     private function commonConsumer($queue)
     {
         $callback = function (AMQPMessage $message) {
+            $message->getExchange();
             echo $message->getBody()."\n";
             $this->channel->basic_ack($message->getDeliveryTag(),false);
         };

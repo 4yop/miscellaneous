@@ -42,7 +42,7 @@ class Work01 extends Command
 
         $this->getOutput()->writeln("这个是backupConsumer消费");
 
-        $queue->backupQueue();
+        $queue->backupConsumer();
 
         return 0;
     }
