@@ -20,9 +20,9 @@ class ConfirmQueue
     const WARNING_QUEUE = "warning.queue";
     const BACKUP_QUEUE = "backup.queue";
 
-    private $is_confirm_select = false;//是否开启
+    private $is_confirm_select = true;//是否开启
 
-    public function __construct($is_confirm_select = false)
+    public function __construct($is_confirm_select = true)
     {
         $this->channel = RabbitMQ::getChannel();
 
@@ -194,7 +194,9 @@ class ConfirmQueue
     public function sendMsg(string $msg_body = '')
     {
         $properties = [
-            'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT
+            'delivery_mode'    => AMQPMessage::DELIVERY_MODE_PERSISTENT,
+            "content_encoding" => "utf-8",
+            "content_type"     => "application/json",
         ];
         $msg = new AMQPMessage($msg_body,$properties);
         $this->channel->basic_publish(
