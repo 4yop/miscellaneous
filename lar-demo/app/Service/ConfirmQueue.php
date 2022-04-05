@@ -24,14 +24,14 @@ class ConfirmQueue
     {
         $this->channel = RabbitMQ::getChannel();
 
-        $this->backExchange();
-        $this->backupQueue();
-        $this->backQueueBinding();
-        $this->warningQueue();
-        $this->warningQueueBinding();
-
-        $this->confirmQueue();
-        $this->confirmExchange();
+//        $this->backExchange();
+//        $this->backupQueue();
+//        $this->backQueueBinding();
+//        $this->warningQueue();
+//        $this->warningQueueBinding();
+//
+//        $this->confirmQueue();
+//        $this->confirmExchange();
 
     }
 
@@ -69,7 +69,7 @@ class ConfirmQueue
     {
         $table = new AMQPTable();
         //备份交换机
-        $table->set("alternate-exchange",self::BACKUP_EXCHANGE);
+        //$table->set("alternate-exchange",self::BACKUP_EXCHANGE);
 
         /**
          * 声明队列
