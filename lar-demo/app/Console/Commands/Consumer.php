@@ -33,7 +33,7 @@ class Consumer extends Command
     public function __construct()
     {
         //创建连接
-        //$this->connection = new AMQPStreamConnection('127.0.0.1', 5672, 'admin', 'admin');
+        $this->connection = new AMQPStreamConnection('127.0.0.1', 5672, 'admin', 'admin');
         parent::__construct();
     }
 
