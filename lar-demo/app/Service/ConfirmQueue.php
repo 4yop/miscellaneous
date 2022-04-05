@@ -47,7 +47,7 @@ class ConfirmQueue
 
     }
 
-    private function setMessageCallback($success_callback = null,$fail_callback = null)
+    public function setMessageCallback($success_callback = null,$fail_callback = null)
     {
         if ($success_callback === null)
         {
@@ -211,12 +211,16 @@ class ConfirmQueue
 
     }
 
-    private function commonConsumer($queue)
+    private function commonConsumer($queue,$callback = null)
     {
-        $callback = function (AMQPMessage $message) {
-            $message->getExchange();
-            echo $message->getBody()."\n";
-            $this->channel->basic_ack($message->getDeliveryTag(),false);
+        $callback = function (AMQPMessage $message) use ($callback) {
+
+            //echo $message->getBody()."\n";
+            $callback($message);
+            if ($this->is_confirm_select)
+            {
+                $this->channel->basic_ack($message->getDeliveryTag(),false);
+            }
         };
         /**
          * 消费
@@ -243,20 +247,20 @@ class ConfirmQueue
 
     }
 
-    public function confirmConsumer()
+    public function confirmConsumer($callback = null)
     {
-        $this->commonConsumer(self::CONFIRM_QUEUE);
+        $this->commonConsumer(self::CONFIRM_QUEUE,$callback = null);
 
     }
 
-    public function backupConsumer()
+    public function backupConsumer($callback = null)
     {
-        $this->commonConsumer(self::BACKUP_QUEUE);
+        $this->commonConsumer(self::BACKUP_QUEUE,$callback = null);
 
     }
 
-    public function warningConsumer()
+    public function warningConsumer($callback = null)
     {
-        $this->commonConsumer(self::WARNING_QUEUE);
+        $this->commonConsumer(self::WARNING_QUEUE,$callback = null);
     }
 }
