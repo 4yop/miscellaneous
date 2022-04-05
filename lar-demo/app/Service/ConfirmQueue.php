@@ -216,7 +216,10 @@ class ConfirmQueue
         $callback = function (AMQPMessage $message) use ($callback) {
 
             //echo $message->getBody()."\n";
-            $callback($message);
+            if (is_callable($callback))
+            {
+                $callback($message);
+            }
             if ($this->is_confirm_select)
             {
                 $this->channel->basic_ack($message->getDeliveryTag(),false);
@@ -249,18 +252,18 @@ class ConfirmQueue
 
     public function confirmConsumer($callback = null)
     {
-        $this->commonConsumer(self::CONFIRM_QUEUE,$callback = null);
+        $this->commonConsumer(self::CONFIRM_QUEUE,$callback);
 
     }
 
     public function backupConsumer($callback = null)
     {
-        $this->commonConsumer(self::BACKUP_QUEUE,$callback = null);
+        $this->commonConsumer(self::BACKUP_QUEUE,$callback);
 
     }
 
     public function warningConsumer($callback = null)
     {
-        $this->commonConsumer(self::WARNING_QUEUE,$callback = null);
+        $this->commonConsumer(self::WARNING_QUEUE,$callback);
     }
 }
