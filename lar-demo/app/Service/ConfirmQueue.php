@@ -49,18 +49,18 @@ class ConfirmQueue
 
     public function setMessageCallback($success_callback = null,$fail_callback = null)
     {
-        if ($success_callback === null)
+        if (!is_callable($success_callback))
         {
             $success_callback = function (AMQPMessage $message) {
                 // code when message is confirmed
-                echo "接收了:{$message->getBody()}\n";
+                echo "[*]".date("Y-m-d H:i:s")." 接收了:{$message->getBody()}\n";
             };
         }
-        if ($fail_callback === null)
+        if (!is_callable($fail_callback))
         {
             $fail_callback = function (AMQPMessage $message) {
                 // code when message is nack-ed
-                echo "没接收:{$message->getBody()}\n";;
+                echo "[*]".date("Y-m-d H:i:s")." 没接收:{$message->getBody()}\n";;
             };
         }
 
