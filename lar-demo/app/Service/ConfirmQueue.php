@@ -190,6 +190,7 @@ class ConfirmQueue
     private function commonConsumer($queue)
     {
         $callback = function (AMQPMessage $message) {
+            $message->getExchange();
             echo $message->getBody()."\n";
             $this->channel->basic_ack($message->getDeliveryTag(),false);
         };
