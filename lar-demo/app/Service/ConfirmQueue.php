@@ -41,24 +41,33 @@ class ConfirmQueue
         if ($is_confirm_select)
         {
             $this->is_confirm_select = true;
-            $this->setCallback();
+            //$this->setMessageCallback();
             $this->channel->confirm_select();
         }
 
     }
 
-    private function setCallback()
+    private function setMessageCallback($success_callback = null,$fail_callback = null)
     {
-        //要写 wait_for_pending_acks();
-        $this->channel->set_ack_handler(function (AMQPMessage $message) {
-            // code when message is confirmed
-            echo "接收了:{$message->getBody()}\n";
-        });
+        if ($success_callback === null)
+        {
+            $success_callback = function (AMQPMessage $message) {
+                // code when message is confirmed
+                echo "接收了:{$message->getBody()}\n";
+            };
+        }
+        if ($fail_callback === null)
+        {
+            $fail_callback = function (AMQPMessage $message) {
+                // code when message is nack-ed
+                echo "没接收:{$message->getBody()}\n";;
+            };
+        }
 
-        $this->channel->set_nack_handler(function (AMQPMessage $message) {
-            // code when message is nack-ed
-            echo "没接收:{$message->getBody()}\n";;
-        });
+        //要写 wait_for_pending_acks();
+        $this->channel->set_ack_handler($success_callback);
+
+        $this->channel->set_nack_handler($fail_callback);
     }
 
     //声明 确认的交换机
