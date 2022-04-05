@@ -20,7 +20,7 @@ class ConfirmQueue
     const WARNING_QUEUE = "warning.queue";
     const BACKUP_QUEUE = "backup.queue";
 
-    public function __construct()
+    public function __construct($is_confirm_select = false)
     {
         $this->channel = RabbitMQ::getChannel();
 
@@ -35,6 +35,12 @@ class ConfirmQueue
         $this->confirmQueue();
         $this->confirmExchange();
         $this->confirmQueueBinding();
+
+        if ($is_confirm_select)
+        {
+            $this->channel->confirm_select();
+        }
+
     }
 
     //声明 确认的交换机
@@ -160,7 +166,7 @@ class ConfirmQueue
 
     public function sendMsg(string $msg_body = '')
     {
-        $this->channel->confirm_select();
+
 
         //要写 wait_for_pending_acks();
         $this->channel->set_ack_handler(function (AMQPMessage $message){
