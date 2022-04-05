@@ -55,6 +55,9 @@ class ConfirmQueue
          * @throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
          * @return mixed|null
          */
+        $table = new AMQPTable();
+        //备份交换机
+        $table->set("alternate-exchange",self::BACKUP_EXCHANGE);
         $this->channel->exchange_declare(
             self::CONFIRM_EXCHANGE,
             AMQPExchangeType::DIRECT,
@@ -69,10 +72,6 @@ class ConfirmQueue
     //声明确认的队列
     public function confirmQueue()
     {
-        $table = new AMQPTable();
-        //备份交换机
-        $table->set("alternate-exchange",self::BACKUP_EXCHANGE);
-
         /**
          * 声明队列
          * @param string $queue
@@ -86,7 +85,7 @@ class ConfirmQueue
          * @return array|null
          *@throws \PhpAmqpLib\Exception\AMQPTimeoutException if the specified operation timeout was exceeded
          */
-        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true,false,false,false,$table);
+        $this->channel->queue_declare(self::CONFIRM_QUEUE,false,true,false,false,false);
     }
 
     //绑定确定队列和确定交换机
