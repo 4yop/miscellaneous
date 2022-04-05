@@ -65,7 +65,8 @@ class ConfirmQueue
             true,
             false,
             false,
-            false
+            false,
+            $table
         );
     }
 
