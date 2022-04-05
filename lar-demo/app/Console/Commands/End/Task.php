@@ -40,6 +40,8 @@ class Task extends Command
     {
         $queue = new ConfirmQueue();
 
+
+
         $queue->sendMsg("123");
 
         return 0;
