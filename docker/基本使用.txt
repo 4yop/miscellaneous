@@ -64,7 +64,20 @@ docker run -d --hostname rabbitmq1   \
               -p "25672:25672"  \
               -v /data/rabbitmq01:/var/lib/rabbitmq:z \
               -e RABBITMQ_ERLANG_COOKIE='jffwcookie' \
-                 rabbitmq:-management
+                 rabbitmq:management
+
+docker run -d --hostname rabbitmq2   \
+              --add-host="rabbitmq1":192.168.1.181 \
+              --add-host="rabbitmq2":192.168.1.182 \
+              --name rabbit2\
+              --restart=always\
+              -p "4369:4369" \
+              -p "5672:5672"  \
+              -p "15672:15672"  \
+              -p "25672:25672"  \
+              -v /data/rabbitmq02:/var/lib/rabbitmq:z \
+              -e RABBITMQ_ERLANG_COOKIE='jffwcookie' \
+             rabbitmq:management
 
 
 
