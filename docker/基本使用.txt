@@ -81,5 +81,6 @@ docker run -d --hostname rabbitmq2   \
 
 
 
-
+docker run -d --hostname localhost --name myrabbit -p 15673:15672 -p 5673:5672 rabbitmq:management
+docker run -d --hostname localhost2 --name myrabbit2 -p 15674:15672 -p 5674:5672 rabbitmq:management
 
