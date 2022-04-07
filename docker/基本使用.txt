@@ -89,3 +89,4 @@ docker run -dit --hostname rabbit2 --name myrabbit2 -e RABBITMQ_DEFAULT_USER=adm
 
 docker run -dit --hostname rabbit3 --name myrabbit3 -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=admin -p 15674:15672 -p 5674:5672 --link myrabbit1:rabbit1 --link myrabbit2:rabbit2 -e RABBITMQ_ERLANG_COOKIE='rabbitcookie' rabbitmq:management
 
+docker run -dit -p 9874:8888 --name haproxy1  haproxy
