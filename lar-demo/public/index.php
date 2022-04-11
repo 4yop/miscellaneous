@@ -53,5 +53,5 @@ $kernel = $app->make(Kernel::class);
 $response = tap($kernel->handle(
     $request = Request::capture()
 ))->send();
-var_dump($response);
+
 $kernel->terminate($request, $response);

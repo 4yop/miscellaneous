@@ -38,3 +38,7 @@ Route::prefix('php/demo/qr_code_login')->group(function () {
 Route::prefix('rabbit_mq')->group(function(){
     Route::get('/',[RabbitMQController::class,'test1']);
 });
+
+
+Route::get("/member",[\App\Http\Controllers\MemberController::class,'index'])->name("member.index");
+
