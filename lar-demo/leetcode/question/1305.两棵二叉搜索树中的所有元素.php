@@ -28,13 +28,17 @@ class Solution {
             $this->helper($root1->left,$root2);
         }
         echo $root1->val."\n";
+        if ($root1->right != null)
+        {
+            $this->helper($root1->right,$root2);
+        }
     }
 
 }
 
 $s = new Solution();
 
-$root1 = [2,1,4];
+$root1 = [2,1,4,0,null,null,5];
 $root2 = [1,0,3];
 
 $root1 = \leetcode\common\Base::buildTreeNodeByArr($root1);
