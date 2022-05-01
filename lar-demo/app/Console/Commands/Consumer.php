@@ -32,8 +32,6 @@ class Consumer extends Command
      */
     public function __construct()
     {
-        //创建连接
-        $this->connection = new AMQPStreamConnection('127.0.0.1', 5672, 'admin', 'admin');
         parent::__construct();
     }
 
@@ -44,6 +42,9 @@ class Consumer extends Command
      */
     public function handle()
     {
+        //创建连接
+        $this->connection = new AMQPStreamConnection('127.0.0.1', 5672, 'admin', 'admin');
+
         $callback = function ($msg)
         {
             echo  ' [x] ' , $msg->body, "\n" ;

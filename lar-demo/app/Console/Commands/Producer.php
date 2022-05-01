@@ -35,7 +35,6 @@ class Producer extends Command
     public function __construct()
     {
         //创建连接
-        $this->connection = new AMQPStreamConnection('127.0.0.1', 5672, 'admin', 'admin');
         parent::__construct();
     }
 
@@ -46,6 +45,8 @@ class Producer extends Command
      */
     public function handle()
     {
+        $this->connection = new AMQPStreamConnection('127.0.0.1', 5672, 'admin', 'admin');
+
         //获取信道
         $channel = $this->connection->channel();
 
